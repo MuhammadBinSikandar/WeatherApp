@@ -350,7 +350,7 @@ def start_schedule():
                   soilMoistureUrl="https://api.thingspeak.com/channels/2597059/fields/1.json?results=2",
                   co2Url="https://api.thingspeak.com/channels/2598253/feeds.json?results=1")
     dataScrapping(database="Margalla", 
-                  station = "IISLAM13", 
+                  station = "IISLAM50", 
                   opticalParticleUrl="https://www.iqair.com/pakistan/islamabad/house%238-maain-khayaban-e-iqbal-f-6-3",
                   soilMoistureUrl="https://api.thingspeak.com/channels/2611688/fields/1.json?results=2",
                   co2Url="https://api.thingspeak.com/channels/2611683/feeds.json?results=1")
@@ -574,10 +574,10 @@ def periodic_fetch():
         time.sleep(900)  # Sleep for 15 minutes
 
 
-scheduler_thread = threading.Thread(target=start_schedule, daemon=True)
-scheduler_thread.start()
+# scheduler_thread = threading.Thread(target=start_schedule, daemon=True)
+# scheduler_thread.start()
 
-time.sleep(120)
+# time.sleep(120)
 
 # Start the thread
 thread1 = threading.Thread(target=periodic_fetch, daemon=True)
