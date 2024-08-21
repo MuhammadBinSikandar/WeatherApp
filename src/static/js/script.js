@@ -1709,3 +1709,5 @@ const co2ChartMonthly = new Chart(document.getElementById('co2GraphMonthly').get
     ...dualLineConfigTemplate,
     data: co2DataMonthly
 });
+
+console.log(TodayData);
