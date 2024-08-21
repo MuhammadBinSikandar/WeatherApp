@@ -1,0 +1,1280 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Dashboard</title>
+    <link href="{% static 'css/output.css' %}" rel="stylesheet">
+    <style>
+        .hidden_content {
+            display: none;
+        }
+        .tab_content {
+            transition: opacity 0.3s ease-in-out;
+        }
+        .tab_content.hidden_content {
+            opacity: 0;
+        }
+        .tab_content:not(.hidden_content) {
+            opacity: 1;
+        }
+        .button_active {
+            background-color: #1f2937;
+            color: white;
+        }
+        .button_inactive {
+            background-color: #0F0E10;
+            /* color: #1f2937; */
+        }
+        .graph_hidden_content {
+            display: none;
+        }
+        .graph_content{
+            transition: opacity 0.3s ease-in-out;
+        }
+        .graph_content.graph_hidden_content {
+            opacity: 0;
+        }
+        .graph_content:not(.graph_hidden_content) {
+            opacity: 1;
+        }
+        .graph_button_active{
+            background-color: #1f2937;
+            color: white;
+        }
+        .graph_button_inactive{
+            background-color: #0F0E10;
+        }
+    </style>
+</head>
+
+<body class="bg-[#0F0E10] text-white">
+    <!-- Header -->
+    <header class="flex flex-col sm:flex-row justify-between items-center py-4 px-4 md:px-8 lg:px-18 bg-[#1f2937] space-y-4 sm:space-y-0 sm:space-x-4">
+        <img src="static/assets/Nutech.png" alt="Logo" class="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20">
+        <div class="flex flex-col sm:flex-row items-center sm:space-x-2 text-center sm:text-left">
+            <img src="static/assets/Active.png" alt="Active Logo" class="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20">
+            <div class="mt-2 sm:mt-0">
+                <h1 class="text-sm sm:text-xs md:text-lg lg:text-xl font-bold">ICT AppliCaTions for sustaInable enVironmental protEction (ACTIVE)</h1>
+                <p class="text-xs sm:text-sm md:text-lg">Grant agreement no. 101082866</p>
+            </div>
+        </div>        
+        <img src="static/assets/EuropeanUnion.png" alt="EU Logo" class="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20">
+    </header>
+    
+
+    <!-- Navigation Tabs -->
+    <nav class="flex flex-wrap justify-center space-x-2 pt-4">
+        <button id="Nutech_Button" class="btn button_active btn-outline btn-xs sm:btn-sm md:btn-md lg:btn-lg">Station NUTECH</button>
+        <button id="Margalla_Button" class="btn button_inactive btn-outline btn-xs sm:btn-sm md:btn-md lg:btn-lg">Station Margalla</button>
+        <button id="Graphs_Button" class="btn button_inactive btn-outline btn-xs sm:btn-sm md:btn-md lg:btn-lg">Graphs</button>
+        <button id="Data_Button" class="btn button_inactive btn-outline btn-xs sm:btn-sm md:btn-md lg:btn-lg">Data</button>
+    </nav>
+    
+    <!-- Main Content -->
+    <main class="px-4">
+        <!-- Date and Tables -->
+        <div id="Nutech_Tab" class="tab_content">
+            <section class="text-center mt-4">
+                <div class="grid grid-cols-1 lg:grid-cols-7 gap-4 mt-4">
+                    <div class="text-white flex flex-col justify-between h-full lg:col-span-1 md:col-span-2 sm:col-span-2">
+                        <h3 class="text-lg font-bold text-left mb-2 border-b-[1px]">Location</h3>
+                        <div class="bg-[#1f2937] h-full text-left p-4 shadow-lg rounded-lg lg:space-y-6 pt-6 md:p-4 md:space-y-2 md:pl-2 ">
+                            <p class="mb-2"><strong>Latitude:</strong> 33.6844° N</p>
+                            <p class="mb-2"><strong>Longitude:</strong> 73.0479° E</p>
+                            <p class="mb-2"><strong>Visibility:</strong> 10 km</p>
+                            <p class="mb-2"><strong>Sunrise:</strong> 5:45 AM</p>
+                            <p class="mb-2"><strong>Sunset:</strong> 6:30 PM</p>
+                            <p class="mb-2"><strong>Moon Phase:</strong> Waxing Crescent</p>
+                            <p class="mb-2"><strong>Elevation:</strong> 540m</p>
+                        </div>
+                    </div>
+                    <div class="lg:col-span-6 md:col-span-5 sm:col-span-5 overflow-x-auto">
+                        <h3 class="text-lg font-bold text-left mb-2 border-b-[1px]">August 15th, 2024</h3>
+                        <table class="table font-bold text-center table-compact w-full border border-white">
+                            <thead>
+                                <tr class="bg-[#1f2937] text-white border-b border-white">
+                                    <th class="border-r border-white">Time</th>
+                                    <th class="border-r border-white">Sky</th>
+                                    <th class="border-r border-white">Temp (°C)</th>
+                                    <th class="border-r border-white">Pressure (hPa)</th>
+                                    <th class="border-r border-white">Wind Speed (km/h)</th>
+                                    <th class="border-r border-white">Wind Direction</th>
+                                    <th class="border-r border-white">Humidity (%)</th>
+                                    <th class="border-r border-white">Rain (mm)</th>
+                                    <th class="border-r border-white">Solar (w/m<sup>2</sup>)</th>
+                                    <th class="border-r border-white">Soil Moisture (kPa)</th>
+                                    <th class="border-r border-white">Evapotranspiration (mm/h)</th>
+                                    <th class="border-r border-white">CO<sub>2</sub> (ppm)</th>
+                                    <th class="border-r border-white">Optical Particles (g/m)</th>
+                                    <th>Pollen</th>
+                                </tr>
+                            </thead>
+                            <tbody id="weatherData">
+                                <tr class="border-b border-white">
+                                    <td class="border-r border-white whitespace-nowrap">03:15 AM</td>
+                                    <td class="border-r border-white">🌤</td>
+                                    <td class="border-r border-white text-black">14</td>
+                                    <td class="border-r border-white text-black">1012</td>
+                                    <td class="border-r border-white text-black">190</td>
+                                    <td class="border-r border-white text-black">West</td>
+                                    <td class="border-r border-white text-black">55</td>
+                                    <td class="border-r border-white text-black">5</td>
+                                    <td class="border-r border-white text-black">800</td>
+                                    <td class="border-r border-white text-black">30</td>
+                                    <td class="border-r border-white text-black">8</td>
+                                    <td class="border-r border-white text-black">3500</td>
+                                    <td class="border-r border-white text-black">40</td>
+                                    <td class="border-r border-white text-black">70</td>
+                                </tr>
+                                <tr class="border-b border-white">
+                                    <td class="border-r border-white">04:30 AM</td>
+                                    <td class="border-r border-white">☁️</td>
+                                    <td class="border-r border-white text-black">12</td>
+                                    <td class="border-r border-white text-black">1008</td>
+                                    <td class="border-r border-white text-black">220</td>
+                                    <td class="border-r border-white text-black">South</td>
+                                    <td class="border-r border-white text-black">65</td>
+                                    <td class="border-r border-white text-black">10</td>
+                                    <td class="border-r border-white text-black">700</td>
+                                    <td class="border-r border-white text-black">45</td>
+                                    <td class="border-r border-white text-black">10</td>
+                                    <td class="border-r border-white text-black">3300</td>
+                                    <td class="border-r border-white text-black">50</td>
+                                    <td class="border-r border-white text-black">60</td>
+                                </tr>
+                                <tr class="border-b border-white">
+                                    <td class="border-r border-white">05:45 AM</td>
+                                    <td class="border-r border-white">🌨</td>
+                                    <td class="border-r border-white text-black">11</td>
+                                    <td class="border-r border-white text-black">1000</td>
+                                    <td class="border-r border-white text-black">210</td>
+                                    <td class="border-r border-white text-black">East</td>
+                                    <td class="border-r border-white text-black">70</td>
+                                    <td class="border-r border-white text-black">15</td>
+                                    <td class="border-r border-white text-black">650</td>
+                                    <td class="border-r border-white text-black">50</td>
+                                    <td class="border-r border-white text-black">12</td>
+                                    <td class="border-r border-white text-black">3200</td>
+                                    <td class="border-r border-white text-black">60</td>
+                                    <td class="border-r border-white text-black">80</td>
+                                </tr>
+                                <tr class="border-b border-white">
+                                    <td class="border-r border-white">06:00 AM</td>
+                                    <td class="border-r border-white">🌫</td>
+                                    <td class="border-r border-white text-black">10</td>
+                                    <td class="border-r border-white text-black">995</td>
+                                    <td class="border-r border-white text-black">180</td>
+                                    <td class="border-r border-white text-black">North</td>
+                                    <td class="border-r border-white text-black">75</td>
+                                    <td class="border-r border-white text-black">8</td>
+                                    <td class="border-r border-white text-black">600</td>
+                                    <td class="border-r border-white text-black">55</td>
+                                    <td class="border-r border-white text-black">9</td>
+                                    <td class="border-r border-white text-black">3100</td>
+                                    <td class="border-r border-white text-black">70</td>
+                                    <td class="border-r border-white text-black">90</td>
+                                </tr>
+                                <tr class="border-b border-white">
+                                    <td class="border-r border-white">07:15 AM</td>
+                                    <td class="border-r border-white">🌦</td>
+                                    <td class="border-r border-white text-black">13</td>
+                                    <td class="border-r border-white text-black">990</td>
+                                    <td class="border-r border-white text-black">200</td>
+                                    <td class="border-r border-white text-black">NW</td>
+                                    <td class="border-r border-white text-black">60</td>
+                                    <td class="border-r border-white text-black">12</td>
+                                    <td class="border-r border-white text-black">750</td>
+                                    <td class="border-r border-white text-black">40</td>
+                                    <td class="border-r border-white text-black">11</td>
+                                    <td class="border-r border-white text-black">3300</td>
+                                    <td class="border-r border-white text-black">55</td>
+                                    <td class="border-r border-white text-black">100</td>
+                                </tr>
+                                <tr class="border-b border-white">
+                                    <td class="border-r border-white">08:30 AM</td>
+                                    <td class="border-r border-white">🌤</td>
+                                    <td class="border-r border-white text-black">15</td>
+                                    <td class="border-r border-white text-black">1015</td>
+                                    <td class="border-r border-white text-black">170</td>
+                                    <td class="border-r border-white text-black">SE</td>
+                                    <td class="border-r border-white text-black">50</td>
+                                    <td class="border-r border-white text-black">6</td>
+                                    <td class="border-r border-white text-black">800</td>
+                                    <td class="border-r border-white text-black">35</td>
+                                    <td class="border-r border-white text-black">8</td>
+                                    <td class="border-r border-white text-black">3000</td>
+                                    <td class="border-r border-white text-black">45</td>
+                                    <td class="border-r border-white text-black">85</td>
+                                </tr>
+                                <tr class="border-b border-white">
+                                    <td class="border-r border-white">09:45 AM</td>
+                                    <td class="border-r border-white">🌤</td>
+                                    <td class="border-r border-white text-black">16</td>
+                                    <td class="border-r border-white text-black">1020</td>
+                                    <td class="border-r border-white text-black">160</td>
+                                    <td class="border-r border-white text-black">SW</td>
+                                    <td class="border-r border-white text-black">45</td>
+                                    <td class="border-r border-white text-black">5</td>
+                                    <td class="border-r border-white text-black">850</td>
+                                    <td class="border-r border-white text-black">30</td>
+                                    <td class="border-r border-white text-black">7</td>
+                                    <td class="border-r border-white text-black">2900</td>
+                                    <td class="border-r border-white text-black">50</td>
+                                    <td class="border-r border-white text-black">75</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+    
+            <section class="w-full">
+                <h2 class="text-lg font-bold text-center mb-4 border-b-2 pt-6">Forecast</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 gap-4"> 
+                    <!-- Adjusted grid columns and gap -->
+                    
+                    <!-- Card -->
+                    <div class="card bg-gray-800 p-4 rounded-lg shadow-md">
+                        <h3 class="text-sm font-semibold text-center mb-2">Today</h3>
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex flex-col items-center">
+                                <img src="static/https://cdn-icons-png.flaticon.com/512/414/414927.png" alt="Weather Icon" class="w-20 h-20">
+                                <span class="text-sm text-gray-300 mt-2">Sunny</span>
+                            </div>
+                            <div class="text-5xl font-bold">37°C</div>
+                        </div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div class="flex items-center">
+                                <img src="static/assets/airpressure.png" alt="Pressure Icon" class="w-8 h-8">
+                                <span class="ml-2 text-sm font-semibold">Pressure</span>
+                            </div>
+                            <span class="text-sm">1024 hPa</span>
+                        </div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div class="flex items-center">
+                                <img src="static/assets/rain.png" alt="Rain Icon" class="w-8 h-8">
+                                <span class="ml-2 text-sm font-semibold">Rain</span>
+                            </div>
+                            <span class="text-sm">20%</span>
+                        </div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div class="flex items-center">
+                                <img src="static/assets/windspeed.png" alt="Wind Icon" class="w-8 h-8">
+                                <span class="ml-2 text-sm font-semibold">Wind</span>
+                            </div>
+                            <span class="text-sm">5 km/h</span>
+                        </div>
+                        <div class="text-center text-sm mt-4">
+                            <span>28° / 40°</span>
+                        </div>
+                    </div>
+                    <div class="card bg-gray-800 p-4 rounded-lg shadow-md">
+                        <h3 class="text-sm font-semibold text-center mb-2">Today</h3>
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex flex-col items-center">
+                                <img src="static/https://cdn-icons-png.flaticon.com/512/414/414927.png" alt="Weather Icon" class="w-20 h-20">
+                                <span class="text-sm text-gray-300 mt-2">Sunny</span>
+                            </div>
+                            <div class="text-5xl font-bold">37°C</div>
+                        </div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div class="flex items-center">
+                                <img src="static/assets/airpressure.png" alt="Pressure Icon" class="w-8 h-8">
+                                <span class="ml-2 text-sm font-semibold">Pressure</span>
+                            </div>
+                            <span class="text-sm">1024 hPa</span>
+                        </div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div class="flex items-center">
+                                <img src="static/assets/rain.png" alt="Rain Icon" class="w-8 h-8">
+                                <span class="ml-2 text-sm font-semibold">Rain</span>
+                            </div>
+                            <span class="text-sm">20%</span>
+                        </div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div class="flex items-center">
+                                <img src="static/assets/windspeed.png" alt="Wind Icon" class="w-8 h-8">
+                                <span class="ml-2 text-sm font-semibold">Wind</span>
+                            </div>
+                            <span class="text-sm">5 km/h</span>
+                        </div>
+                        <div class="text-center text-sm mt-4">
+                            <span>28° / 40°</span>
+                        </div>
+                    </div>
+                    <div class="card bg-gray-800 p-4 rounded-lg shadow-md">
+                        <h3 class="text-sm font-semibold text-center mb-2">Today</h3>
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex flex-col items-center">
+                                <img src="static/https://cdn-icons-png.flaticon.com/512/414/414927.png" alt="Weather Icon" class="w-20 h-20">
+                                <span class="text-sm text-gray-300 mt-2">Sunny</span>
+                            </div>
+                            <div class="text-5xl font-bold">37°C</div>
+                        </div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div class="flex items-center">
+                                <img src="static/assets/airpressure.png" alt="Pressure Icon" class="w-8 h-8">
+                                <span class="ml-2 text-sm font-semibold">Pressure</span>
+                            </div>
+                            <span class="text-sm">1024 hPa</span>
+                        </div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div class="flex items-center">
+                                <img src="static/assets/rain.png" alt="Rain Icon" class="w-8 h-8">
+                                <span class="ml-2 text-sm font-semibold">Rain</span>
+                            </div>
+                            <span class="text-sm">20%</span>
+                        </div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div class="flex items-center">
+                                <img src="static/assets/windspeed.png" alt="Wind Icon" class="w-8 h-8">
+                                <span class="ml-2 text-sm font-semibold">Wind</span>
+                            </div>
+                            <span class="text-sm">5 km/h</span>
+                        </div>
+                        <div class="text-center text-sm mt-4">
+                            <span>28° / 40°</span>
+                        </div>
+                    </div>
+                    <div class="card bg-gray-800 p-4 rounded-lg shadow-md">
+                        <h3 class="text-sm font-semibold text-center mb-2">Today</h3>
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex flex-col items-center">
+                                <img src="static/https://cdn-icons-png.flaticon.com/512/414/414927.png" alt="Weather Icon" class="w-20 h-20">
+                                <span class="text-sm text-gray-300 mt-2">Sunny</span>
+                            </div>
+                            <div class="text-5xl font-bold">37°C</div>
+                        </div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div class="flex items-center">
+                                <img src="static/assets/airpressure.png" alt="Pressure Icon" class="w-8 h-8">
+                                <span class="ml-2 text-sm font-semibold">Pressure</span>
+                            </div>
+                            <span class="text-sm">1024 hPa</span>
+                        </div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div class="flex items-center">
+                                <img src="static/assets/rain.png" alt="Rain Icon" class="w-8 h-8">
+                                <span class="ml-2 text-sm font-semibold">Rain</span>
+                            </div>
+                            <span class="text-sm">20%</span>
+                        </div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div class="flex items-center">
+                                <img src="static/assets/windspeed.png" alt="Wind Icon" class="w-8 h-8">
+                                <span class="ml-2 text-sm font-semibold">Wind</span>
+                            </div>
+                            <span class="text-sm">5 km/h</span>
+                        </div>
+                        <div class="text-center text-sm mt-4">
+                            <span>28° / 40°</span>
+                        </div>
+                    </div>
+                    <div class="card bg-gray-800 p-4 rounded-lg shadow-md">
+                        <h3 class="text-sm font-semibold text-center mb-2">Today</h3>
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex flex-col items-center">
+                                <img src="static/https://cdn-icons-png.flaticon.com/512/414/414927.png" alt="Weather Icon" class="w-20 h-20">
+                                <span class="text-sm text-gray-300 mt-2">Sunny</span>
+                            </div>
+                            <div class="text-5xl font-bold">37°C</div>
+                        </div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div class="flex items-center">
+                                <img src="static/assets/airpressure.png" alt="Pressure Icon" class="w-8 h-8">
+                                <span class="ml-2 text-sm font-semibold">Pressure</span>
+                            </div>
+                            <span class="text-sm">1024 hPa</span>
+                        </div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div class="flex items-center">
+                                <img src="static/assets/rain.png" alt="Rain Icon" class="w-8 h-8">
+                                <span class="ml-2 text-sm font-semibold">Rain</span>
+                            </div>
+                            <span class="text-sm">20%</span>
+                        </div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div class="flex items-center">
+                                <img src="static/assets/windspeed.png" alt="Wind Icon" class="w-8 h-8">
+                                <span class="ml-2 text-sm font-semibold">Wind</span>
+                            </div>
+                            <span class="text-sm">5 km/h</span>
+                        </div>
+                        <div class="text-center text-sm mt-4">
+                            <span>28° / 40°</span>
+                        </div>
+                    </div>
+                    <div class="card bg-gray-800 p-4 rounded-lg shadow-md">
+                        <h3 class="text-sm font-semibold text-center mb-2">Today</h3>
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex flex-col items-center">
+                                <img src="static/https://cdn-icons-png.flaticon.com/512/414/414927.png" alt="Weather Icon" class="w-20 h-20">
+                                <span class="text-sm text-gray-300 mt-2">Sunny</span>
+                            </div>
+                            <div class="text-5xl font-bold">37°C</div>
+                        </div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div class="flex items-center">
+                                <img src="static/assets/airpressure.png" alt="Pressure Icon" class="w-8 h-8">
+                                <span class="ml-2 text-sm font-semibold">Pressure</span>
+                            </div>
+                            <span class="text-sm">1024 hPa</span>
+                        </div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div class="flex items-center">
+                                <img src="static/assets/rain.png" alt="Rain Icon" class="w-8 h-8">
+                                <span class="ml-2 text-sm font-semibold">Rain</span>
+                            </div>
+                            <span class="text-sm">20%</span>
+                        </div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div class="flex items-center">
+                                <img src="static/assets/windspeed.png" alt="Wind Icon" class="w-8 h-8">
+                                <span class="ml-2 text-sm font-semibold">Wind</span>
+                            </div>
+                            <span class="text-sm">5 km/h</span>
+                        </div>
+                        <div class="text-center text-sm mt-4">
+                            <span>28° / 40°</span>
+                        </div>
+                    </div>
+                    <div class="card bg-gray-800 p-4 rounded-lg shadow-md">
+                        <h3 class="text-sm font-semibold text-center mb-2">Today</h3>
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex flex-col items-center">
+                                <img src="static/https://cdn-icons-png.flaticon.com/512/414/414927.png" alt="Weather Icon" class="w-20 h-20">
+                                <span class="text-sm text-gray-300 mt-2">Sunny</span>
+                            </div>
+                            <div class="text-5xl font-bold">37°C</div>
+                        </div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div class="flex items-center">
+                                <img src="static/assets/airpressure.png" alt="Pressure Icon" class="w-8 h-8">
+                                <span class="ml-2 text-sm font-semibold">Pressure</span>
+                            </div>
+                            <span class="text-sm">1024 hPa</span>
+                        </div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div class="flex items-center">
+                                <img src="static/assets/rain.png" alt="Rain Icon" class="w-8 h-8">
+                                <span class="ml-2 text-sm font-semibold">Rain</span>
+                            </div>
+                            <span class="text-sm">20%</span>
+                        </div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div class="flex items-center">
+                                <img src="static/assets/windspeed.png" alt="Wind Icon" class="w-8 h-8">
+                                <span class="ml-2 text-sm font-semibold">Wind</span>
+                            </div>
+                            <span class="text-sm">5 km/h</span>
+                        </div>
+                        <div class="text-center text-sm mt-4">
+                            <span>28° / 40°</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <section>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
+                    <div>
+                        <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]">Temperature</h3>
+                        <div class="bg-gray-800 p-2 rounded-lg h-[300px]"> 
+                            <canvas id="temperatureGraphNutech" class="w-full h-full"></canvas>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]">Pressure</h3>
+                        <div class="bg-gray-800 p-2 rounded-lg h-[300px]"> 
+                            <canvas id="pressureGraphNutech" class="w-full h-full"></canvas>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]">Wind Speed</h3>
+                        <div class="bg-gray-800 p-2 rounded-lg h-[300px]"> 
+                            <canvas id="windSpeedGraphNutech" class="w-full h-full"></canvas>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]">Humidity</h3>
+                        <div class="bg-gray-800 p-2 rounded-lg h-[300px]"> 
+                            <canvas id="humidityGraphNutech" class="w-full h-full"></canvas>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]">Rain</h3>
+                        <div class="bg-gray-800 p-2 rounded-lg h-[300px]"> 
+                            <canvas id="rainGraphNutech" class="w-full h-full"></canvas>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]">Solar Radiation</h3>
+                        <div class="bg-gray-800 p-2 rounded-lg h-[300px]"> 
+                            <canvas id="solarradiationGraphNutech" class="w-full h-full"></canvas>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]">Soil Moisture</h3>
+                        <div class="bg-gray-800 p-2 rounded-lg h-[300px]"> 
+                            <canvas id="soilmoistureGraphNutech" class="w-full h-full"></canvas>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]">Evapotranspiration</h3>
+                        <div class="bg-gray-800 p-2 rounded-lg h-[300px]"> 
+                            <canvas id="evapotranspirationGraphNutech" class="w-full h-full"></canvas>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]">CO<sub>2</sub></h3>
+                        <div class="bg-gray-800 p-2 rounded-lg h-[300px]"> 
+                            <canvas id="co2GraphNutech" class="w-full h-full"></canvas>
+                        </div>
+                    </div> 
+                </div>
+            </section>
+        </div>
+        <div id="Margalla_Tab" class="tab_content hidden_content">
+            <section class="text-center mt-4">
+                <div class="grid grid-cols-1 lg:grid-cols-7 gap-4 mt-4">
+                    <div class="text-white flex flex-col justify-between h-full lg:col-span-1 md:col-span-2 sm:col-span-2">
+                        <h3 class="text-lg font-bold text-left mb-2 border-b-[1px]">Location</h3>
+                        <div class="bg-[#1f2937] h-full text-left p-4 shadow-lg rounded-lg lg:space-y-6 pt-6 md:p-4 md:space-y-2 md:pl-2 ">
+                            <p class="mb-2"><strong>Latitude:</strong> 33.6844° N</p>
+                            <p class="mb-2"><strong>Longitude:</strong> 73.0479° E</p>
+                            <p class="mb-2"><strong>Visibility:</strong> 10 km</p>
+                            <p class="mb-2"><strong>Sunrise:</strong> 5:45 AM</p>
+                            <p class="mb-2"><strong>Sunset:</strong> 6:30 PM</p>
+                            <p class="mb-2"><strong>Moon Phase:</strong> Waxing Crescent</p>
+                            <p class="mb-2"><strong>Elevation:</strong> 540m</p>
+                        </div>
+                    </div>
+                    <div class="lg:col-span-6 md:col-span-5 sm:col-span-5 overflow-x-auto">
+                        <h3 class="text-lg font-bold text-left mb-2 border-b-[1px]">August 20th, 2024</h3>
+                        <table class="table font-bold text-center table-compact w-full border border-white">
+                            <thead>
+                                <tr class="bg-[#1f2937] text-white border-b border-white">
+                                    <th class="border-r border-white">Time</th>
+                                    <th class="border-r border-white">Sky</th>
+                                    <th class="border-r border-white">Temp (°C)</th>
+                                    <th class="border-r border-white">Pressure (hPa)</th>
+                                    <th class="border-r border-white">Wind Speed (km/h)</th>
+                                    <th class="border-r border-white">Wind Direction</th>
+                                    <th class="border-r border-white">Humidity (%)</th>
+                                    <th class="border-r border-white">Rain (mm)</th>
+                                    <th class="border-r border-white">Solar (w/m<sup>2</sup>)</th>
+                                    <th class="border-r border-white">Soil Moisture (kPa)</th>
+                                    <th class="border-r border-white">Evapotranspiration (mm/h)</th>
+                                    <th class="border-r border-white">CO<sub>2</sub> (ppm)</th>
+                                    <th class="border-r border-white">Optical Particles (g/m)</th>
+                                    <th>Pollen</th>
+                                </tr>
+                            </thead>
+                            <tbody id="weatherData">
+                                <tr class="border-b border-white">
+                                    <td class="border-r border-white whitespace-nowrap">03:45 PM</td>
+                                    <td class="border-r border-white">🌤</td>
+                                    <td class="border-r border-white text-black">22</td>
+                                    <td class="border-r border-white text-black">1012</td>
+                                    <td class="border-r border-white text-black">12</td>
+                                    <td class="border-r border-white text-black">West</td>
+                                    <td class="border-r border-white text-black">55</td>
+                                    <td class="border-r border-white text-black">0.2</td>
+                                    <td class="border-r border-white text-black">850</td>
+                                    <td class="border-r border-white text-black">35</td>
+                                    <td class="border-r border-white text-black">5</td>
+                                    <td class="border-r border-white text-black">4100</td>
+                                    <td class="border-r border-white text-black">30</td>
+                                    <td class="border-r border-white text-black">70</td>
+                                </tr>
+                                <tr class="border-b border-white">
+                                    <td class="border-r border-white">04:15 PM</td>
+                                    <td class="border-r border-white">🌧</td>
+                                    <td class="border-r border-white text-black">19</td>
+                                    <td class="border-r border-white text-black">1008</td>
+                                    <td class="border-r border-white text-black">15</td>
+                                    <td class="border-r border-white text-black">NW</td>
+                                    <td class="border-r border-white text-black">65</td>
+                                    <td class="border-r border-white text-black">3.0</td>
+                                    <td class="border-r border-white text-black">780</td>
+                                    <td class="border-r border-white text-black">45</td>
+                                    <td class="border-r border-white text-black">8</td>
+                                    <td class="border-r border-white text-black">3900</td>
+                                    <td class="border-r border-white text-black">40</td>
+                                    <td class="border-r border-white text-black">120</td>
+                                </tr>
+                                <tr class="border-b border-white">
+                                    <td class="border-r border-white">05:00 PM</td>
+                                    <td class="border-r border-white">🌩</td>
+                                    <td class="border-r border-white text-black">17</td>
+                                    <td class="border-r border-white text-black">1020</td>
+                                    <td class="border-r border-white text-black">20</td>
+                                    <td class="border-r border-white text-black">SE</td>
+                                    <td class="border-r border-white text-black">75</td>
+                                    <td class="border-r border-white text-black">4.5</td>
+                                    <td class="border-r border-white text-black">920</td>
+                                    <td class="border-r border-white text-black">50</td>
+                                    <td class="border-r border-white text-black">6</td>
+                                    <td class="border-r border-white text-black">4300</td>
+                                    <td class="border-r border-white text-black">25</td>
+                                    <td class="border-r border-white text-black">80</td>
+                                </tr>
+                                <tr class="border-b border-white">
+                                    <td class="border-r border-white">06:30 PM</td>
+                                    <td class="border-r border-white">🌫</td>
+                                    <td class="border-r border-white text-black">14</td>
+                                    <td class="border-r border-white text-black">1000</td>
+                                    <td class="border-r border-white text-black">8</td>
+                                    <td class="border-r border-white text-black">East</td>
+                                    <td class="border-r border-white text-black">80</td>
+                                    <td class="border-r border-white text-black">1.0</td>
+                                    <td class="border-r border-white text-black">700</td>
+                                    <td class="border-r border-white text-black">55</td>
+                                    <td class="border-r border-white text-black">7</td>
+                                    <td class="border-r border-white text-black">3500</td>
+                                    <td class="border-r border-white text-black">20</td>
+                                    <td class="border-r border-white text-black">60</td>
+                                </tr>
+                                <tr class="border-b border-white">
+                                    <td class="border-r border-white">07:15 PM</td>
+                                    <td class="border-r border-white">🌒</td>
+                                    <td class="border-r border-white text-black">12</td>
+                                    <td class="border-r border-white text-black">995</td>
+                                    <td class="border-r border-white text-black">10</td>
+                                    <td class="border-r border-white text-black">South</td>
+                                    <td class="border-r border-white text-black">85</td>
+                                    <td class="border-r border-white text-black">0.5</td>
+                                    <td class="border-r border-white text-black">650</td>
+                                    <td class="border-r border-white text-black">60</td>
+                                    <td class="border-r border-white text-black">4</td>
+                                    <td class="border-r border-white text-black">3000</td>
+                                    <td class="border-r border-white text-black">45</td>
+                                    <td class="border-r border-white text-black">90</td>
+                                </tr>
+                                <tr class="border-b border-white">
+                                    <td class="border-r border-white">08:00 PM</td>
+                                    <td class="border-r border-white">🌚</td>
+                                    <td class="border-r border-white text-black">10</td>
+                                    <td class="border-r border-white text-black">990</td>
+                                    <td class="border-r border-white text-black">5</td>
+                                    <td class="border-r border-white text-black">West</td>
+                                    <td class="border-r border-white text-black">90</td>
+                                    <td class="border-r border-white text-black">0.1</td>
+                                    <td class="border-r border-white text-black">600</td>
+                                    <td class="border-r border-white text-black">65</td>
+                                    <td class="border-r border-white text-black">3</td>
+                                    <td class="border-r border-white text-black">2900</td>
+                                    <td class="border-r border-white text-black">50</td>
+                                    <td class="border-r border-white text-black">110</td>
+                                </tr>
+                                <tr class="border-b border-white">
+                                    <td class="border-r border-white">09:30 PM</td>
+                                    <td class="border-r border-white">🌌</td>
+                                    <td class="border-r border-white text-black">8</td>
+                                    <td class="border-r border-white text-black">980</td>
+                                    <td class="border-r border-white text-black">7</td>
+                                    <td class="border-r border-white text-black">NE</td>
+                                    <td class="border-r border-white text-black">95</td>
+                                    <td class="border-r border-white text-black">0.0</td>
+                                    <td class="border-r border-white text-black">550</td>
+                                    <td class="border-r border-white text-black">70</td>
+                                    <td class="border-r border-white text-black">2</td>
+                                    <td class="border-r border-white text-black">2700</td>
+                                    <td class="border-r border-white text-black">55</td>
+                                    <td class="border-r border-white text-black">130</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+    
+            <section class="w-full">
+                <h2 class="text-lg font-bold text-center mb-4 border-b-2 pt-6">Forecast</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 gap-4"> 
+                    <!-- Adjusted grid columns and gap -->
+                    
+                    <!-- Card -->
+                    <div class="card bg-gray-800 p-4 rounded-lg shadow-md">
+                        <h3 class="text-sm font-semibold text-center mb-2">Today</h3>
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex flex-col items-center">
+                                <img src="static/https://cdn-icons-png.flaticon.com/512/414/414927.png" alt="Weather Icon" class="w-20 h-20">
+                                <span class="text-sm text-gray-300 mt-2">Sunny</span>
+                            </div>
+                            <div class="text-5xl font-bold">37°C</div>
+                        </div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div class="flex items-center">
+                                <img src="static/assets/airpressure.png" alt="Pressure Icon" class="w-8 h-8">
+                                <span class="ml-2 text-sm font-semibold">Pressure</span>
+                            </div>
+                            <span class="text-sm">1024 hPa</span>
+                        </div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div class="flex items-center">
+                                <img src="static/assets/rain.png" alt="Rain Icon" class="w-8 h-8">
+                                <span class="ml-2 text-sm font-semibold">Rain</span>
+                            </div>
+                            <span class="text-sm">20%</span>
+                        </div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div class="flex items-center">
+                                <img src="static/assets/windspeed.png" alt="Wind Icon" class="w-8 h-8">
+                                <span class="ml-2 text-sm font-semibold">Wind</span>
+                            </div>
+                            <span class="text-sm">5 km/h</span>
+                        </div>
+                        <div class="text-center text-sm mt-4">
+                            <span>28° / 40°</span>
+                        </div>
+                    </div>
+                    <div class="card bg-gray-800 p-4 rounded-lg shadow-md">
+                        <h3 class="text-sm font-semibold text-center mb-2">Today</h3>
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex flex-col items-center">
+                                <img src="static/https://cdn-icons-png.flaticon.com/512/414/414927.png" alt="Weather Icon" class="w-20 h-20">
+                                <span class="text-sm text-gray-300 mt-2">Sunny</span>
+                            </div>
+                            <div class="text-5xl font-bold">37°C</div>
+                        </div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div class="flex items-center">
+                                <img src="static/assets/airpressure.png" alt="Pressure Icon" class="w-8 h-8">
+                                <span class="ml-2 text-sm font-semibold">Pressure</span>
+                            </div>
+                            <span class="text-sm">1024 hPa</span>
+                        </div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div class="flex items-center">
+                                <img src="static/assets/rain.png" alt="Rain Icon" class="w-8 h-8">
+                                <span class="ml-2 text-sm font-semibold">Rain</span>
+                            </div>
+                            <span class="text-sm">20%</span>
+                        </div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div class="flex items-center">
+                                <img src="static/assets/windspeed.png" alt="Wind Icon" class="w-8 h-8">
+                                <span class="ml-2 text-sm font-semibold">Wind</span>
+                            </div>
+                            <span class="text-sm">5 km/h</span>
+                        </div>
+                        <div class="text-center text-sm mt-4">
+                            <span>28° / 40°</span>
+                        </div>
+                    </div>
+                    <div class="card bg-gray-800 p-4 rounded-lg shadow-md">
+                        <h3 class="text-sm font-semibold text-center mb-2">Today</h3>
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex flex-col items-center">
+                                <img src="static/https://cdn-icons-png.flaticon.com/512/414/414927.png" alt="Weather Icon" class="w-20 h-20">
+                                <span class="text-sm text-gray-300 mt-2">Sunny</span>
+                            </div>
+                            <div class="text-5xl font-bold">37°C</div>
+                        </div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div class="flex items-center">
+                                <img src="static/assets/airpressure.png" alt="Pressure Icon" class="w-8 h-8">
+                                <span class="ml-2 text-sm font-semibold">Pressure</span>
+                            </div>
+                            <span class="text-sm">1024 hPa</span>
+                        </div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div class="flex items-center">
+                                <img src="static/assets/rain.png" alt="Rain Icon" class="w-8 h-8">
+                                <span class="ml-2 text-sm font-semibold">Rain</span>
+                            </div>
+                            <span class="text-sm">20%</span>
+                        </div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div class="flex items-center">
+                                <img src="static/assets/windspeed.png" alt="Wind Icon" class="w-8 h-8">
+                                <span class="ml-2 text-sm font-semibold">Wind</span>
+                            </div>
+                            <span class="text-sm">5 km/h</span>
+                        </div>
+                        <div class="text-center text-sm mt-4">
+                            <span>28° / 40°</span>
+                        </div>
+                    </div>
+                    <div class="card bg-gray-800 p-4 rounded-lg shadow-md">
+                        <h3 class="text-sm font-semibold text-center mb-2">Today</h3>
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex flex-col items-center">
+                                <img src="static/https://cdn-icons-png.flaticon.com/512/414/414927.png" alt="Weather Icon" class="w-20 h-20">
+                                <span class="text-sm text-gray-300 mt-2">Sunny</span>
+                            </div>
+                            <div class="text-5xl font-bold">37°C</div>
+                        </div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div class="flex items-center">
+                                <img src="static/assets/airpressure.png" alt="Pressure Icon" class="w-8 h-8">
+                                <span class="ml-2 text-sm font-semibold">Pressure</span>
+                            </div>
+                            <span class="text-sm">1024 hPa</span>
+                        </div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div class="flex items-center">
+                                <img src="static/assets/rain.png" alt="Rain Icon" class="w-8 h-8">
+                                <span class="ml-2 text-sm font-semibold">Rain</span>
+                            </div>
+                            <span class="text-sm">20%</span>
+                        </div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div class="flex items-center">
+                                <img src="static/assets/windspeed.png" alt="Wind Icon" class="w-8 h-8">
+                                <span class="ml-2 text-sm font-semibold">Wind</span>
+                            </div>
+                            <span class="text-sm">5 km/h</span>
+                        </div>
+                        <div class="text-center text-sm mt-4">
+                            <span>28° / 40°</span>
+                        </div>
+                    </div>
+                    <div class="card bg-gray-800 p-4 rounded-lg shadow-md">
+                        <h3 class="text-sm font-semibold text-center mb-2">Today</h3>
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex flex-col items-center">
+                                <img src="static/https://cdn-icons-png.flaticon.com/512/414/414927.png" alt="Weather Icon" class="w-20 h-20">
+                                <span class="text-sm text-gray-300 mt-2">Sunny</span>
+                            </div>
+                            <div class="text-5xl font-bold">37°C</div>
+                        </div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div class="flex items-center">
+                                <img src="static/assets/airpressure.png" alt="Pressure Icon" class="w-8 h-8">
+                                <span class="ml-2 text-sm font-semibold">Pressure</span>
+                            </div>
+                            <span class="text-sm">1024 hPa</span>
+                        </div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div class="flex items-center">
+                                <img src="static/assets/rain.png" alt="Rain Icon" class="w-8 h-8">
+                                <span class="ml-2 text-sm font-semibold">Rain</span>
+                            </div>
+                            <span class="text-sm">20%</span>
+                        </div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div class="flex items-center">
+                                <img src="static/assets/windspeed.png" alt="Wind Icon" class="w-8 h-8">
+                                <span class="ml-2 text-sm font-semibold">Wind</span>
+                            </div>
+                            <span class="text-sm">5 km/h</span>
+                        </div>
+                        <div class="text-center text-sm mt-4">
+                            <span>28° / 40°</span>
+                        </div>
+                    </div>
+                    <div class="card bg-gray-800 p-4 rounded-lg shadow-md">
+                        <h3 class="text-sm font-semibold text-center mb-2">Today</h3>
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex flex-col items-center">
+                                <img src="static/https://cdn-icons-png.flaticon.com/512/414/414927.png" alt="Weather Icon" class="w-20 h-20">
+                                <span class="text-sm text-gray-300 mt-2">Sunny</span>
+                            </div>
+                            <div class="text-5xl font-bold">37°C</div>
+                        </div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div class="flex items-center">
+                                <img src="static/assets/airpressure.png" alt="Pressure Icon" class="w-8 h-8">
+                                <span class="ml-2 text-sm font-semibold">Pressure</span>
+                            </div>
+                            <span class="text-sm">1024 hPa</span>
+                        </div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div class="flex items-center">
+                                <img src="static/assets/rain.png" alt="Rain Icon" class="w-8 h-8">
+                                <span class="ml-2 text-sm font-semibold">Rain</span>
+                            </div>
+                            <span class="text-sm">20%</span>
+                        </div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div class="flex items-center">
+                                <img src="static/assets/windspeed.png" alt="Wind Icon" class="w-8 h-8">
+                                <span class="ml-2 text-sm font-semibold">Wind</span>
+                            </div>
+                            <span class="text-sm">5 km/h</span>
+                        </div>
+                        <div class="text-center text-sm mt-4">
+                            <span>28° / 40°</span>
+                        </div>
+                    </div>
+                    <div class="card bg-gray-800 p-4 rounded-lg shadow-md">
+                        <h3 class="text-sm font-semibold text-center mb-2">Today</h3>
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex flex-col items-center">
+                                <img src="static/https://cdn-icons-png.flaticon.com/512/414/414927.png" alt="Weather Icon" class="w-20 h-20">
+                                <span class="text-sm text-gray-300 mt-2">Sunny</span>
+                            </div>
+                            <div class="text-5xl font-bold">37°C</div>
+                        </div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div class="flex items-center">
+                                <img src="static/assets/airpressure.png" alt="Pressure Icon" class="w-8 h-8">
+                                <span class="ml-2 text-sm font-semibold">Pressure</span>
+                            </div>
+                            <span class="text-sm">1024 hPa</span>
+                        </div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div class="flex items-center">
+                                <img src="static/assets/rain.png" alt="Rain Icon" class="w-8 h-8">
+                                <span class="ml-2 text-sm font-semibold">Rain</span>
+                            </div>
+                            <span class="text-sm">20%</span>
+                        </div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div class="flex items-center">
+                                <img src="static/assets/windspeed.png" alt="Wind Icon" class="w-8 h-8">
+                                <span class="ml-2 text-sm font-semibold">Wind</span>
+                            </div>
+                            <span class="text-sm">5 km/h</span>
+                        </div>
+                        <div class="text-center text-sm mt-4">
+                            <span>28° / 40°</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <section>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
+                    <div>
+                        <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]">Temperature</h3>
+                        <div class="bg-gray-800 p-2 rounded-lg h-[300px]"> 
+                            <canvas id="temperatureGraphMargalla" class="w-full h-full"></canvas>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]">Pressure</h3>
+                        <div class="bg-gray-800 p-2 rounded-lg h-[300px]"> 
+                            <canvas id="pressureGraphMargalla" class="w-full h-full"></canvas>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]">Wind Speed</h3>
+                        <div class="bg-gray-800 p-2 rounded-lg h-[300px]"> 
+                            <canvas id="windSpeedGraphMargalla" class="w-full h-full"></canvas>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]">Humidity</h3>
+                        <div class="bg-gray-800 p-2 rounded-lg h-[300px]"> 
+                            <canvas id="humidityGraphMargalla" class="w-full h-full"></canvas>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]">Rain</h3>
+                        <div class="bg-gray-800 p-2 rounded-lg h-[300px]"> 
+                            <canvas id="rainGraphMargalla" class="w-full h-full"></canvas>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]">Solar Radiation</h3>
+                        <div class="bg-gray-800 p-2 rounded-lg h-[300px]"> 
+                            <canvas id="solarradiationGraphMargalla" class="w-full h-full"></canvas>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]">Soil Moisture</h3>
+                        <div class="bg-gray-800 p-2 rounded-lg h-[300px]"> 
+                            <canvas id="soilmoistureGraphMargalla" class="w-full h-full"></canvas>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]">Evapotranspiration</h3>
+                        <div class="bg-gray-800 p-2 rounded-lg h-[300px]"> 
+                            <canvas id="evapotranspirationGraphMargalla" class="w-full h-full"></canvas>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]">CO<sub>2</sub></h3>
+                        <div class="bg-gray-800 p-2 rounded-lg h-[300px]"> 
+                            <canvas id="co2GraphMargalla" class="w-full h-full"></canvas>
+                        </div>
+                    </div> 
+                </div>
+            </section>
+        </div>
+        
+        <div id="Graphs_Tab" class="tab_content hidden_content">
+            <nav class="flex justify-center space-x-4 pt-4">
+                <button id="Graphs_Daily_Button" class="btn graph_button_active btn-outline btn-xs sm:btn-sm md:btn-md md:btn-wide lg:btn-wide">Daily</button>
+                <button id="Graphs_Weekly_Button" class="btn graph_button_inactive btn-outline btn-xs sm:btn-sm md:btn-md md:btn-wide lg:btn-wide">Weekly</button>
+                <button id="Graphs_Monthly_Button" class="btn graph_button_inactive btn-outline btn-xs sm:btn-sm md:btn-md md:btn-wide lg:btn-wide">Monthly</button>
+            </nav>
+            <div id="Daily_Graphs_Tab" class="graph_content">
+                <section>
+                    <h1>Daily Graphs</h1>
+                    <div class="grid grid-cols-1 space-y-4 mt-4">
+                        <div>
+                            <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]">Temperature</h3>
+                            <div class="bg-gray-800 p-2 rounded-lg h-[300px]"> 
+                                <canvas id="temperatureGraphDaily" class="w-full h-full"></canvas>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]">Pressure</h3>
+                            <div class="bg-gray-800 p-2 rounded-lg h-[300px]"> 
+                                <canvas id="pressureGraphDaily" class="w-full h-full"></canvas>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]">Wind Speed</h3>
+                            <div class="bg-gray-800 p-2 rounded-lg h-[300px]"> 
+                                <canvas id="windSpeedGraphDaily" class="w-full h-full"></canvas>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]">Humidity</h3>
+                            <div class="bg-gray-800 p-2 rounded-lg h-[300px]"> 
+                                <canvas id="humidityGraphDaily" class="w-full h-full"></canvas>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]">Rain</h3>
+                            <div class="bg-gray-800 p-2 rounded-lg h-[300px]"> 
+                                <canvas id="rainGraphDaily" class="w-full h-full"></canvas>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]">Solar Radiation</h3>
+                            <div class="bg-gray-800 p-2 rounded-lg h-[300px]"> 
+                                <canvas id="solarradiationGraphDaily" class="w-full h-full"></canvas>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]">Soil Moisture</h3>
+                            <div class="bg-gray-800 p-2 rounded-lg h-[300px]"> 
+                                <canvas id="soilmoistureGraphDaily" class="w-full h-full"></canvas>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]">Evapotranspiration</h3>
+                            <div class="bg-gray-800 p-2 rounded-lg h-[300px]"> 
+                                <canvas id="evapotranspirationGraphDaily" class="w-full h-full"></canvas>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]">CO<sub>2</sub></h3>
+                            <div class="bg-gray-800 p-2 rounded-lg h-[300px]"> 
+                                <canvas id="co2GraphDaily" class="w-full h-full"></canvas>
+                            </div>
+                        </div> 
+                    </div>
+                </section>
+            </div>
+            <div id="Weekly_Graphs_Tab" class="graph_content graph_hidden_content">
+                <section>
+                    <h1>Weekly</h1>
+                    <div class="grid grid-cols-1 space-y-4 mt-4">
+                        <div>
+                            <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]">Temperature</h3>
+                            <div class="bg-gray-800 p-2 rounded-lg h-[300px]"> 
+                                <canvas id="temperatureGraphWeekly" class="w-full h-full"></canvas>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]">Pressure</h3>
+                            <div class="bg-gray-800 p-2 rounded-lg h-[300px]"> 
+                                <canvas id="pressureGraphWeekly" class="w-full h-full"></canvas>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]">Wind Speed</h3>
+                            <div class="bg-gray-800 p-2 rounded-lg h-[300px]"> 
+                                <canvas id="windSpeedGraphWeekly" class="w-full h-full"></canvas>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]">Humidity</h3>
+                            <div class="bg-gray-800 p-2 rounded-lg h-[300px]"> 
+                                <canvas id="humidityGraphWeekly" class="w-full h-full"></canvas>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]">Rain</h3>
+                            <div class="bg-gray-800 p-2 rounded-lg h-[300px]"> 
+                                <canvas id="rainGraphWeekly" class="w-full h-full"></canvas>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]">Solar Radiation</h3>
+                            <div class="bg-gray-800 p-2 rounded-lg h-[300px]"> 
+                                <canvas id="solarradiationGraphWeekly" class="w-full h-full"></canvas>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]">Soil Moisture</h3>
+                            <div class="bg-gray-800 p-2 rounded-lg h-[300px]"> 
+                                <canvas id="soilmoistureGraphWeekly" class="w-full h-full"></canvas>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]">Evapotranspiration</h3>
+                            <div class="bg-gray-800 p-2 rounded-lg h-[300px]"> 
+                                <canvas id="evapotranspirationGraphWeekly" class="w-full h-full"></canvas>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]">CO<sub>2</sub></h3>
+                            <div class="bg-gray-800 p-2 rounded-lg h-[300px]"> 
+                                <canvas id="co2GraphWeekly" class="w-full h-full"></canvas>
+                            </div>
+                        </div> 
+                    </div>
+                </section>
+            </div>
+            <div id="Monthly_Graphs_Tab" class="graph_content graph_hidden_content">
+                <section>
+                    <h1>Monthly</h1>
+                    <div class="grid grid-cols-1 space-y-4 mt-4">
+                        <div>
+                            <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]">Temperature</h3>
+                            <div class="bg-gray-800 p-2 rounded-lg h-[300px]"> 
+                                <canvas id="temperatureGraphMonthly" class="w-full h-full"></canvas>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]">Pressure</h3>
+                            <div class="bg-gray-800 p-2 rounded-lg h-[300px]"> 
+                                <canvas id="pressureGraphMonthly" class="w-full h-full"></canvas>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]">Wind Speed</h3>
+                            <div class="bg-gray-800 p-2 rounded-lg h-[300px]"> 
+                                <canvas id="windSpeedGraphMonthly" class="w-full h-full"></canvas>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]">Humidity</h3>
+                            <div class="bg-gray-800 p-2 rounded-lg h-[300px]"> 
+                                <canvas id="humidityGraphMonthly" class="w-full h-full"></canvas>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]">Rain</h3>
+                            <div class="bg-gray-800 p-2 rounded-lg h-[300px]"> 
+                                <canvas id="rainGraphMonthly" class="w-full h-full"></canvas>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]">Solar Radiation</h3>
+                            <div class="bg-gray-800 p-2 rounded-lg h-[300px]"> 
+                                <canvas id="solarradiationGraphMonthly" class="w-full h-full"></canvas>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]">Soil Moisture</h3>
+                            <div class="bg-gray-800 p-2 rounded-lg h-[300px]"> 
+                                <canvas id="soilmoistureGraphMonthly" class="w-full h-full"></canvas>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]">Evapotranspiration</h3>
+                            <div class="bg-gray-800 p-2 rounded-lg h-[300px]"> 
+                                <canvas id="evapotranspirationGraphMonthly" class="w-full h-full"></canvas>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]">CO<sub>2</sub></h3>
+                            <div class="bg-gray-800 p-2 rounded-lg h-[300px]"> 
+                                <canvas id="co2GraphMonthly" class="w-full h-full"></canvas>
+                            </div>
+                        </div> 
+                    </div>
+                </section>
+            </div>
+        </div>
+        <div id="Data_Tab" class="tab_content hidden_content mt-8 overflow-x-auto">
+            <table id="weather-table" class="min-w-full bg-gray-900 text-xs md:text-sm lg:text-base border border-gray-700">
+                <thead>
+                    <tr class="bg-gray-700">
+                        <th rowspan="2" class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">Time</th>
+                        <th colspan="2" class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">Temp (°C)</th>
+                        <th colspan="2" class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">Rain (mm)</th>
+                        <th colspan="2" class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">Humidity (%)</th>
+                        <th colspan="2" class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">Wind Speed (km/h)</th>
+                        <th colspan="2" class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">Wind Direction</th>
+                        <th colspan="2" class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">Pressure (hpa)</th>
+                        <th colspan="2" class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">Evapotranspiration (mm/h)</th>
+                        <th colspan="2" class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">CO2 (ppm)</th>
+                        <th colspan="2" class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">Optical Particles (µg/m³)</th>
+                        <th colspan="2" class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">Solar (w/m²)</th>
+                        <th colspan="2" class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">Soil Moisture (kPa)</th>
+                        <th colspan="2" class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">Pollen (g/m)</th>
+                    </tr>
+                    <tr class="bg-gray-700">
+                        <th class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">N</th>
+                        <th class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">M</th>
+                        <th class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">N</th>
+                        <th class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">M</th>
+                        <th class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">N</th>
+                        <th class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">M</th>
+                        <th class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">N</th>
+                        <th class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">M</th>
+                        <th class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">N</th>
+                        <th class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">M</th>
+                        <th class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">N</th>
+                        <th class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">M</th>
+                        <th class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">N</th>
+                        <th class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">M</th>
+                        <th class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">N</th>
+                        <th class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">M</th>
+                        <th class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">N</th>
+                        <th class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">M</th>
+                        <th class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">N</th>
+                        <th class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">M</th>
+                        <th class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">N</th>
+                        <th class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">M</th>
+                        <th class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">N</th>
+                        <th class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">M</th>
+                    </tr>
+                </thead>
+                <tbody class="text-center">
+                    {% for nutech_row, margalla_row in combined_data %}
+                    <tr>
+                        <td class="border border-gray-600 px-2 py-1 md:px-4 md:py-2 whitespace-nowrap">{{ nutech_row.Time }}</td>
+                        <td class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">{{ nutech_row.Temperature }}</td>
+                        <td class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">{{ margalla_row.Temperature }}</td>
+                        <td class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">{{ nutech_row.Rain }}</td>
+                        <td class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">{{ margalla_row.Rain }}</td>
+                        <td class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">{{ nutech_row.Humidity }}</td>
+                        <td class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">{{ margalla_row.Humidity }}</td>
+                        <td class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">{{ nutech_row.Wind_Speed }}</td>
+                        <td class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">{{ margalla_row.Wind_Speed }}</td>
+                        <td class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">{{ nutech_row.Wind_Direction }}</td>
+                        <td class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">{{ margalla_row.Wind_Direction }}</td>
+                        <td class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">{{ nutech_row.Pressure }}</td>
+                        <td class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">{{ margalla_row.Pressure }}</td>
+                        <td class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">{{ nutech_row.Evapotranspiration }}</td>
+                        <td class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">{{ margalla_row.Evapotranspiration }}</td>
+                        <td class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">{{ nutech_row.CO2_level }}</td>
+                        <td class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">{{ margalla_row.CO2_level }}</td>
+                        <td class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">{{ nutech_row.Optical_Particles }}</td>
+                        <td class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">{{ margalla_row.Optical_Particles }}</td>
+                        <td class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">{{ nutech_row.Solar_Radiation }}</td>
+                        <td class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">{{ margalla_row.Solar_Radiation }}</td>
+                        <td class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">{{ nutech_row.Soil_Moisture }}</td>
+                        <td class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">{{ margalla_row.Soil_Moisture }}</td>
+                        <td class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">{{ nutech_row.Pollen_Count }}</td>
+                        <td class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">{{ margalla_row.Pollen_Count }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="text-center p-4 mt-6 bg-[#1f2937]">
+        <p>Developed by NIC, NUTECH</p>
+    </footer>
+    <!-- Chart.js Script -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="{% static 'js/script.js' %}"></script>
+</body>
+</html>
