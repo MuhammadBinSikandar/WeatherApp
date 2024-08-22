@@ -529,18 +529,22 @@ document.addEventListener('DOMContentLoaded', function() {
         // Add additional coloring rules for other parameters as needed
     });
 });
-function generateLabels() {
-    const labels = [];
-    const startTime = new Date(); // Get current time
-    startTime.setHours(0, 0, 0, 0); // Set time to 12:00 AM
 
-    for (let i = 0; i < 96; i++) { // 96 intervals for a full day (15 minutes each)
-        labels.push(startTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
-        startTime.setMinutes(startTime.getMinutes() + 15);
+function generateLabels(station) {
+    if (station === "NUTECH") {
+        return TodayDataNUTECH.map(dataPoint => dataPoint.Time);
+    } else {
+        return TodayDataMARGALLA.map(dataPoint => dataPoint.Time);
     }
-
-    return labels;
 }
+    
+function generateLabelsNUTECH() {
+    return TodayDataNUTECH.map(dataPoint => dataPoint.Time);
+}
+function getDataNUTECH(parameter) {
+    return TodayDataNUTECH.map(dataPoint => parseFloat(dataPoint[parameter]));
+}
+
 
 // Function to generate random data for the graphs
 function generateRandomData(min, max) {
@@ -551,11 +555,13 @@ function generateRandomData(min, max) {
     return data;
 }
 
-// Create datasets for each graph
+
+// Chart configuration with actual temperature data
 const temperatureDataNutech = {
-    labels: generateLabels(),
+    labels: generateLabelsNUTECH(),
     datasets: [{
-        data: generateRandomData(0, 50),
+        label: 'Temperature',
+        data: getDataNUTECH("Temperature"),
         borderColor: 'rgb(75, 192, 192)', // Light Blue
         backgroundColor: 'rgba(75, 192, 192, 0.2)', // Light Blue Shadow
         tension: 0.1,
@@ -564,9 +570,10 @@ const temperatureDataNutech = {
 };
 
 const pressureDataNutech = {
-    labels: generateLabels(),
+    labels: generateLabelsNUTECH(),
     datasets: [{
-        data: generateRandomData(400, 1100),
+        label: 'Pressure',
+        data: getDataNUTECH("Pressure"),
         borderColor: 'rgb(153, 102, 255)', // Purple
         backgroundColor: 'rgba(153, 102, 255, 0.2)', // Purple Shadow
         tension: 0.1,
@@ -575,9 +582,10 @@ const pressureDataNutech = {
 };
 
 const windDataNutech = {
-    labels: generateLabels(),
+    labels: generateLabelsNUTECH(),
     datasets: [{
-        data: generateRandomData(0, 10),
+        label: 'Wind Speed',
+        data: getDataNUTECH("Wind_Speed"),
         borderColor: 'rgb(255, 206, 86)', // Yellow
         backgroundColor: 'rgba(255, 206, 86, 0.2)', // Yellow Shadow
         tension: 0.1,
@@ -586,9 +594,10 @@ const windDataNutech = {
 };
 
 const humidityDataNutech = {
-    labels: generateLabels(),
+    labels: generateLabelsNUTECH(),
     datasets: [{
-        data: generateRandomData(0, 100),
+        label: 'Humidity',
+        data: getDataNUTECH("Humidity"),
         borderColor: 'rgb(54, 162, 235)', // Blue
         backgroundColor: 'rgba(54, 162, 235, 0.2)', // Blue Shadow
         tension: 0.1,
@@ -597,9 +606,10 @@ const humidityDataNutech = {
 };
 
 const rainDataNutech = {
-    labels: generateLabels(),
+    labels: generateLabelsNUTECH(),
     datasets: [{
-        data: generateRandomData(0, 100),
+        label: 'Rain',
+        data: getDataNUTECH("Rain"),
         borderColor: 'rgb(255, 159, 64)', // Orange
         backgroundColor: 'rgba(255, 159, 64, 0.2)', // Orange Shadow
         tension: 0.1,
@@ -608,10 +618,10 @@ const rainDataNutech = {
 };
 
 const solarradiationDataNutech = {
-    labels: generateLabels(),
+    labels: generateLabelsNUTECH(),
     datasets: [{
-        label: 'UV',
-        data: generateRandomData(0, 6),
+        label: 'Solar Radiation',
+        data: getDataNUTECH("Solar_Radiation"),
         borderColor: 'rgb(255, 99, 132)', // Red
         backgroundColor: 'rgba(255, 99, 132, 0.2)', // Red Shadow
         tension: 0.1,
@@ -620,10 +630,10 @@ const solarradiationDataNutech = {
 };
 
 const soilmoistureDataNutech = {
-    labels: generateLabels(),
+    labels: generateLabelsNUTECH(),
     datasets: [{
-        label: 'Solar',
-        data: generateRandomData(0, 6),
+        label: 'Soil Moisture',
+        data: getDataNUTECH("Soil_Moisture"),
         borderColor: 'rgb(144, 238, 144)', // Light Green
         backgroundColor: 'rgba(144, 238, 144, 0.2)', // Light Green Shadow
         tension: 0.1,
@@ -632,10 +642,10 @@ const soilmoistureDataNutech = {
 };
 
 const evapotranspirationDataNutech = {
-    labels: generateLabels(),
+    labels: generateLabelsNUTECH(),
     datasets: [{
         label: 'Evapotranspiration',
-        data: generateRandomData(0, 6),
+        data: getDataNUTECH("Evapotranspiration"),
         borderColor: 'rgb(0, 255, 255)', // Cyan
         backgroundColor: 'rgba(0, 255, 255, 0.2)', // Cyan Shadow
         tension: 0.1,
@@ -644,10 +654,10 @@ const evapotranspirationDataNutech = {
 };
 
 const co2DataNutech = {
-    labels: generateLabels(),
+    labels: generateLabelsNUTECH(),
     datasets: [{
-        label: 'Optical Particles',
-        data: generateRandomData(0, 6),
+        label: 'CO2',
+        data: getDataNUTECH("CO2_level"),
         borderColor: 'rgb(64, 224, 208)', // Turquoise
         backgroundColor: 'rgba(64, 224, 208, 0.2)', // Turquoise Shadow
         tension: 0.1,
@@ -657,7 +667,6 @@ const co2DataNutech = {
 
 
 // Create Chart configurations
-// Create Chart configurations
 const configTemplate = {
     type: 'line',
     options: {
@@ -666,7 +675,7 @@ const configTemplate = {
         aspectRatio: 2, // Adjust the aspect ratio (default is 2, you can increase or decrease this value)
         scales: {
             y: {
-                beginAtZero: true,
+                beginAtZero: false,
                 grid: {
                     color: 'rgba(255, 255, 255, 0.1)' // Lighter grid lines for better visibility
                 },
@@ -750,39 +759,20 @@ const co2ChartNutech = new Chart(document.getElementById('co2GraphNutech').getCo
 });
 
 // Update graph data every 15 seconds
-setInterval(() => {
-    temperatureDataNutech.datasets[0].data = generateRandomData(0, 50);
-    temperatureChartNutech.update();
+setInterval(() => {}, 15000);
 
-    pressureDataNutech.datasets[0].data = generateRandomData(400, 1100);
-    pressureChartNutech.update();
 
-    windDataNutech.datasets[0].data = generateRandomData(0, 10);
-    windSpeedChartNutech.update();
-
-    humidityDataNutech.datasets[0].data = generateRandomData(0, 100);
-    humidityChartNutech.update();
-
-    rainDataNutech.datasets[0].data = generateRandomData(0, 100);
-    rainChartNutech.update();
-
-    solarradiationDataNutech.datasets[0].data = generateRandomData(0, 6);
-    solarradiationChartNutech.update();
-
-    soilmoistureDataNutech.datasets[0].data = generateRandomData(0, 6);
-    soilmoistureChartNutech.update();
-
-    evapotranspirationDataNutech.datasets[0].data = generateRandomData(0, 6);
-    evapotranspirationChartNutech.update();
-
-    co2DataNutech.datasets[0].data = generateRandomData(0, 6);  
-    co2ChartNutech.update();
-}, 15000);
+function generateLabelsMARGALLA() {
+    return TodayDataMARGALLA.map(dataPoint => dataPoint.Time);
+}
+function getDataMARGALLA(parameter) {
+    return TodayDataMARGALLA.map(dataPoint => parseFloat(dataPoint[parameter]));
+}
 
 const temperatureDataMargalla = {
-    labels: generateLabels(),
+    labels: generateLabelsMARGALLA(),
     datasets: [{
-        data: generateRandomData(0, 50),
+        data: getDataMARGALLA("Temperature"),
         borderColor: 'rgb(75, 192, 192)', // Light Blue
         backgroundColor: 'rgba(75, 192, 192, 0.2)', // Light Blue Shadow
         tension: 0.1,
@@ -791,9 +781,9 @@ const temperatureDataMargalla = {
 };
 
 const pressureDataMargalla = {
-    labels: generateLabels(),
+    labels: generateLabelsMARGALLA(),
     datasets: [{
-        data: generateRandomData(400, 1100),
+        data: getDataMARGALLA("Pressure"),
         borderColor: 'rgb(153, 102, 255)', // Purple
         backgroundColor: 'rgba(153, 102, 255, 0.2)', // Purple Shadow
         tension: 0.1,
@@ -802,9 +792,9 @@ const pressureDataMargalla = {
 };
 
 const windDataMargalla = {
-    labels: generateLabels(),
+    labels: generateLabelsMARGALLA(),
     datasets: [{
-        data: generateRandomData(0, 10),
+        data: getDataMARGALLA("Wind_Speed"),
         borderColor: 'rgb(255, 206, 86)', // Yellow
         backgroundColor: 'rgba(255, 206, 86, 0.2)', // Yellow Shadow
         tension: 0.1,
@@ -813,9 +803,9 @@ const windDataMargalla = {
 };
 
 const humidityDataMargalla = {
-    labels: generateLabels(),
+    labels: generateLabelsMARGALLA(),
     datasets: [{
-        data: generateRandomData(0, 100),
+        data: getDataMARGALLA("Humidity"),
         borderColor: 'rgb(54, 162, 235)', // Blue
         backgroundColor: 'rgba(54, 162, 235, 0.2)', // Blue Shadow
         tension: 0.1,
@@ -824,9 +814,9 @@ const humidityDataMargalla = {
 };
 
 const rainDataMargalla = {
-    labels: generateLabels(),
+    labels: generateLabelsMARGALLA(),
     datasets: [{
-        data: generateRandomData(0, 100),
+        data: getDataMARGALLA("Rain"),
         borderColor: 'rgb(255, 159, 64)', // Orange
         backgroundColor: 'rgba(255, 159, 64, 0.2)', // Orange Shadow
         tension: 0.1,
@@ -835,10 +825,10 @@ const rainDataMargalla = {
 };
 
 const solarradiationDataMargalla = {
-    labels: generateLabels(),
+    labels: generateLabelsMARGALLA(),
     datasets: [{
         label: 'UV',
-        data: generateRandomData(0, 6),
+        data: getDataMARGALLA("Solar_Radiation"),
         borderColor: 'rgb(255, 99, 132)', // Red
         backgroundColor: 'rgba(255, 99, 132, 0.2)', // Red Shadow
         tension: 0.1,
@@ -847,10 +837,10 @@ const solarradiationDataMargalla = {
 };
 
 const soilmoistureDataMargalla = {
-    labels: generateLabels(),
+    labels: generateLabelsMARGALLA(),
     datasets: [{
         label: 'Solar',
-        data: generateRandomData(0, 6),
+        data: getDataMARGALLA("Soil_Moisture"),
         borderColor: 'rgb(144, 238, 144)', // Light Green
         backgroundColor: 'rgba(144, 238, 144, 0.2)', // Light Green Shadow
         tension: 0.1,
@@ -859,10 +849,10 @@ const soilmoistureDataMargalla = {
 };
 
 const evapotranspirationDataMargalla = {
-    labels: generateLabels(),
+    labels: generateLabelsMARGALLA(),
     datasets: [{
         label: 'Evapotranspiration',
-        data: generateRandomData(0, 6),
+        data: getDataMARGALLA("Evapotranspiration"),
         borderColor: 'rgb(0, 255, 255)', // Cyan
         backgroundColor: 'rgba(0, 255, 255, 0.2)', // Cyan Shadow
         tension: 0.1,
@@ -871,10 +861,10 @@ const evapotranspirationDataMargalla = {
 };
 
 const co2DataMargalla = {
-    labels: generateLabels(),
+    labels: generateLabelsMARGALLA(),
     datasets: [{
         label: 'Optical Particles',
-        data: generateRandomData(0, 6),
+        data: getDataMARGALLA("CO2_level"),
         borderColor: 'rgb(64, 224, 208)', // Turquoise
         backgroundColor: 'rgba(64, 224, 208, 0.2)', // Turquoise Shadow
         tension: 0.1,
@@ -927,34 +917,7 @@ const co2ChartMargalla = new Chart(document.getElementById('co2GraphMargalla').g
     data: co2DataMargalla
 });
 
-setInterval(() => {
-    temperatureDataMargalla.datasets[0].data = generateRandomData(0, 50);
-    temperatureChartMargalla.update();
-
-    pressureDataMargalla.datasets[0].data = generateRandomData(400, 1100);
-    pressureChartMargalla.update();
-
-    windDataMargalla.datasets[0].data = generateRandomData(0, 10);
-    windSpeedChartMargalla.update();
-
-    humidityDataMargalla.datasets[0].data = generateRandomData(0, 100);
-    humidityChartMargalla.update();
-
-    rainDataMargalla.datasets[0].data = generateRandomData(0, 100);
-    rainChartMargalla.update();
-
-    solarradiationDataMargalla.datasets[0].data = generateRandomData(0, 6);
-    solarradiationChartMargalla.update();
-
-    soilmoistureDataMargalla.datasets[0].data = generateRandomData(0, 6);
-    soilmoistureChartMargalla.update();
-
-    evapotranspirationDataMargalla.datasets[0].data = generateRandomData(0, 6);
-    evapotranspirationChartMargalla.update();
-
-    co2DataMargalla.datasets[0].data = generateRandomData(0, 6);  
-    co2ChartMargalla.update();
-}, 15000);
+setInterval(() => {}, 15000);
 
 const dualLineConfigTemplate = {
     type: 'line',
@@ -964,7 +927,7 @@ const dualLineConfigTemplate = {
         aspectRatio: 2, // Adjust the aspect ratio
         scales: {
             y: {
-                beginAtZero: true,
+                beginAtZero: false,
                 grid: {
                     color: 'rgba(255, 255, 255, 0.1)' // Lighter grid lines for better visibility
                 },
@@ -1014,17 +977,17 @@ const dualLineConfigTemplate = {
 };
 
 const temperatureDataDaily = {
-    labels: generateLabels(),
+    labels: generateLabelsNUTECH(),
     datasets: [{
         label: 'Nutech',
-        data: generateRandomData(0, 50),
+        data: getDataNUTECH("Temperature"),
         borderColor: 'rgb(75, 192, 192)', // Light Blue
         backgroundColor: 'rgba(75, 192, 192, 0.2)', // Light Blue Shadow
         tension: 0.1,
         fill: true
     }, {
         label: 'Margalla',
-        data: generateRandomData(0, 50),
+        data: getDataMARGALLA("Temperature"),
         borderColor: 'rgb(255, 99, 132)', // Red
         backgroundColor: 'rgba(255, 99, 132, 0.2)', // Red Shadow
         tension: 0.1,
@@ -1033,17 +996,17 @@ const temperatureDataDaily = {
 }
 
 const pressureDataDaily = {
-    labels: generateLabels(),
+    labels: generateLabelsNUTECH(),
     datasets: [{
         label: 'Nutech',
-        data: generateRandomData(400, 1100),
+        data: getDataNUTECH("Pressure"),
         borderColor: 'rgb(153, 102, 255)', // Purple
         backgroundColor: 'rgba(153, 102, 255, 0.2)', // Purple Shadow
         tension: 0.1,
         fill: true
     }, {
         label: 'Margalla',
-        data: generateRandomData(400, 1100),
+        data: getDataMARGALLA("Pressure"),
         borderColor: 'rgb(255, 206, 86)', // Yellow
         backgroundColor: 'rgba(255, 206, 86, 0.2)', // Yellow Shadow
         tension: 0.1,
@@ -1052,17 +1015,17 @@ const pressureDataDaily = {
 }
 
 const windDataDaily = {
-    labels: generateLabels(),
+    labels: generateLabelsNUTECH(),
     datasets: [{
         label: 'Nutech',
-        data: generateRandomData(0, 10),
+        data: getDataNUTECH("Wind_Speed"),
         borderColor: 'rgb(54, 162, 235)', // Blue
         backgroundColor: 'rgba(54, 162, 235, 0.2)', // Blue Shadow
         tension: 0.1,
         fill: true
     }, {
         label: 'Margalla',
-        data: generateRandomData(0, 10),
+        data: getDataMARGALLA("Wind_Speed"),
         borderColor: 'rgb(255, 159, 64)', // Orange
         backgroundColor: 'rgba(255, 159, 64, 0.2)', // Orange Shadow
         tension: 0.1,
@@ -1071,17 +1034,17 @@ const windDataDaily = {
 }
 
 const humidityDataDaily = {
-    labels: generateLabels(),
+    labels: generateLabelsNUTECH(),
     datasets: [{
         label: 'Nutech',
-        data: generateRandomData(0, 100),
+        data: getDataNUTECH("Humidity"),
         borderColor: 'rgb(75, 192, 192)', // Light Blue
         backgroundColor: 'rgba(75, 192, 192, 0.2)', // Light Blue Shadow
         tension: 0.1,
         fill: true
     }, {
         label: 'Margalla',
-        data: generateRandomData(0, 100),
+        data: getDataMARGALLA("Humidity"),
         borderColor: 'rgb(153, 102, 255)', // Purple
         backgroundColor: 'rgba(153, 102, 255, 0.2)', // Purple Shadow
         tension: 0.1,
@@ -1090,17 +1053,17 @@ const humidityDataDaily = {
 }
 
 const rainDataDaily = {
-    labels: generateLabels(),
+    labels: generateLabelsNUTECH(),
     datasets: [{
         label: 'Nutech',
-        data: generateRandomData(0, 100),
+        data: getDataNUTECH("Rain"),
         borderColor: 'rgb(255, 99, 132)', // Red
         backgroundColor: 'rgba(255, 99, 132, 0.2)', // Red Shadow
         tension: 0.1,
         fill: true
     }, {
         label: 'Margalla',
-        data: generateRandomData(0, 100),
+        data: getDataMARGALLA("Rain"),
         borderColor: 'rgb(255, 206, 86)', // Yellow
         backgroundColor: 'rgba(255, 206, 86, 0.2)', // Yellow Shadow
         tension: 0.1,
@@ -1109,17 +1072,17 @@ const rainDataDaily = {
 }
 
 const solarradiationDataDaily = {
-    labels: generateLabels(),
+    labels: generateLabelsNUTECH(),
     datasets: [{
         label: 'Nutech',
-        data: generateRandomData(0, 6),
+        data: getDataNUTECH("Solar_Radiation"),
         borderColor: 'rgb(0, 255, 255)', // Cyan
         backgroundColor: 'rgba(0, 255, 255, 0.2)', // Cyan Shadow
         tension: 0.1,
         fill: true
     }, {
         label: 'Margalla',
-        data: generateRandomData(0, 6),
+        data: getDataMARGALLA("Solar_Radiation"),
         borderColor: 'rgb(255, 99, 132)', // Red
         backgroundColor: 'rgba(255, 99, 132, 0.2)', // Red Shadow
         tension: 0.1,
@@ -1128,17 +1091,17 @@ const solarradiationDataDaily = {
 }
 
 const soilmoistureDataDaily = {
-    labels: generateLabels(),
+    labels: generateLabelsNUTECH(),
     datasets: [{
         label: 'Nutech',
-        data: generateRandomData(0, 6),
+        data: getDataNUTECH("Soil_Moisture"),
         borderColor: 'rgb(144, 238, 144)', // Light Green
         backgroundColor: 'rgba(144, 238, 144, 0.2)', // Light Green Shadow
         tension: 0.1,
         fill: true
     }, {
         label: 'Margalla',
-        data: generateRandomData(0, 6),
+        data: getDataMARGALLA("Soil_Moisture"),
         borderColor: 'rgb(255, 206, 86)', // Yellow
         backgroundColor: 'rgba(255, 206, 86, 0.2)', // Yellow Shadow
         tension: 0.1,
@@ -1147,17 +1110,17 @@ const soilmoistureDataDaily = {
 }
 
 const evapotranspirationDataDaily = {
-    labels: generateLabels(),
+    labels: generateLabelsNUTECH(),
     datasets: [{
         label: 'Nutech',
-        data: generateRandomData(0, 6),
+        data: getDataNUTECH("Evapotranspiration"),
         borderColor: 'rgb(255, 159, 64)', // Orange
         backgroundColor: 'rgba(255, 159, 64, 0.2)', // Orange Shadow
         tension: 0.1,
         fill: true
     }, {
         label: 'Margalla',
-        data: generateRandomData(0, 6),
+        data: getDataMARGALLA("Evapotranspiration"),
         borderColor: 'rgb(54, 162, 235)', // Blue
         backgroundColor: 'rgba(54, 162, 235, 0.2)', // Blue Shadow
         tension: 0.1,
@@ -1166,17 +1129,17 @@ const evapotranspirationDataDaily = {
 }
 
 const co2DataDaily = {
-    labels: generateLabels(),
+    labels: generateLabelsNUTECH(),
     datasets: [{
         label: 'Nutech',
-        data: generateRandomData(0, 6),
+        data: getDataNUTECH("CO2_level"),
         borderColor: 'rgb(64, 224, 208)', // Turquoise
         backgroundColor: 'rgba(64, 224, 208, 0.2)', // Turquoise Shadow
         tension: 0.1,
         fill: true
     }, {
         label: 'Margalla',
-        data: generateRandomData(0, 6),
+        data: getDataMARGALLA("CO2_level"),
         borderColor: 'rgb(255, 99, 132)', // Red
         backgroundColor: 'rgba(255, 99, 132, 0.2)', // Red Shadow
         tension: 0.1,
@@ -1229,41 +1192,39 @@ const co2ChartDaily = new Chart(document.getElementById('co2GraphDaily').getCont
     data: co2DataDaily
 });
 
+
 function generateLabelsWeekly() {
-    const labels = [];
-    const currentDate = new Date(); // Get the current date
-    currentDate.setHours(0, 0, 0, 0); // Set time to 12:00 AM
-
-    for (let i = 6; i >= 0; i--) { // Generate labels for the last 7 days
-        const date = new Date(currentDate);
-        date.setDate(date.getDate() - i);
-        const options = { weekday: 'short' }; // Short day name
-        labels.push(date.toLocaleDateString('en-US', options));
-    }
-
-    return labels;
+    return WeeklyDataNUTECH.map(dataPoint => dataPoint.CollectionDate);
 }
+function getWeeklyDataNUTECH(parameter) {
+    const x_data_week = generateLabelsWeekly();
+    return x_data_week.map(date => {
+        const value = AggregatedWeeklyDataNUTECH[`${date}_${parameter}`];
+        return parseFloat(value);
+    });
 
-function generateRandomDataWeekly(min, max) {
-    const data = [];
-    for (let i = 0; i < 7; i++) { // 7 days in a week
-        data.push(Math.floor(Math.random() * (max - min + 1)) + min);
-    }
-    return data;
+}
+function getWeeklyDataMARGALLA(parameter) {
+    const x_data_week = generateLabelsWeekly();
+    return x_data_week.map(date => {
+        const value = AggregatedWeeklyDataMargalla[`${date}_${parameter}`];
+        return parseFloat(value);
+    });
+
 }
 
 const temperatureDataWeekly = {
     labels: generateLabelsWeekly(),
     datasets: [{
         label: 'Nutech',
-        data: generateRandomDataWeekly(0, 50),
+        data: getWeeklyDataNUTECH("Temperature"),
         borderColor: 'rgb(75, 192, 192)', // Light Blue
         backgroundColor: 'rgba(75, 192, 192, 0.2)', // Light Blue Shadow
         tension: 0.1,
         fill: true
     }, {
         label: 'Margalla',
-        data: generateRandomDataWeekly(0, 50),
+        data: getWeeklyDataMARGALLA("Temperature"),
         borderColor: 'rgb(255, 99, 132)', // Red
         backgroundColor: 'rgba(255, 99, 132, 0.2)', // Red Shadow
         tension: 0.1,
@@ -1275,14 +1236,14 @@ const pressureDataWeekly = {
     labels: generateLabelsWeekly(),
     datasets: [{
         label: 'Nutech',
-        data: generateRandomDataWeekly(400, 1100),
+        data: getWeeklyDataNUTECH("Pressure"),
         borderColor: 'rgb(153, 102, 255)', // Purple
         backgroundColor: 'rgba(153, 102, 255, 0.2)', // Purple Shadow
         tension: 0.1,
         fill: true
     }, {
         label: 'Margalla',
-        data: generateRandomDataWeekly(400, 1100),
+        data: getWeeklyDataMARGALLA("Pressure"),
         borderColor: 'rgb(255, 206, 86)', // Yellow
         backgroundColor: 'rgba(255, 206, 86, 0.2)', // Yellow Shadow
         tension: 0.1,
@@ -1294,14 +1255,14 @@ const windDataWeekly = {
     labels: generateLabelsWeekly(),
     datasets: [{
         label: 'Nutech',
-        data: generateRandomDataWeekly(0, 10),
+        data: getWeeklyDataNUTECH("Wind_Speed"),
         borderColor: 'rgb(54, 162, 235)', // Blue
         backgroundColor: 'rgba(54, 162, 235, 0.2)', // Blue Shadow
         tension: 0.1,
         fill: true
     }, {
         label: 'Margalla',
-        data: generateRandomDataWeekly(0, 10),
+        data: getWeeklyDataMARGALLA("Wind_Speed"),
         borderColor: 'rgb(255, 159, 64)', // Orange
         backgroundColor: 'rgba(255, 159, 64, 0.2)', // Orange Shadow
         tension: 0.1,
@@ -1313,14 +1274,14 @@ const humidityDataWeekly = {
     labels: generateLabelsWeekly(),
     datasets: [{
         label: 'Nutech',
-        data: generateRandomDataWeekly(0, 100),
+        data: getWeeklyDataNUTECH("Humidity"),
         borderColor: 'rgb(75, 192, 192)', // Light Blue
         backgroundColor: 'rgba(75, 192, 192, 0.2)', // Light Blue Shadow
         tension: 0.1,
         fill: true
     }, {
         label: 'Margalla',
-        data: generateRandomDataWeekly(0, 100),
+        data: getWeeklyDataMARGALLA("Humidity"),
         borderColor: 'rgb(153, 102, 255)', // Purple
         backgroundColor: 'rgba(153, 102, 255, 0.2)', // Purple Shadow
         tension: 0.1,
@@ -1332,14 +1293,14 @@ const rainDataWeekly = {
     labels: generateLabelsWeekly(),
     datasets: [{
         label: 'Nutech',
-        data: generateRandomDataWeekly(0, 100),
+        data: getWeeklyDataNUTECH("Rain"),
         borderColor: 'rgb(255, 99, 132)', // Red
         backgroundColor: 'rgba(255, 99, 132, 0.2)', // Red Shadow
         tension: 0.1,
         fill: true
     }, {
         label: 'Margalla',
-        data: generateRandomDataWeekly(0, 100),
+        data: getWeeklyDataMARGALLA("Rain"),
         borderColor: 'rgb(255, 206, 86)', // Yellow
         backgroundColor: 'rgba(255, 206, 86, 0.2)', // Yellow Shadow
         tension: 0.1,
@@ -1351,14 +1312,14 @@ const solarradiationDataWeekly = {
     labels: generateLabelsWeekly(),
     datasets: [{
         label: 'Nutech',
-        data: generateRandomDataWeekly(0, 6),
+        data: getWeeklyDataNUTECH("Solar_Radiation"),
         borderColor: 'rgb(0, 255, 255)', // Cyan
         backgroundColor: 'rgba(0, 255, 255, 0.2)', // Cyan Shadow
         tension: 0.1,
         fill: true
     }, {
         label: 'Margalla',
-        data: generateRandomDataWeekly(0, 6),
+        data: getWeeklyDataMARGALLA("Solar_Radiation"),
         borderColor: 'rgb(255, 99, 132)', // Red
         backgroundColor: 'rgba(255, 99, 132, 0.2)', // Red Shadow
         tension: 0.1,
@@ -1370,14 +1331,14 @@ const soilmoistureDataWeekly = {
     labels: generateLabelsWeekly(),
     datasets: [{
         label: 'Nutech',
-        data: generateRandomDataWeekly(0, 6),
+        data: getWeeklyDataNUTECH("Soil_Moisture"),
         borderColor: 'rgb(144, 238, 144)', // Light Green
         backgroundColor: 'rgba(144, 238, 144, 0.2)', // Light Green Shadow
         tension: 0.1,
         fill: true
     }, {
         label: 'Margalla',
-        data: generateRandomDataWeekly(0, 6),
+        data: getWeeklyDataMARGALLA("Soil_Moisture"),
         borderColor: 'rgb(255, 206, 86)', // Yellow
         backgroundColor: 'rgba(255, 206, 86, 0.2)', // Yellow Shadow
         tension: 0.1,
@@ -1389,14 +1350,14 @@ const evapotranspirationDataWeekly = {
     labels: generateLabelsWeekly(),
     datasets: [{
         label: 'Nutech',
-        data: generateRandomDataWeekly(0, 6),
+        data: getWeeklyDataNUTECH("Evapotranspiration"),
         borderColor: 'rgb(255, 159, 64)', // Orange
         backgroundColor: 'rgba(255, 159, 64, 0.2)', // Orange Shadow
         tension: 0.1,
         fill: true
     }, {
         label: 'Margalla',
-        data: generateRandomDataWeekly(0, 6),
+        data: getWeeklyDataMARGALLA("Evapotranspiration"),
         borderColor: 'rgb(54, 162, 235)', // Blue
         backgroundColor: 'rgba(54, 162, 235, 0.2)', // Blue Shadow
         tension: 0.1,
@@ -1408,14 +1369,14 @@ const co2DataWeekly = {
     labels: generateLabelsWeekly(),
     datasets: [{
         label: 'Nutech',
-        data: generateRandomDataWeekly(0, 6),
+        data: getWeeklyDataNUTECH("CO2_level"),
         borderColor: 'rgb(64, 224, 208)', // Turquoise
         backgroundColor: 'rgba(64, 224, 208, 0.2)', // Turquoise Shadow
         tension: 0.1,
         fill: true
     }, {
         label: 'Margalla',
-        data: generateRandomDataWeekly(0, 6),
+        data: getWeeklyDataMARGALLA("CO2_level"),
         borderColor: 'rgb(255, 99, 132)', // Red
         backgroundColor: 'rgba(255, 99, 132, 0.2)', // Red Shadow
         tension: 0.1,
@@ -1467,45 +1428,38 @@ const co2ChartWeekly = new Chart(document.getElementById('co2GraphWeekly').getCo
     ...dualLineConfigTemplate,
     data: co2DataWeekly
 });
-
-function generateLabelsMonthly() {
-    const labels = [];
-    const currentDate = new Date(); // Get the current date
-    const currentYear = currentDate.getFullYear();
-    const currentMonth = currentDate.getMonth(); // Get the current month (0-11)
-
-    // Get the number of days in the current month
-    const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
-
-    // Generate labels for each day of the current month
-    for (let i = 1; i <= daysInMonth; i++) {
-        labels.push(i.toString()); // Push the day number as a string
-    }
-
-    return labels;
+function generateLabelsMonthly(){
+    return Monthly_Graphs_Labels.map(dataPoint => dataPoint.CollectionDate);
 }
 
-function generateRandomDataMonthly(min, max) {
-    const labels = generateLabelsMonthly(); // Get the labels to determine the number of days in the month
-    const data = [];
-    for (let i = 0; i < labels.length; i++) { // Number of data points matches the number of days in the month
-        data.push(Math.floor(Math.random() * (max - min + 1)) + min);
-    }
-    return data;
+function getMonthlyDataNUTECH(parameter) {
+    const x_data_month = generateLabelsMonthly();
+    return x_data_month.map(date => {
+        const value = Monthly_Graphs_Data_NUTECH[`${date}_${parameter}`];
+        return parseFloat(value);
+    });
+}
+
+function getMonthlyDataMARGALLA(parameter) {
+    const x_data_month = generateLabelsMonthly();
+    return x_data_month.map(date => {
+        const value = Monthly_Graphs_Data_MARGALLA[`${date}_${parameter}`];
+        return parseFloat(value);
+    });
 }
 
 const temperatureDataMonthly = {
     labels: generateLabelsMonthly(),
     datasets: [{
         label: 'Nutech',
-        data: generateRandomDataMonthly(0, 50),
+        data: getMonthlyDataNUTECH("Temperature"),
         borderColor: 'rgb(75, 192, 192)', // Light Blue
         backgroundColor: 'rgba(75, 192, 192, 0.2)', // Light Blue Shadow
         tension: 0.1,
         fill: true
     }, {
         label: 'Margalla',
-        data: generateRandomDataMonthly(0, 50),
+        data: getMonthlyDataMARGALLA("Temperature"),
         borderColor: 'rgb(255, 99, 132)', // Red
         backgroundColor: 'rgba(255, 99, 132, 0.2)', // Red Shadow
         tension: 0.1,
@@ -1517,14 +1471,14 @@ const pressureDataMonthly = {
     labels: generateLabelsMonthly(),
     datasets: [{
         label: 'Nutech',
-        data: generateRandomDataMonthly(400, 1100),
+        data: getMonthlyDataNUTECH("Pressure"),
         borderColor: 'rgb(153, 102, 255)', // Purple
         backgroundColor: 'rgba(153, 102, 255, 0.2)', // Purple Shadow
         tension: 0.1,
         fill: true
     }, {
         label: 'Margalla',
-        data: generateRandomDataMonthly(400, 1100),
+        data: getMonthlyDataMARGALLA("Pressure"),
         borderColor: 'rgb(255, 206, 86)', // Yellow
         backgroundColor: 'rgba(255, 206, 86, 0.2)', // Yellow Shadow
         tension: 0.1,
@@ -1536,14 +1490,14 @@ const windDataMonthly = {
     labels: generateLabelsMonthly(),
     datasets: [{
         label: 'Nutech',
-        data: generateRandomDataMonthly(0, 10),
+        data: getMonthlyDataNUTECH("Wind_Speed"),
         borderColor: 'rgb(54, 162, 235)', // Blue
         backgroundColor: 'rgba(54, 162, 235, 0.2)', // Blue Shadow
         tension: 0.1,
         fill: true
     }, {
         label: 'Margalla',
-        data: generateRandomDataMonthly(0, 10),
+        data: getMonthlyDataMARGALLA("Wind_Speed"),
         borderColor: 'rgb(255, 159, 64)', // Orange
         backgroundColor: 'rgba(255, 159, 64, 0.2)', // Orange Shadow
         tension: 0.1,
@@ -1555,14 +1509,14 @@ const humidityDataMonthly = {
     labels: generateLabelsMonthly(),
     datasets: [{
         label: 'Nutech',
-        data: generateRandomDataMonthly(0, 100),
+        data: getMonthlyDataNUTECH("Humidity"),
         borderColor: 'rgb(75, 192, 192)', // Light Blue
         backgroundColor: 'rgba(75, 192, 192, 0.2)', // Light Blue Shadow
         tension: 0.1,
         fill: true
     }, {
         label: 'Margalla',
-        data: generateRandomDataMonthly(0, 100),
+        data: getMonthlyDataMARGALLA("Humidity"),
         borderColor: 'rgb(153, 102, 255)', // Purple
         backgroundColor: 'rgba(153, 102, 255, 0.2)', // Purple Shadow
         tension: 0.1,
@@ -1574,14 +1528,14 @@ const rainDataMonthly = {
     labels: generateLabelsMonthly(),
     datasets: [{
         label: 'Nutech',
-        data: generateRandomDataMonthly(0, 100),
+        data: getMonthlyDataNUTECH("Rain"),
         borderColor: 'rgb(255, 99, 132)', // Red
         backgroundColor: 'rgba(255, 99, 132, 0.2)', // Red Shadow
         tension: 0.1,
         fill: true
     }, {
         label: 'Margalla',
-        data: generateRandomDataMonthly(0, 100),
+        data: getMonthlyDataMARGALLA("Rain"),
         borderColor: 'rgb(255, 206, 86)', // Yellow
         backgroundColor: 'rgba(255, 206, 86, 0.2)', // Yellow Shadow
         tension: 0.1,
@@ -1593,14 +1547,14 @@ const solarradiationDataMonthly = {
     labels: generateLabelsMonthly(),
     datasets: [{
         label: 'Nutech',
-        data: generateRandomDataMonthly(0, 6),
+        data: getMonthlyDataNUTECH("Solar_Radiation"),
         borderColor: 'rgb(0, 255, 255)', // Cyan
         backgroundColor: 'rgba(0, 255, 255, 0.2)', // Cyan Shadow
         tension: 0.1,
         fill: true
     }, {
         label: 'Margalla',
-        data: generateRandomDataMonthly(0, 6),
+        data: getMonthlyDataMARGALLA("Solar_Radiation"),
         borderColor: 'rgb(255, 99, 132)', // Red
         backgroundColor: 'rgba(255, 99, 132, 0.2)', // Red Shadow
         tension: 0.1,
@@ -1612,14 +1566,14 @@ const soilmoistureDataMonthly = {
     labels: generateLabelsMonthly(),
     datasets: [{
         label: 'Nutech',
-        data: generateRandomDataMonthly(0, 6),
+        data: getMonthlyDataNUTECH("Soil_Moisture"),
         borderColor: 'rgb(144, 238, 144)', // Light Green
         backgroundColor: 'rgba(144, 238, 144, 0.2)', // Light Green Shadow
         tension: 0.1,
         fill: true
     }, {
         label: 'Margalla',
-        data: generateRandomDataMonthly(0, 6),
+        data: getMonthlyDataMARGALLA("Soil_Moisture"),
         borderColor: 'rgb(255, 206, 86)', // Yellow
         backgroundColor: 'rgba(255, 206, 86, 0.2)', // Yellow Shadow
         tension: 0.1,
@@ -1631,14 +1585,14 @@ const evapotranspirationDataMonthly = {
     labels: generateLabelsMonthly(),
     datasets: [{
         label: 'Nutech',
-        data: generateRandomDataMonthly(0, 6),
+        data: getMonthlyDataNUTECH("Evapotranspiration"),
         borderColor: 'rgb(255, 159, 64)', // Orange
         backgroundColor: 'rgba(255, 159, 64, 0.2)', // Orange Shadow
         tension: 0.1,
         fill: true
     }, {
         label: 'Margalla',
-        data: generateRandomDataMonthly(0, 6),
+        data: getMonthlyDataMARGALLA("Evapotranspiration"),
         borderColor: 'rgb(54, 162, 235)', // Blue
         backgroundColor: 'rgba(54, 162, 235, 0.2)', // Blue Shadow
         tension: 0.1,
@@ -1650,14 +1604,14 @@ const co2DataMonthly = {
     labels: generateLabelsMonthly(),
     datasets: [{
         label: 'Nutech',
-        data: generateRandomDataMonthly(0, 6),
+        data: getMonthlyDataNUTECH("CO2_level"),
         borderColor: 'rgb(64, 224, 208)', // Turquoise
         backgroundColor: 'rgba(64, 224, 208, 0.2)', // Turquoise Shadow
         tension: 0.1,
         fill: true
     }, {
         label: 'Margalla',
-        data: generateRandomDataMonthly(0, 6),
+        data: getMonthlyDataMARGALLA("CO2_level"),
         borderColor: 'rgb(255, 99, 132)', // Red
         backgroundColor: 'rgba(255, 99, 132, 0.2)', // Red Shadow
         tension: 0.1,
