@@ -1662,4 +1662,10 @@ const evapotranspirationChartMonthly = new Chart(document.getElementById('evapot
 const co2ChartMonthly = new Chart(document.getElementById('co2GraphMonthly').getContext('2d'), {
     ...dualLineConfigTemplate,
     data: co2DataMonthly
+<<<<<<< HEAD
 });
+=======
+});
+
+console.log(TodayData);
+>>>>>>> d6eb8847b9f0289418c744ba86fad811561abc03

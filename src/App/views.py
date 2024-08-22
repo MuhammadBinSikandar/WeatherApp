@@ -364,7 +364,11 @@ def start_schedule():
         time.sleep(1)
 
 
+<<<<<<< HEAD
 global mapped_last_data_NUTECH, mapped_last_data_Margalla, combined_data, mapped_all_data_NUTECH, mapped_all_data_Margalla
+=======
+global mapped_last_data_NUTECH, mapped_last_data_Margalla, combined_data, mapped_all_data_NUTECH
+>>>>>>> d6eb8847b9f0289418c744ba86fad811561abc03
 global predictions_by_day_NUTECH, predictions_by_day_Margalla, mapped_weekly_data_NUTECH, mapped_monthly_data_NUTECH
 global aggregated_weekly_data_NUTECH, aggregated_weekly_data_Margalla
 global aggregated_monthly_data_NUTECH, aggregated_monthly_data_Margalla
@@ -372,7 +376,11 @@ global temperature_graph_html_day, humidity_graph_html_day, pressure_graph_html_
 global pressure_graph_html_week, temperature_graph_html_month, humidity_graph_html_month, pressure_graph_html_month 
 
 def get_data_from_db():
+<<<<<<< HEAD
     global mapped_last_data_NUTECH, mapped_last_data_Margalla, combined_data, mapped_all_data_NUTECH, mapped_all_data_Margalla
+=======
+    global mapped_last_data_NUTECH, mapped_last_data_Margalla, combined_data, mapped_all_data_NUTECH
+>>>>>>> d6eb8847b9f0289418c744ba86fad811561abc03
     global predictions_by_day_NUTECH, predictions_by_day_Margalla, mapped_weekly_data_NUTECH, mapped_monthly_data_NUTECH
     global aggregated_weekly_data_NUTECH, aggregated_weekly_data_Margalla
     global aggregated_monthly_data_NUTECH, aggregated_monthly_data_Margalla
@@ -538,7 +546,11 @@ thread1.start()
 
 
 def index(request):
+<<<<<<< HEAD
     global mapped_last_data_NUTECH, mapped_last_data_Margalla, combined_data, mapped_all_data_NUTECH, mapped_all_data_Margalla
+=======
+    global mapped_last_data_NUTECH, mapped_last_data_Margalla, combined_data, mapped_all_data_NUTECH
+>>>>>>> d6eb8847b9f0289418c744ba86fad811561abc03
     global predictions_by_day_NUTECH, predictions_by_day_Margalla, mapped_weekly_data_NUTECH, mapped_monthly_data_NUTECH
     global aggregated_weekly_data_NUTECH, aggregated_weekly_data_Margalla
     global aggregated_monthly_data_NUTECH, aggregated_monthly_data_Margalla
@@ -562,6 +574,7 @@ def index(request):
         # 'last_data_NUTECH': mapped_last_data_NUTECH,
         # 'last_data_Margalla': mapped_last_data_Margalla,
         'combined_data': combined_data,
+<<<<<<< HEAD
         'mapped_all_data_NUTECH': json.dumps(mapped_all_data_NUTECH),
         'mapped_all_data_Margalla': json.dumps(mapped_all_data_Margalla),
         'mapped_weekly_data_NUTECH': json.dumps(mapped_weekly_data_NUTECH),
@@ -570,6 +583,9 @@ def index(request):
         'mapped_monthly_data_NUTECH': json.dumps(mapped_monthly_data_NUTECH),
         'aggregated_monthly_data_NUTECH': json.dumps(aggregated_monthly_data_NUTECH),
         'aggregated_monthly_data_Margalla': json.dumps(aggregated_monthly_data_Margalla),
+=======
+        'mapped_all_data_NUTECH' : mapped_all_data_NUTECH,
+>>>>>>> d6eb8847b9f0289418c744ba86fad811561abc03
         # 'predictions_day_1_NUTECH': predictions_by_day_NUTECH.get(1, {}),
         # 'predictions_day_2_NUTECH': predictions_by_day_NUTECH.get(2, {}),
         # 'predictions_day_3_NUTECH': predictions_by_day_NUTECH.get(3, {}),
@@ -591,6 +607,18 @@ def index(request):
         # 'day_name_5': day_names[4],
         # 'day_name_6': day_names[5],
         # 'day_name_7': day_names[6],
+<<<<<<< HEAD
+=======
+        # 'temperature_graph_html_day': temperature_graph_html_day,
+        # 'humidity_graph_html_day': humidity_graph_html_day,
+        # 'pressure_graph_html_day': pressure_graph_html_day,
+        # 'temperature_graph_html_week': temperature_graph_html_week,
+        # 'humidity_graph_html_week': humidity_graph_html_week,
+        # 'pressure_graph_html_week': pressure_graph_html_week,
+        # 'temperature_graph_html_month': temperature_graph_html_month,
+        # 'humidity_graph_html_month': humidity_graph_html_month,
+        # 'pressure_graph_html_month': pressure_graph_html_month,
+>>>>>>> d6eb8847b9f0289418c744ba86fad811561abc03
     }
 
     return render(request, 'index.html', context)
