@@ -8,7 +8,75 @@
     <title>Weather Dashboard</title>
     <link href="{% static 'css/output.css' %}" rel="stylesheet">
     <script>
-        var TodayData = "{{ mapped_all_data_NUTECH }}";
+        var TodayDataNUTECH = "{{ mapped_all_data_NUTECH }}";
+        var TodayDataMARGALLA = "{{ mapped_all_data_Margalla }}";
+        var WeeklyDataNUTECH = "{{ mapped_weekly_data_NUTECH }}";
+        var AggregatedWeeklyDataNUTECH = "{{ aggregated_weekly_data_NUTECH }}";
+        var AggregatedWeeklyDataMargalla = "{{ aggregated_weekly_data_Margalla }}";
+        var Monthly_Graphs_Labels = "{{mapped_monthly_data_NUTECH}}"
+        var Monthly_Graphs_Data_NUTECH = "{{aggregated_monthly_data_NUTECH}}"
+        var Monthly_Graphs_Data_MARGALLA = "{{aggregated_monthly_data_Margalla}}"
+
+        TodayDataNUTECH = TodayDataNUTECH.replace(/&quot;/g, '"');
+        TodayDataMARGALLA = TodayDataMARGALLA.replace(/&quot;/g, '"');
+        WeeklyDataNUTECH = WeeklyDataNUTECH.replace(/&quot;/g, '"');
+        AggregatedWeeklyDataNUTECH = AggregatedWeeklyDataNUTECH.replace(/&quot;/g, '"');
+        AggregatedWeeklyDataMargalla = AggregatedWeeklyDataMargalla.replace(/&quot;/g, '"');
+        Monthly_Graphs_Labels = Monthly_Graphs_Labels.replace(/&quot;/g, '"');
+        Monthly_Graphs_Data_NUTECH = Monthly_Graphs_Data_NUTECH.replace(/&quot;/g, '"');
+        Monthly_Graphs_Data_MARGALLA = Monthly_Graphs_Data_MARGALLA.replace(/&quot;/g, '"');
+
+        try {
+            TodayDataNUTECH = JSON.parse(TodayDataNUTECH);
+        } catch (e) {
+            console.error('Failed to parse JSON:', e);
+        }
+
+        try {
+            TodayDataMARGALLA = JSON.parse(TodayDataMARGALLA);
+        } catch (e) {
+            console.error('Failed to parse JSON:', e);
+        }
+
+        try {
+            WeeklyDataNUTECH = JSON.parse(WeeklyDataNUTECH);
+        } catch (e) {
+            console.error('Failed to parse JSON:', e);
+        }
+
+        try {
+            AggregatedWeeklyDataNUTECH = JSON.parse(AggregatedWeeklyDataNUTECH);
+        } catch (e) {
+            console.error('Failed to parse JSON:', e);
+        }
+
+        try {
+            AggregatedWeeklyDataMargalla = JSON.parse(AggregatedWeeklyDataMargalla);
+        } catch (e) {
+            console.error('Failed to parse JSON:', e);
+        }
+
+        try {
+            Monthly_Graphs_Labels = JSON.parse(Monthly_Graphs_Labels);
+            console.log(Monthly_Graphs_Labels);
+        } catch (e) {
+            console.error('Failed to parse JSON:', e);
+        }
+
+        try {
+            Monthly_Graphs_Data_NUTECH = JSON.parse(Monthly_Graphs_Data_NUTECH);
+            console.log(Monthly_Graphs_Data_NUTECH);
+        } catch (e) {
+            console.error('Failed to parse JSON:', e);
+        }
+
+        try {
+            Monthly_Graphs_Data_MARGALLA = JSON.parse(Monthly_Graphs_Data_MARGALLA);
+            console.log(Monthly_Graphs_Data_MARGALLA);
+        } catch (e) {
+            console.error('Failed to parse JSON:', e);
+        }
+
     </script>
     <style>
         .hidden_content {
@@ -244,7 +312,7 @@
                         <h3 class="text-sm font-semibold text-center mb-2">Today</h3>
                         <div class="flex items-center justify-between mb-4">
                             <div class="flex flex-col items-center">
-                                <img src="static/https://cdn-icons-png.flaticon.com/512/414/414927.png" alt="Weather Icon" class="w-20 h-20">
+                                <img src="static/assets/rain.png" alt="Weather Icon" class="w-20 h-20">
                                 <span class="text-sm text-gray-300 mt-2">Sunny</span>
                             </div>
                             <div class="text-5xl font-bold">37°C</div>
@@ -278,7 +346,7 @@
                         <h3 class="text-sm font-semibold text-center mb-2">Today</h3>
                         <div class="flex items-center justify-between mb-4">
                             <div class="flex flex-col items-center">
-                                <img src="static/https://cdn-icons-png.flaticon.com/512/414/414927.png" alt="Weather Icon" class="w-20 h-20">
+                                <img src="static/assets/rain.png" alt="Weather Icon" class="w-20 h-20">
                                 <span class="text-sm text-gray-300 mt-2">Sunny</span>
                             </div>
                             <div class="text-5xl font-bold">37°C</div>
@@ -312,7 +380,7 @@
                         <h3 class="text-sm font-semibold text-center mb-2">Today</h3>
                         <div class="flex items-center justify-between mb-4">
                             <div class="flex flex-col items-center">
-                                <img src="static/https://cdn-icons-png.flaticon.com/512/414/414927.png" alt="Weather Icon" class="w-20 h-20">
+                                <img src="static/assets/rain.png" alt="Weather Icon" class="w-20 h-20">
                                 <span class="text-sm text-gray-300 mt-2">Sunny</span>
                             </div>
                             <div class="text-5xl font-bold">37°C</div>
@@ -346,7 +414,7 @@
                         <h3 class="text-sm font-semibold text-center mb-2">Today</h3>
                         <div class="flex items-center justify-between mb-4">
                             <div class="flex flex-col items-center">
-                                <img src="static/https://cdn-icons-png.flaticon.com/512/414/414927.png" alt="Weather Icon" class="w-20 h-20">
+                                <img src="static/assets/rain.png" alt="Weather Icon" class="w-20 h-20">
                                 <span class="text-sm text-gray-300 mt-2">Sunny</span>
                             </div>
                             <div class="text-5xl font-bold">37°C</div>
@@ -380,7 +448,7 @@
                         <h3 class="text-sm font-semibold text-center mb-2">Today</h3>
                         <div class="flex items-center justify-between mb-4">
                             <div class="flex flex-col items-center">
-                                <img src="static/https://cdn-icons-png.flaticon.com/512/414/414927.png" alt="Weather Icon" class="w-20 h-20">
+                                <img src="static/assets/rain.png" alt="Weather Icon" class="w-20 h-20">
                                 <span class="text-sm text-gray-300 mt-2">Sunny</span>
                             </div>
                             <div class="text-5xl font-bold">37°C</div>
@@ -414,7 +482,7 @@
                         <h3 class="text-sm font-semibold text-center mb-2">Today</h3>
                         <div class="flex items-center justify-between mb-4">
                             <div class="flex flex-col items-center">
-                                <img src="static/https://cdn-icons-png.flaticon.com/512/414/414927.png" alt="Weather Icon" class="w-20 h-20">
+                                <img src="static/assets/rain.png" alt="Weather Icon" class="w-20 h-20">
                                 <span class="text-sm text-gray-300 mt-2">Sunny</span>
                             </div>
                             <div class="text-5xl font-bold">37°C</div>
@@ -448,7 +516,7 @@
                         <h3 class="text-sm font-semibold text-center mb-2">Today</h3>
                         <div class="flex items-center justify-between mb-4">
                             <div class="flex flex-col items-center">
-                                <img src="static/https://cdn-icons-png.flaticon.com/512/414/414927.png" alt="Weather Icon" class="w-20 h-20">
+                                <img src="static/assets/rain.png" alt="Weather Icon" class="w-20 h-20">
                                 <span class="text-sm text-gray-300 mt-2">Sunny</span>
                             </div>
                             <div class="text-5xl font-bold">37°C</div>
@@ -482,7 +550,7 @@
             </section>
             
             <section>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">                   
                     <div>
                         <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]">Temperature</h3>
                         <div class="bg-gray-800 p-2 rounded-lg h-[300px]"> 
@@ -705,7 +773,7 @@
                         <h3 class="text-sm font-semibold text-center mb-2">Today</h3>
                         <div class="flex items-center justify-between mb-4">
                             <div class="flex flex-col items-center">
-                                <img src="static/https://cdn-icons-png.flaticon.com/512/414/414927.png" alt="Weather Icon" class="w-20 h-20">
+                                <img src="static/assets/rain.png" alt="Weather Icon" class="w-20 h-20">
                                 <span class="text-sm text-gray-300 mt-2">Sunny</span>
                             </div>
                             <div class="text-5xl font-bold">37°C</div>
@@ -739,7 +807,7 @@
                         <h3 class="text-sm font-semibold text-center mb-2">Today</h3>
                         <div class="flex items-center justify-between mb-4">
                             <div class="flex flex-col items-center">
-                                <img src="static/https://cdn-icons-png.flaticon.com/512/414/414927.png" alt="Weather Icon" class="w-20 h-20">
+                                <img src="static/assets/rain.png" alt="Weather Icon" class="w-20 h-20">
                                 <span class="text-sm text-gray-300 mt-2">Sunny</span>
                             </div>
                             <div class="text-5xl font-bold">37°C</div>
@@ -773,7 +841,7 @@
                         <h3 class="text-sm font-semibold text-center mb-2">Today</h3>
                         <div class="flex items-center justify-between mb-4">
                             <div class="flex flex-col items-center">
-                                <img src="static/https://cdn-icons-png.flaticon.com/512/414/414927.png" alt="Weather Icon" class="w-20 h-20">
+                                <img src="static/assets/rain.png" alt="Weather Icon" class="w-20 h-20">
                                 <span class="text-sm text-gray-300 mt-2">Sunny</span>
                             </div>
                             <div class="text-5xl font-bold">37°C</div>
@@ -807,7 +875,7 @@
                         <h3 class="text-sm font-semibold text-center mb-2">Today</h3>
                         <div class="flex items-center justify-between mb-4">
                             <div class="flex flex-col items-center">
-                                <img src="static/https://cdn-icons-png.flaticon.com/512/414/414927.png" alt="Weather Icon" class="w-20 h-20">
+                                <img src="static/assets/rain.png" alt="Weather Icon" class="w-20 h-20">
                                 <span class="text-sm text-gray-300 mt-2">Sunny</span>
                             </div>
                             <div class="text-5xl font-bold">37°C</div>
@@ -841,7 +909,7 @@
                         <h3 class="text-sm font-semibold text-center mb-2">Today</h3>
                         <div class="flex items-center justify-between mb-4">
                             <div class="flex flex-col items-center">
-                                <img src="static/https://cdn-icons-png.flaticon.com/512/414/414927.png" alt="Weather Icon" class="w-20 h-20">
+                                <img src="static/assets/rain.png" alt="Weather Icon" class="w-20 h-20">
                                 <span class="text-sm text-gray-300 mt-2">Sunny</span>
                             </div>
                             <div class="text-5xl font-bold">37°C</div>
@@ -875,7 +943,7 @@
                         <h3 class="text-sm font-semibold text-center mb-2">Today</h3>
                         <div class="flex items-center justify-between mb-4">
                             <div class="flex flex-col items-center">
-                                <img src="static/https://cdn-icons-png.flaticon.com/512/414/414927.png" alt="Weather Icon" class="w-20 h-20">
+                                <img src="static/assets/rain.png" alt="Weather Icon" class="w-20 h-20">
                                 <span class="text-sm text-gray-300 mt-2">Sunny</span>
                             </div>
                             <div class="text-5xl font-bold">37°C</div>
@@ -909,7 +977,7 @@
                         <h3 class="text-sm font-semibold text-center mb-2">Today</h3>
                         <div class="flex items-center justify-between mb-4">
                             <div class="flex flex-col items-center">
-                                <img src="static/https://cdn-icons-png.flaticon.com/512/414/414927.png" alt="Weather Icon" class="w-20 h-20">
+                                <img src="static/assets/rain.png" alt="Weather Icon" class="w-20 h-20">
                                 <span class="text-sm text-gray-300 mt-2">Sunny</span>
                             </div>
                             <div class="text-5xl font-bold">37°C</div>
@@ -1010,7 +1078,6 @@
             </nav>
             <div id="Daily_Graphs_Tab" class="graph_content">
                 <section>
-                    <h1>Daily Graphs</h1>
                     <div class="grid grid-cols-1 space-y-4 mt-4">
                         <div>
                             <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]">Temperature</h3>
@@ -1071,7 +1138,6 @@
             </div>
             <div id="Weekly_Graphs_Tab" class="graph_content graph_hidden_content">
                 <section>
-                    <h1>Weekly</h1>
                     <div class="grid grid-cols-1 space-y-4 mt-4">
                         <div>
                             <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]">Temperature</h3>
@@ -1132,7 +1198,6 @@
             </div>
             <div id="Monthly_Graphs_Tab" class="graph_content graph_hidden_content">
                 <section>
-                    <h1>Monthly</h1>
                     <div class="grid grid-cols-1 space-y-4 mt-4">
                         <div>
                             <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]">Temperature</h3>

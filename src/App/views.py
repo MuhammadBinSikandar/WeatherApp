@@ -1,3 +1,4 @@
+import json
 import math
 from django.shortcuts import render
 from pymongo import MongoClient
@@ -78,7 +79,7 @@ def dataScrapping(database = "NUTECH",
 
     header = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.5060.134 Safari/537.36',
-    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,/;q=0.8',
     'Accept-Language': 'en-US,en;q=0.9',
     'Accept-Encoding': 'gzip, deflate, br',
     'Connection': 'keep-alive',
@@ -334,7 +335,7 @@ def start_schedule():
                                   "https://www.iqair.com/pakistan/islamabad/austrian-embassy", 
                                   "https://api.thingspeak.com/channels/2597059/fields/1.json?results=2", 
                                   "https://api.thingspeak.com/channels/2598253/feeds.json?results=1")
-    schedule.every(15).minutes.do(dataScrapping, "Margalla", "IISLAM13", 
+    schedule.every(15).minutes.do(dataScrapping, "Margalla", "IISLAM50", 
                                   "https://www.iqair.com/pakistan/islamabad/house%238-maain-khayaban-e-iqbal-f-6-3", 
                                   "https://api.thingspeak.com/channels/2611688/fields/1.json?results=2", 
                                   "https://api.thingspeak.com/channels/2611683/feeds.json?results=1")
@@ -363,7 +364,7 @@ def start_schedule():
         time.sleep(1)
 
 
-global mapped_last_data_NUTECH, mapped_last_data_Margalla, combined_data, mapped_all_data_NUTECH
+global mapped_last_data_NUTECH, mapped_last_data_Margalla, combined_data, mapped_all_data_NUTECH, mapped_all_data_Margalla
 global predictions_by_day_NUTECH, predictions_by_day_Margalla, mapped_weekly_data_NUTECH, mapped_monthly_data_NUTECH
 global aggregated_weekly_data_NUTECH, aggregated_weekly_data_Margalla
 global aggregated_monthly_data_NUTECH, aggregated_monthly_data_Margalla
@@ -371,7 +372,7 @@ global temperature_graph_html_day, humidity_graph_html_day, pressure_graph_html_
 global pressure_graph_html_week, temperature_graph_html_month, humidity_graph_html_month, pressure_graph_html_month 
 
 def get_data_from_db():
-    global mapped_last_data_NUTECH, mapped_last_data_Margalla, combined_data, mapped_all_data_NUTECH
+    global mapped_last_data_NUTECH, mapped_last_data_Margalla, combined_data, mapped_all_data_NUTECH, mapped_all_data_Margalla
     global predictions_by_day_NUTECH, predictions_by_day_Margalla, mapped_weekly_data_NUTECH, mapped_monthly_data_NUTECH
     global aggregated_weekly_data_NUTECH, aggregated_weekly_data_Margalla
     global aggregated_monthly_data_NUTECH, aggregated_monthly_data_Margalla
@@ -545,24 +546,24 @@ def get_data_from_db():
         fig.update_yaxes(title_text=yaxis_title)
         return to_html(fig, config={'displayModeBar': False, 'responsive': True}, full_html=True)
 
-    x_data_day = [item['Time'] for item in mapped_all_data_NUTECH]
-    temperature_graph_html_day = create_graph(x_data_day, [item['Temperature'] for item in mapped_all_data_NUTECH], [item['Temperature'] for item in mapped_all_data_Margalla], 'Temperature', color1 = "orange", color2 = "blue")
-    humidity_graph_html_day = create_graph(x_data_day, [item['Humidity'] for item in mapped_all_data_NUTECH], [item['Humidity'] for item in mapped_all_data_Margalla], 'Humidity', color1="green", color2="red")
-    pressure_graph_html_day = create_graph(x_data_day, [item['Pressure'] for item in mapped_all_data_NUTECH], [item['Pressure'] for item in mapped_all_data_Margalla], 'Pressure', color1="fuchsia", color2="yellow")
+    # x_data_day = [item['Time'] for item in mapped_all_data_NUTECH]
+    # temperature_graph_html_day = create_graph(x_data_day, [item['Temperature'] for item in mapped_all_data_NUTECH], [item['Temperature'] for item in mapped_all_data_Margalla], 'Temperature', color1 = "orange", color2 = "blue")
+    # humidity_graph_html_day = create_graph(x_data_day, [item['Humidity'] for item in mapped_all_data_NUTECH], [item['Humidity'] for item in mapped_all_data_Margalla], 'Humidity', color1="green", color2="red")
+    # pressure_graph_html_day = create_graph(x_data_day, [item['Pressure'] for item in mapped_all_data_NUTECH], [item['Pressure'] for item in mapped_all_data_Margalla], 'Pressure', color1="fuchsia", color2="yellow")
 
-    # Create weekly graphs
-    x_data_week = list(set(item['CollectionDate'] for item in mapped_weekly_data_NUTECH))
-    x_data_week.sort()
-    temperature_graph_html_week = create_graph(x_data_week, [aggregated_weekly_data_NUTECH[f'{date}_Temperature'] for date in x_data_week], [aggregated_weekly_data_Margalla[f'{date}_Temperature'] for date in x_data_week], 'Temperature', color1 = "orange", color2 = "blue")
-    humidity_graph_html_week = create_graph(x_data_week, [aggregated_weekly_data_NUTECH[f'{date}_Humidity'] for date in x_data_week], [aggregated_weekly_data_Margalla[f'{date}_Humidity'] for date in x_data_week], 'Humidity', color1="green", color2="red")
-    pressure_graph_html_week = create_graph(x_data_week, [aggregated_weekly_data_NUTECH[f'{date}_Pressure'] for date in x_data_week], [aggregated_weekly_data_Margalla[f'{date}_Pressure'] for date in x_data_week], 'Pressure', color1="fuchsia", color2="yellow")
+    # # Create weekly graphs
+    # x_data_week = list(set(item['CollectionDate'] for item in mapped_weekly_data_NUTECH))
+    # x_data_week.sort()
+    # temperature_graph_html_week = create_graph(x_data_week, [aggregated_weekly_data_NUTECH[f'{date}_Temperature'] for date in x_data_week], [aggregated_weekly_data_Margalla[f'{date}_Temperature'] for date in x_data_week], 'Temperature', color1 = "orange", color2 = "blue")
+    # humidity_graph_html_week = create_graph(x_data_week, [aggregated_weekly_data_NUTECH[f'{date}_Humidity'] for date in x_data_week], [aggregated_weekly_data_Margalla[f'{date}_Humidity'] for date in x_data_week], 'Humidity', color1="green", color2="red")
+    # pressure_graph_html_week = create_graph(x_data_week, [aggregated_weekly_data_NUTECH[f'{date}_Pressure'] for date in x_data_week], [aggregated_weekly_data_Margalla[f'{date}_Pressure'] for date in x_data_week], 'Pressure', color1="fuchsia", color2="yellow")
 
-    # Create monthly graphs
-    x_data_month = list(set(item['CollectionDate'] for item in mapped_monthly_data_NUTECH))
-    x_data_month.sort()
-    temperature_graph_html_month = create_graph(x_data_month, [aggregated_monthly_data_NUTECH[f'{date}_Temperature'] for date in x_data_month], [aggregated_monthly_data_Margalla[f'{date}_Temperature'] for date in x_data_month], 'Temperature', color1 = "orange", color2 = "blue")
-    humidity_graph_html_month = create_graph(x_data_month, [aggregated_monthly_data_NUTECH[f'{date}_Humidity'] for date in x_data_month], [aggregated_monthly_data_Margalla[f'{date}_Humidity'] for date in x_data_month], 'Humidity', color1="green", color2="red")
-    pressure_graph_html_month = create_graph(x_data_month, [aggregated_monthly_data_NUTECH[f'{date}_Pressure'] for date in x_data_month], [aggregated_monthly_data_Margalla[f'{date}_Pressure'] for date in x_data_month], 'Pressure', color1="fuchsia", color2="yellow")
+    # # Create monthly graphs
+    # x_data_month = list(set(item['CollectionDate'] for item in mapped_monthly_data_NUTECH))
+    # x_data_month.sort()
+    # temperature_graph_html_month = create_graph(x_data_month, [aggregated_monthly_data_NUTECH[f'{date}_Temperature'] for date in x_data_month], [aggregated_monthly_data_Margalla[f'{date}_Temperature'] for date in x_data_month], 'Temperature', color1 = "orange", color2 = "blue")
+    # humidity_graph_html_month = create_graph(x_data_month, [aggregated_monthly_data_NUTECH[f'{date}_Humidity'] for date in x_data_month], [aggregated_monthly_data_Margalla[f'{date}_Humidity'] for date in x_data_month], 'Humidity', color1="green", color2="red")
+    # pressure_graph_html_month = create_graph(x_data_month, [aggregated_monthly_data_NUTECH[f'{date}_Pressure'] for date in x_data_month], [aggregated_monthly_data_Margalla[f'{date}_Pressure'] for date in x_data_month], 'Pressure', color1="fuchsia", color2="yellow")
 
     client.close()
     print("Data fetched successfully")
@@ -574,10 +575,10 @@ def periodic_fetch():
         time.sleep(900)  # Sleep for 15 minutes
 
 
-# scheduler_thread = threading.Thread(target=start_schedule, daemon=True)
-# scheduler_thread.start()
+scheduler_thread = threading.Thread(target=start_schedule, daemon=True)
+scheduler_thread.start()
 
-# time.sleep(120)
+time.sleep(120)
 
 # Start the thread
 thread1 = threading.Thread(target=periodic_fetch, daemon=True)
@@ -585,7 +586,7 @@ thread1.start()
 
 
 def index(request):
-    global mapped_last_data_NUTECH, mapped_last_data_Margalla, combined_data, mapped_all_data_NUTECH
+    global mapped_last_data_NUTECH, mapped_last_data_Margalla, combined_data, mapped_all_data_NUTECH, mapped_all_data_Margalla
     global predictions_by_day_NUTECH, predictions_by_day_Margalla, mapped_weekly_data_NUTECH, mapped_monthly_data_NUTECH
     global aggregated_weekly_data_NUTECH, aggregated_weekly_data_Margalla
     global aggregated_monthly_data_NUTECH, aggregated_monthly_data_Margalla
@@ -596,20 +597,27 @@ def index(request):
     Today_date = datetime.now()
     formatted_date = Today_date.strftime("%B %d, %Y")
 
-    today = datetime.now().date()
-    day_names = ['Today', 'Tomorrow']
+    # today = datetime.now().date()
+    # day_names = ['Today', 'Tomorrow']
     
-    for i in range(2, 9):  
-        future_day = today + timedelta(days=i)
-        day_names.append(future_day.strftime('%A %d'))
+    # for i in range(2, 9):  
+    #     future_day = today + timedelta(days=i)
+    #     day_names.append(future_day.strftime('%A %d'))
 
-
+    
     context = {
         'formatted_date': formatted_date,
         # 'last_data_NUTECH': mapped_last_data_NUTECH,
         # 'last_data_Margalla': mapped_last_data_Margalla,
         'combined_data': combined_data,
-        'mapped_all_data_NUTECH' : mapped_all_data_NUTECH,
+        'mapped_all_data_NUTECH': json.dumps(mapped_all_data_NUTECH),
+        'mapped_all_data_Margalla': json.dumps(mapped_all_data_Margalla),
+        'mapped_weekly_data_NUTECH': json.dumps(mapped_weekly_data_NUTECH),
+        'aggregated_weekly_data_NUTECH': json.dumps(aggregated_weekly_data_NUTECH),
+        'aggregated_weekly_data_Margalla': json.dumps(aggregated_weekly_data_Margalla),
+        'mapped_monthly_data_NUTECH': json.dumps(mapped_monthly_data_NUTECH),
+        'aggregated_monthly_data_NUTECH': json.dumps(aggregated_monthly_data_NUTECH),
+        'aggregated_monthly_data_Margalla': json.dumps(aggregated_monthly_data_Margalla),
         # 'predictions_day_1_NUTECH': predictions_by_day_NUTECH.get(1, {}),
         # 'predictions_day_2_NUTECH': predictions_by_day_NUTECH.get(2, {}),
         # 'predictions_day_3_NUTECH': predictions_by_day_NUTECH.get(3, {}),
@@ -631,15 +639,6 @@ def index(request):
         # 'day_name_5': day_names[4],
         # 'day_name_6': day_names[5],
         # 'day_name_7': day_names[6],
-        # 'temperature_graph_html_day': temperature_graph_html_day,
-        # 'humidity_graph_html_day': humidity_graph_html_day,
-        # 'pressure_graph_html_day': pressure_graph_html_day,
-        # 'temperature_graph_html_week': temperature_graph_html_week,
-        # 'humidity_graph_html_week': humidity_graph_html_week,
-        # 'pressure_graph_html_week': pressure_graph_html_week,
-        # 'temperature_graph_html_month': temperature_graph_html_month,
-        # 'humidity_graph_html_month': humidity_graph_html_month,
-        # 'pressure_graph_html_month': pressure_graph_html_month,
     }
 
     return render(request, 'index.html', context)
