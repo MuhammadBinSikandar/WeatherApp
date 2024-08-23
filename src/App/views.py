@@ -313,7 +313,7 @@ def predictions(database, api_url):
             'Low_Temperature': round(day_data['tempmin']),
             'Temperature': round(day_data['temp']),
             'Wind_Speed': day_data['windspeed'],
-            'Rain_Probability': day_data['precipprob'],  # Probability of rain
+            'Rain_Probability': day_data['precip'],  # Probability of rain
             'Pressure': day_data['pressure'],
             'Icon': day_data['icon']  # Weather condition icon
         }
@@ -339,10 +339,10 @@ def start_schedule():
                                   "https://api.thingspeak.com/channels/2611688/fields/1.json?results=2", 
                                   "https://api.thingspeak.com/channels/2611683/feeds.json?results=1")
     
-    schedule.every().day.at("00:00").do(predictions, "NUTECH", search="https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/33.62599%2C%2073.01109?unitGroup=metric&elements=tempmax%2Ctempmin%2Ctemp%2Cprecipprob%2Cwindspeed%2Cpressure%2Cicon&include=days&key=FVZ4MF57QRM857ELFR4NCPDYW&contentType=json")
-    schedule.every().day.at("00:00").do(predictions, "Margalla", search="https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/33.759271%2C%20%2073.08361?unitGroup=metric&elements=tempmax%2Ctempmin%2Ctemp%2Cprecipprob%2Cwindspeed%2Cpressure%2Cicon&include=days&key=FVZ4MF57QRM857ELFR4NCPDYW&contentType=json")
-    schedule.every().day.at("12:00").do(predictions, "NUTECH", search="https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/33.62599%2C%2073.01109?unitGroup=metric&elements=tempmax%2Ctempmin%2Ctemp%2Cprecipprob%2Cwindspeed%2Cpressure%2Cicon&include=days&key=FVZ4MF57QRM857ELFR4NCPDYW&contentType=json")
-    schedule.every().day.at("12:00").do(predictions, "Margalla", search="https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/33.759271%2C%20%2073.08361?unitGroup=metric&elements=tempmax%2Ctempmin%2Ctemp%2Cprecipprob%2Cwindspeed%2Cpressure%2Cicon&include=days&key=FVZ4MF57QRM857ELFR4NCPDYW&contentType=json")
+    schedule.every().day.at("00:00").do(predictions, "NUTECH", "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/Rawalpindi?unitGroup=metric&elements=tempmax%2Ctempmin%2Ctemp%2Cprecip%2Cprecipprob%2Cwindspeed%2Cpressure%2Cicon&include=fcst%2Cdays&key=FVZ4MF57QRM857ELFR4NCPDYW&contentType=json")
+    schedule.every().day.at("00:00").do(predictions, "Margalla","https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/Islamabad?unitGroup=metric&elements=tempmax%2Ctempmin%2Ctemp%2Cprecip%2Cprecipprob%2Cwindspeed%2Cpressure%2Cicon&include=fcst%2Cdays&key=FVZ4MF57QRM857ELFR4NCPDYW&contentType=json")
+    schedule.every().day.at("12:00").do(predictions, "NUTECH", "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/Rawalpindi?unitGroup=metric&elements=tempmax%2Ctempmin%2Ctemp%2Cprecip%2Cprecipprob%2Cwindspeed%2Cpressure%2Cicon&include=fcst%2Cdays&key=FVZ4MF57QRM857ELFR4NCPDYW&contentType=json")
+    schedule.every().day.at("12:00").do(predictions, "Margalla", "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/Islamabad?unitGroup=metric&elements=tempmax%2Ctempmin%2Ctemp%2Cprecip%2Cprecipprob%2Cwindspeed%2Cpressure%2Cicon&include=fcst%2Cdays&key=FVZ4MF57QRM857ELFR4NCPDYW&contentType=json")
     
     dataScrapping(database="NUTECH", 
                   station = "IISLAM48", 
@@ -355,8 +355,8 @@ def start_schedule():
                   soilMoistureUrl="https://api.thingspeak.com/channels/2611688/fields/1.json?results=2",
                   co2Url="https://api.thingspeak.com/channels/2611683/feeds.json?results=1")
     
-    predictions(database="NUTECH" ,api_url="https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/33.62599%2C%2073.01109?unitGroup=metric&elements=tempmax%2Ctempmin%2Ctemp%2Cprecipprob%2Cwindspeed%2Cpressure%2Cicon&include=days&key=FVZ4MF57QRM857ELFR4NCPDYW&contentType=json")
-    predictions(database="Margalla" ,api_url="https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/33.759271%2C%20%2073.08361?unitGroup=metric&elements=tempmax%2Ctempmin%2Ctemp%2Cprecipprob%2Cwindspeed%2Cpressure%2Cicon&include=days&key=FVZ4MF57QRM857ELFR4NCPDYW&contentType=json")
+    predictions(database="NUTECH" ,api_url="https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/Rawalpindi?unitGroup=metric&elements=tempmax%2Ctempmin%2Ctemp%2Cprecip%2Cprecipprob%2Cwindspeed%2Cpressure%2Cicon&include=fcst%2Cdays&key=FVZ4MF57QRM857ELFR4NCPDYW&contentType=json")
+    predictions(database="Margalla" ,api_url="https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/Islamabad?unitGroup=metric&elements=tempmax%2Ctempmin%2Ctemp%2Cprecip%2Cprecipprob%2Cwindspeed%2Cpressure%2Cicon&include=fcst%2Cdays&key=FVZ4MF57QRM857ELFR4NCPDYW&contentType=json")
 
     while True:
         schedule.run_pending()
@@ -510,6 +510,8 @@ def get_data_from_db():
         pressure = data['Pressure']
         icon = data['Icon']
         heading = icon.replace('-', ' ').title()
+        if heading == 'Partly Cloudy Day' or heading == 'Partly Cloudy Night':
+            heading = 'Partly Cloudy'
         
         predictions_by_day_NUTECH[day_number] = {
             'Temperature': temperature,
@@ -533,6 +535,9 @@ def get_data_from_db():
         pressure = data['Pressure']
         icon = data['Icon']
         heading = icon.replace('-', ' ').title()
+        if heading == 'Partly Cloudy Day' or heading == 'Partly Cloudy Night':
+            heading = 'Partly Cloudy'
+
         
         predictions_by_day_Margalla[day_number] = {
             'Temperature': temperature,

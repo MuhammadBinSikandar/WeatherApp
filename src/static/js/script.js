@@ -951,7 +951,6 @@ const co2ChartMargalla = new Chart(document.getElementById('co2GraphMargalla').g
     data: co2DataMargalla
 });
 
-setInterval(() => {}, 15000);
 
 const dualLineConfigTemplate = {
     type: 'line',
@@ -1228,23 +1227,37 @@ const co2ChartDaily = new Chart(document.getElementById('co2GraphDaily').getCont
 
 
 function generateLabelsWeekly() {
-    return WeeklyDataNUTECH.map(dataPoint => dataPoint.CollectionDate);
+    const uniqueDates = new Set();
+    WeeklyDataNUTECH.forEach(dataPoint => uniqueDates.add(dataPoint.CollectionDate));
+    return Array.from(uniqueDates);
 }
+
 function getWeeklyDataNUTECH(parameter) {
     const x_data_week = generateLabelsWeekly();
-    return x_data_week.map(date => {
-        const value = AggregatedWeeklyDataNUTECH[`${date}_${parameter}`];
-        return parseFloat(value);
+    const dataMap = new Map();
+
+    x_data_week.forEach(date => {
+        const value = parseFloat(AggregatedWeeklyDataNUTECH[`${date}_${parameter}`]);
+        if (!dataMap.has(date)) {
+            dataMap.set(date, value);
+        }
     });
 
+    return Array.from(dataMap.values());
 }
+
 function getWeeklyDataMARGALLA(parameter) {
     const x_data_week = generateLabelsWeekly();
-    return x_data_week.map(date => {
-        const value = AggregatedWeeklyDataMargalla[`${date}_${parameter}`];
-        return parseFloat(value);
+    const dataMap = new Map();
+
+    x_data_week.forEach(date => {
+        const value = parseFloat(AggregatedWeeklyDataMargalla[`${date}_${parameter}`]);
+        if (!dataMap.has(date)) {
+            dataMap.set(date, value);
+        }
     });
 
+    return Array.from(dataMap.values());
 }
 
 const temperatureDataWeekly = {
@@ -1462,24 +1475,38 @@ const co2ChartWeekly = new Chart(document.getElementById('co2GraphWeekly').getCo
     ...dualLineConfigTemplate,
     data: co2DataWeekly
 });
-function generateLabelsMonthly(){
-    return Monthly_Graphs_Labels.map(dataPoint => dataPoint.CollectionDate);
+function generateLabelsMonthly() {
+    const uniqueDates = new Set();
+    Monthly_Graphs_Labels.forEach(dataPoint => uniqueDates.add(dataPoint.CollectionDate));
+    return Array.from(uniqueDates);
 }
 
 function getMonthlyDataNUTECH(parameter) {
     const x_data_month = generateLabelsMonthly();
-    return x_data_month.map(date => {
-        const value = Monthly_Graphs_Data_NUTECH[`${date}_${parameter}`];
-        return parseFloat(value);
+    const dataMap = new Map();
+
+    x_data_month.forEach(date => {
+        const value = parseFloat(Monthly_Graphs_Data_NUTECH[`${date}_${parameter}`]);
+        if (!dataMap.has(date)) {
+            dataMap.set(date, value);
+        }
     });
+
+    return Array.from(dataMap.values());
 }
 
 function getMonthlyDataMARGALLA(parameter) {
     const x_data_month = generateLabelsMonthly();
-    return x_data_month.map(date => {
-        const value = Monthly_Graphs_Data_MARGALLA[`${date}_${parameter}`];
-        return parseFloat(value);
+    const dataMap = new Map();
+
+    x_data_month.forEach(date => {
+        const value = parseFloat(Monthly_Graphs_Data_MARGALLA[`${date}_${parameter}`]);
+        if (!dataMap.has(date)) {
+            dataMap.set(date, value);
+        }
     });
+
+    return Array.from(dataMap.values());
 }
 
 const temperatureDataMonthly = {
