@@ -530,6 +530,40 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
+
+function updateAlerts(data, temperatureAlertId, windAlertId, thunderstormAlertId, alertSectionId,) {
+    const temperatureAlert = document.getElementById(temperatureAlertId);
+    const windAlert = document.getElementById(windAlertId);
+    const thunderstormAlert = document.getElementById(thunderstormAlertId);
+    const alertSection = document.getElementById(alertSectionId);
+    if (data.Temperature > 28) {
+        temperatureAlert.classList.remove('hidden');
+    } else {
+        temperatureAlert.classList.add('hidden');
+    }
+    if (data.Wind_Speed > 20) {
+        windAlert.classList.remove('hidden');
+    } else {
+        windAlert.classList.add('hidden');
+    }
+    if (data.Rain > 3) {
+        thunderstormAlert.classList.remove('hidden');
+    } else {
+        thunderstormAlert.classList.add('hidden');
+    }
+    if (!temperatureAlert.classList.contains('hidden') ||
+        !windAlert.classList.contains('hidden') ||
+        !thunderstormAlert.classList.contains('hidden')) {
+        alertSection.classList.remove('hidden');
+        alertSection.classList.add('flex', 'flex-col', 'items-center');
+    } else {
+        alertSection.classList.add('hidden');
+        alertSection.classList.remove('flex', 'flex-col', 'items-center');
+    }
+}
+updateAlerts(mapped_last_data_NUTECH, 'Temp_Alert_Nutech', 'Wind_Alert_Nutech', 'Thunderstorm-Alert_Nutech', 'Alert_Nutech');
+updateAlerts(mapped_last_data_Margalla, 'Temp_Alert_Margalla', 'Wind_Alert_Margalla', 'Thunderstorm_Alert_Margalla', 'Alert_Margalla');
+
 function generateLabels(station) {
     if (station === "NUTECH") {
         return TodayDataNUTECH.map(dataPoint => dataPoint.Time);

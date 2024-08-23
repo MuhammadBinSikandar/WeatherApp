@@ -78,14 +78,14 @@ def dataScrapping(database = "NUTECH",
     weather_page = requests.get(weather_url)
 
     header = {
-    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.5060.134 Safari/537.36',
-    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,/;q=0.8',
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)',
+    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
     'Accept-Language': 'en-US,en;q=0.9',
     'Accept-Encoding': 'gzip, deflate, br',
     'Connection': 'keep-alive',
-    'Upgrade-Insecure-Requests': '1',
     'Referer': 'https://www.pmd.gov.pk/'
     }
+
 
     optical_particle_url = opticalParticleUrl
     optical_particle_response = requests.get(optical_particle_url, headers = header, verify=False)
@@ -303,26 +303,25 @@ def predictions(database, api_url):
     # Deleting existing documents in the predictions collection
     predictions_collection.delete_many({})
 
-    # Mapping the predictions according to the data for the day number
+    # Mapping the predictions according to the new API data
     weather_forecast = []
 
-    for i, day in enumerate(data['daily']['time']):
+    for i, day_data in enumerate(data['days']):
         forecast = {
-            'high_temp': data['daily']['temperature_2m_max'][i],
-            'low_temp': data['daily']['temperature_2m_min'][i],
-            'uv': data['daily']['uv_index_max'][i],
-            'precipitation': data['daily']['precipitation_sum'][i],
-            'wind_speed': data['daily']['wind_speed_10m_max'][i]
+            'Day_Number': i + 1,  # Incremental day number
+            'High_Temperature': round(day_data['tempmax']),
+            'Low_Temperature': round(day_data['tempmin']),
+            'Temperature': round(day_data['temp']),
+            'Wind_Speed': day_data['windspeed'],
+            'Rain_Probability': day_data['precipprob'],  # Probability of rain
+            'Pressure': day_data['pressure'],
+            'Icon': day_data['icon']  # Weather condition icon
         }
         weather_forecast.append(forecast)
 
-    for i, forecast in enumerate(weather_forecast):
-        forecast['High_Temperature'] = int(forecast['high_temp'])
-        del forecast['high_temp']
-        forecast['Low_Temperature'] = int(forecast['low_temp'])
-        del forecast['low_temp']
-        forecast['Day_Number'] = i + 1
-        predictions_collection.insert_one(forecast)
+    # Inserting the weather forecast into the MongoDB collection
+    predictions_collection.insert_many(weather_forecast)
+
 
 
 
@@ -340,10 +339,10 @@ def start_schedule():
                                   "https://api.thingspeak.com/channels/2611688/fields/1.json?results=2", 
                                   "https://api.thingspeak.com/channels/2611683/feeds.json?results=1")
     
-    schedule.every().day.at("00:00").do(predictions, "NUTECH", search="https://api.open-meteo.com/v1/forecast?latitude=33.62599&longitude=73.01109&daily=temperature_2m_max,temperature_2m_min,uv_index_max,precipitation_sum,wind_speed_10m_max&timezone=Asia%2FSingapore")
-    schedule.every().day.at("00:00").do(predictions, "Margalla", search="https://api.open-meteo.com/v1/forecast?latitude=33.759271&longitude=73.08361&daily=temperature_2m_max,temperature_2m_min,uv_index_max,precipitation_sum,wind_speed_10m_max&timezone=Asia%2FSingapore")
-    schedule.every().day.at("12:00").do(predictions, "NUTECH", search="https://api.open-meteo.com/v1/forecast?latitude=33.62599&longitude=73.01109&daily=temperature_2m_max,temperature_2m_min,uv_index_max,precipitation_sum,wind_speed_10m_max&timezone=Asia%2FSingapore")
-    schedule.every().day.at("12:00").do(predictions, "Margalla", search="https://api.open-meteo.com/v1/forecast?latitude=33.759271&longitude=73.08361&daily=temperature_2m_max,temperature_2m_min,uv_index_max,precipitation_sum,wind_speed_10m_max&timezone=Asia%2FSingapore")
+    schedule.every().day.at("00:00").do(predictions, "NUTECH", search="https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/33.62599%2C%2073.01109?unitGroup=metric&elements=tempmax%2Ctempmin%2Ctemp%2Cprecipprob%2Cwindspeed%2Cpressure%2Cicon&include=days&key=FVZ4MF57QRM857ELFR4NCPDYW&contentType=json")
+    schedule.every().day.at("00:00").do(predictions, "Margalla", search="https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/33.759271%2C%20%2073.08361?unitGroup=metric&elements=tempmax%2Ctempmin%2Ctemp%2Cprecipprob%2Cwindspeed%2Cpressure%2Cicon&include=days&key=FVZ4MF57QRM857ELFR4NCPDYW&contentType=json")
+    schedule.every().day.at("12:00").do(predictions, "NUTECH", search="https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/33.62599%2C%2073.01109?unitGroup=metric&elements=tempmax%2Ctempmin%2Ctemp%2Cprecipprob%2Cwindspeed%2Cpressure%2Cicon&include=days&key=FVZ4MF57QRM857ELFR4NCPDYW&contentType=json")
+    schedule.every().day.at("12:00").do(predictions, "Margalla", search="https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/33.759271%2C%20%2073.08361?unitGroup=metric&elements=tempmax%2Ctempmin%2Ctemp%2Cprecipprob%2Cwindspeed%2Cpressure%2Cicon&include=days&key=FVZ4MF57QRM857ELFR4NCPDYW&contentType=json")
     
     dataScrapping(database="NUTECH", 
                   station = "IISLAM48", 
@@ -356,14 +355,15 @@ def start_schedule():
                   soilMoistureUrl="https://api.thingspeak.com/channels/2611688/fields/1.json?results=2",
                   co2Url="https://api.thingspeak.com/channels/2611683/feeds.json?results=1")
     
-    predictions(database="NUTECH" ,api_url="https://api.open-meteo.com/v1/forecast?latitude=33.62599&longitude=73.01109&daily=temperature_2m_max,temperature_2m_min,uv_index_max,precipitation_sum,wind_speed_10m_max&timezone=Asia%2FSingapore")
-    predictions(database="Margalla" ,api_url="https://api.open-meteo.com/v1/forecast?latitude=33.759271&longitude=73.08361&daily=temperature_2m_max,temperature_2m_min,uv_index_max,precipitation_sum,wind_speed_10m_max&timezone=Asia%2FSingapore")
+    predictions(database="NUTECH" ,api_url="https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/33.62599%2C%2073.01109?unitGroup=metric&elements=tempmax%2Ctempmin%2Ctemp%2Cprecipprob%2Cwindspeed%2Cpressure%2Cicon&include=days&key=FVZ4MF57QRM857ELFR4NCPDYW&contentType=json")
+    predictions(database="Margalla" ,api_url="https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/33.759271%2C%20%2073.08361?unitGroup=metric&elements=tempmax%2Ctempmin%2Ctemp%2Cprecipprob%2Cwindspeed%2Cpressure%2Cicon&include=days&key=FVZ4MF57QRM857ELFR4NCPDYW&contentType=json")
 
     while True:
         schedule.run_pending()
         time.sleep(1)
 
-global mapped_last_data_NUTECH, mapped_last_data_Margalla, combined_data, mapped_all_data_NUTECH, mapped_all_data_Margalla
+
+global mapped_last_data_NUTECH, mapped_last_data_Margalla, combined_data, mapped_all_data_NUTECH, mapped_all_data_Margalla, last_7_data_NUTECH, last_7_data_Margalla
 global predictions_by_day_NUTECH, predictions_by_day_Margalla, mapped_weekly_data_NUTECH, mapped_monthly_data_NUTECH
 global aggregated_weekly_data_NUTECH, aggregated_weekly_data_Margalla
 global aggregated_monthly_data_NUTECH, aggregated_monthly_data_Margalla
@@ -371,7 +371,7 @@ global temperature_graph_html_day, humidity_graph_html_day, pressure_graph_html_
 global pressure_graph_html_week, temperature_graph_html_month, humidity_graph_html_month, pressure_graph_html_month 
 
 def get_data_from_db():
-    global mapped_last_data_NUTECH, mapped_last_data_Margalla, combined_data, mapped_all_data_NUTECH, mapped_all_data_Margalla
+    global mapped_last_data_NUTECH, mapped_last_data_Margalla, combined_data, mapped_all_data_NUTECH, mapped_all_data_Margalla, last_7_data_NUTECH, last_7_data_Margalla
     global predictions_by_day_NUTECH, predictions_by_day_Margalla, mapped_weekly_data_NUTECH, mapped_monthly_data_NUTECH
     global aggregated_weekly_data_NUTECH, aggregated_weekly_data_Margalla
     global aggregated_monthly_data_NUTECH, aggregated_monthly_data_Margalla
@@ -493,28 +493,57 @@ def get_data_from_db():
 
     combined_data = list(zip(all_data_NUTECH, all_data_Margalla))
 
+    last_7_data_NUTECH = list(all_data_NUTECH[-7:])
+    last_7_data_Margalla = list(all_data_Margalla[-7:])
+
     prediction_data_NUTECH = predictions_NUTECH.find()
     prediction_data_Margalla = predictions_Margalla.find()
     
     predictions_by_day_NUTECH = {}
     for data in prediction_data_NUTECH:
         day_number = data['Day_Number']
-        temperature = data['High_Temperature']
+        temperature = data['Temperature']  
         high_temperature = data['High_Temperature']
         low_temperature = data['Low_Temperature']
-        Wind_Speed = data['wind_speed']
-        precipitation = data['precipitation']
-        predictions_by_day_NUTECH[day_number] = {'Temperature': temperature, 'High_Temperature': high_temperature, 'Low_Temperature': low_temperature, 'Wind_Speed': Wind_Speed, 'Precipitation': precipitation}
+        wind_speed = data['Wind_Speed']  
+        rain_probability = data['Rain_Probability']
+        pressure = data['Pressure']
+        icon = data['Icon']
+        heading = icon.replace('-', ' ').title()
+        
+        predictions_by_day_NUTECH[day_number] = {
+            'Temperature': temperature,
+            'High_Temperature': high_temperature,
+            'Low_Temperature': low_temperature,
+            'Wind_Speed': wind_speed,
+            'Rain': rain_probability,
+            'Pressure': pressure,
+            'Icon': icon,
+            'Heading': heading
+        }
 
     predictions_by_day_Margalla = {}
     for data in prediction_data_Margalla:
         day_number = data['Day_Number']
-        temperature = data['High_Temperature']
+        temperature = data['Temperature'] 
         high_temperature = data['High_Temperature']
         low_temperature = data['Low_Temperature']
-        Wind_Speed = data['wind_speed']
-        precipitation = data['precipitation']
-        predictions_by_day_Margalla[day_number] = {'Temperature': temperature, 'High_Temperature': high_temperature, 'Low_Temperature': low_temperature, 'Wind_Speed': Wind_Speed, 'Precipitation': precipitation}
+        wind_speed = data['Wind_Speed'] 
+        rain_probability = data['Rain_Probability']  
+        pressure = data['Pressure']
+        icon = data['Icon']
+        heading = icon.replace('-', ' ').title()
+        
+        predictions_by_day_Margalla[day_number] = {
+            'Temperature': temperature,
+            'High_Temperature': high_temperature,
+            'Low_Temperature': low_temperature,
+            'Wind_Speed': wind_speed,
+            'Rain': rain_probability,
+            'Pressure': pressure,
+            'Icon': icon,
+            'Heading': heading
+        }
 
     client.close()
     print("Data fetched successfully")
@@ -537,7 +566,7 @@ thread1.start()
 
 
 def index(request):
-    global mapped_last_data_NUTECH, mapped_last_data_Margalla, combined_data, mapped_all_data_NUTECH, mapped_all_data_Margalla
+    global mapped_last_data_NUTECH, mapped_last_data_Margalla, combined_data, mapped_all_data_NUTECH, mapped_all_data_Margalla, last_7_data_NUTECH, last_7_data_Margalla
     global predictions_by_day_NUTECH, predictions_by_day_Margalla, mapped_weekly_data_NUTECH, mapped_monthly_data_NUTECH
     global aggregated_weekly_data_NUTECH, aggregated_weekly_data_Margalla
     global aggregated_monthly_data_NUTECH, aggregated_monthly_data_Margalla
@@ -548,19 +577,19 @@ def index(request):
     Today_date = datetime.now()
     formatted_date = Today_date.strftime("%B %d, %Y")
 
-    # today = datetime.now().date()
-    # day_names = ['Today', 'Tomorrow']
+    today = datetime.now().date()
+    day_names = ['Today', 'Tomorrow']
     
-    # for i in range(2, 9):  
-    #     future_day = today + timedelta(days=i)
-    #     day_names.append(future_day.strftime('%A %d'))
+    for i in range(2, 9):  
+        future_day = today + timedelta(days=i)
+        day_names.append(future_day.strftime('%A %d'))
 
     
     context = {
         'formatted_date': formatted_date,
-        # 'last_data_NUTECH': mapped_last_data_NUTECH,
-        # 'last_data_Margalla': mapped_last_data_Margalla,
         'combined_data': combined_data,
+        'mapped_last_data_NUTECH': json.dumps(mapped_last_data_NUTECH),
+        'mapped_last_data_Margalla': json.dumps(mapped_last_data_Margalla),
         'mapped_all_data_NUTECH': json.dumps(mapped_all_data_NUTECH),
         'mapped_all_data_Margalla': json.dumps(mapped_all_data_Margalla),
         'mapped_weekly_data_NUTECH': json.dumps(mapped_weekly_data_NUTECH),
@@ -569,37 +598,29 @@ def index(request):
         'mapped_monthly_data_NUTECH': json.dumps(mapped_monthly_data_NUTECH),
         'aggregated_monthly_data_NUTECH': json.dumps(aggregated_monthly_data_NUTECH),
         'aggregated_monthly_data_Margalla': json.dumps(aggregated_monthly_data_Margalla),
-        'mapped_all_data_NUTECH' : mapped_all_data_NUTECH,
-        # 'predictions_day_1_NUTECH': predictions_by_day_NUTECH.get(1, {}),
-        # 'predictions_day_2_NUTECH': predictions_by_day_NUTECH.get(2, {}),
-        # 'predictions_day_3_NUTECH': predictions_by_day_NUTECH.get(3, {}),
-        # 'predictions_day_4_NUTECH': predictions_by_day_NUTECH.get(4, {}),
-        # 'predictions_day_5_NUTECH': predictions_by_day_NUTECH.get(5, {}),
-        # 'predictions_day_6_NUTECH': predictions_by_day_NUTECH.get(6, {}),
-        # 'predictions_day_7_NUTECH': predictions_by_day_NUTECH.get(7, {}),
-        # 'predictions_day_1_Margalla': predictions_by_day_Margalla.get(1, {}),
-        # 'predictions_day_2_Margalla': predictions_by_day_Margalla.get(2, {}),
-        # 'predictions_day_3_Margalla': predictions_by_day_Margalla.get(3, {}),
-        # 'predictions_day_4_Margalla': predictions_by_day_Margalla.get(4, {}),
-        # 'predictions_day_5_Margalla': predictions_by_day_Margalla.get(5, {}),
-        # 'predictions_day_6_Margalla': predictions_by_day_Margalla.get(6, {}),
-        # 'predictions_day_7_Margalla': predictions_by_day_Margalla.get(7, {}),
-        # 'day_name_1': day_names[0],
-        # 'day_name_2': day_names[1],
-        # 'day_name_3': day_names[2],
-        # 'day_name_4': day_names[3],
-        # 'day_name_5': day_names[4],
-        # 'day_name_6': day_names[5],
-        # 'day_name_7': day_names[6],
-        # 'temperature_graph_html_day': temperature_graph_html_day,
-        # 'humidity_graph_html_day': humidity_graph_html_day,
-        # 'pressure_graph_html_day': pressure_graph_html_day,
-        # 'temperature_graph_html_week': temperature_graph_html_week,
-        # 'humidity_graph_html_week': humidity_graph_html_week,
-        # 'pressure_graph_html_week': pressure_graph_html_week,
-        # 'temperature_graph_html_month': temperature_graph_html_month,
-        # 'humidity_graph_html_month': humidity_graph_html_month,
-        # 'pressure_graph_html_month': pressure_graph_html_month,
+        'last_7_data_NUTECH': last_7_data_NUTECH,
+        'last_7_data_Margalla': last_7_data_Margalla,
+        'predictions_day_1_NUTECH': predictions_by_day_NUTECH.get(1, {}),
+        'predictions_day_2_NUTECH': predictions_by_day_NUTECH.get(2, {}),
+        'predictions_day_3_NUTECH': predictions_by_day_NUTECH.get(3, {}),
+        'predictions_day_4_NUTECH': predictions_by_day_NUTECH.get(4, {}),
+        'predictions_day_5_NUTECH': predictions_by_day_NUTECH.get(5, {}),
+        'predictions_day_6_NUTECH': predictions_by_day_NUTECH.get(6, {}),
+        'predictions_day_7_NUTECH': predictions_by_day_NUTECH.get(7, {}),
+        'predictions_day_1_Margalla': predictions_by_day_Margalla.get(1, {}),
+        'predictions_day_2_Margalla': predictions_by_day_Margalla.get(2, {}),
+        'predictions_day_3_Margalla': predictions_by_day_Margalla.get(3, {}),
+        'predictions_day_4_Margalla': predictions_by_day_Margalla.get(4, {}),
+        'predictions_day_5_Margalla': predictions_by_day_Margalla.get(5, {}),
+        'predictions_day_6_Margalla': predictions_by_day_Margalla.get(6, {}),
+        'predictions_day_7_Margalla': predictions_by_day_Margalla.get(7, {}),
+        'day_name_1': day_names[0],
+        'day_name_2': day_names[1],
+        'day_name_3': day_names[2],
+        'day_name_4': day_names[3],
+        'day_name_5': day_names[4],
+        'day_name_6': day_names[5],
+        'day_name_7': day_names[6],
     }
 
     return render(request, 'index.html', context)

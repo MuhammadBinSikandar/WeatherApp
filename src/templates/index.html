@@ -8,10 +8,6 @@
     <title>Weather Dashboard</title>
     <link href="{% static 'css/output.css' %}" rel="stylesheet">
     <script>
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> e9ea83a5d4e69b794902ce86969f46298c5b08e0
         var TodayDataNUTECH = "{{ mapped_all_data_NUTECH }}";
         var TodayDataMARGALLA = "{{ mapped_all_data_Margalla }}";
         var WeeklyDataNUTECH = "{{ mapped_weekly_data_NUTECH }}";
@@ -20,6 +16,8 @@
         var Monthly_Graphs_Labels = "{{mapped_monthly_data_NUTECH}}"
         var Monthly_Graphs_Data_NUTECH = "{{aggregated_monthly_data_NUTECH}}"
         var Monthly_Graphs_Data_MARGALLA = "{{aggregated_monthly_data_Margalla}}"
+        var mapped_last_data_NUTECH = "{{ mapped_last_data_NUTECH }}"
+        var mapped_last_data_Margalla = "{{ mapped_last_data_Margalla }}"
 
         TodayDataNUTECH = TodayDataNUTECH.replace(/&quot;/g, '"');
         TodayDataMARGALLA = TodayDataMARGALLA.replace(/&quot;/g, '"');
@@ -29,6 +27,8 @@
         Monthly_Graphs_Labels = Monthly_Graphs_Labels.replace(/&quot;/g, '"');
         Monthly_Graphs_Data_NUTECH = Monthly_Graphs_Data_NUTECH.replace(/&quot;/g, '"');
         Monthly_Graphs_Data_MARGALLA = Monthly_Graphs_Data_MARGALLA.replace(/&quot;/g, '"');
+        mapped_last_data_NUTECH = mapped_last_data_NUTECH.replace(/&quot;/g, '"');
+        mapped_last_data_Margalla = mapped_last_data_Margalla.replace(/&quot;/g, '"');
 
         try {
             TodayDataNUTECH = JSON.parse(TodayDataNUTECH);
@@ -62,31 +62,34 @@
 
         try {
             Monthly_Graphs_Labels = JSON.parse(Monthly_Graphs_Labels);
-            console.log(Monthly_Graphs_Labels);
         } catch (e) {
             console.error('Failed to parse JSON:', e);
         }
 
         try {
             Monthly_Graphs_Data_NUTECH = JSON.parse(Monthly_Graphs_Data_NUTECH);
-            console.log(Monthly_Graphs_Data_NUTECH);
         } catch (e) {
             console.error('Failed to parse JSON:', e);
         }
 
         try {
             Monthly_Graphs_Data_MARGALLA = JSON.parse(Monthly_Graphs_Data_MARGALLA);
-            console.log(Monthly_Graphs_Data_MARGALLA);
         } catch (e) {
             console.error('Failed to parse JSON:', e);
         }
 
-<<<<<<< HEAD
-=======
-=======
-        var TodayData = "{{ mapped_all_data_NUTECH }}";
->>>>>>> d6eb8847b9f0289418c744ba86fad811561abc03
->>>>>>> e9ea83a5d4e69b794902ce86969f46298c5b08e0
+        try {
+            mapped_last_data_NUTECH = JSON.parse(mapped_last_data_NUTECH);
+        } catch (e) {
+            console.error('Failed to parse JSON:', e);
+        }
+
+        try {
+            mapped_last_data_Margalla = JSON.parse(mapped_last_data_Margalla);
+        } catch (e) {
+            console.error('Failed to parse JSON:', e);
+        }
+
     </script>
     <style>
         .hidden_content {
@@ -153,11 +156,31 @@
         <button id="Graphs_Button" class="btn button_inactive btn-outline btn-xs sm:btn-sm md:btn-md lg:btn-lg">Graphs</button>
         <button id="Data_Button" class="btn button_inactive btn-outline btn-xs sm:btn-sm md:btn-md lg:btn-lg">Data</button>
     </nav>
-    
+
     <!-- Main Content -->
     <main class="px-4">
-        <!-- Date and Tables -->
+
         <div id="Nutech_Tab" class="tab_content">
+            <div id="Alert_Nutech" class="hidden p-4 space-y-4">
+                <div id="Temp_Alert_Nutech" class="alert alert-error shadow-lg flex items-center justify-between p-2 bg-red-500 text-white rounded-lg">
+                    <div class="flex items-center">
+                        <span class="text-2xl mr-3">🌡️</span>
+                        <span class="font-semibold">Warning: Temperature has exceeded the safe limit!</span>
+                    </div>
+                </div>
+                <div id="Wind_Alert_Nutech" class="alert alert-warning shadow-lg flex items-center justify-between p-2 bg-yellow-500 text-white rounded-lg">
+                    <div class="flex items-center">
+                        <span class="text-2xl mr-3">💨</span>
+                        <span class="font-semibold">Caution: Wind speed is too high!</span>
+                    </div>
+                </div>
+                <div id="Thunderstorm-Alert_Nutech" class="alert alert-error shadow-lg flex items-center justify-between p-2 bg-red-700 text-white rounded-lg">
+                    <div class="flex items-center">
+                        <span class="text-2xl mr-3">⚡</span>
+                        <span class="font-semibold">Danger: Thunderstorm detected!</span>
+                    </div>
+                </div>
+            </div>
             <section class="text-center mt-4">
                 <div class="grid grid-cols-1 lg:grid-cols-7 gap-4 mt-4">
                     <div class="text-white flex flex-col justify-between h-full lg:col-span-1 md:col-span-2 sm:col-span-2">
@@ -173,7 +196,7 @@
                         </div>
                     </div>
                     <div class="lg:col-span-6 md:col-span-5 sm:col-span-5 overflow-x-auto">
-                        <h3 class="text-lg font-bold text-left mb-2 border-b-[1px]">August 15th, 2024</h3>
+                        <h3 class="text-lg font-bold text-left mb-2 border-b-[1px]">{{formatted_date}}</h3>
                         <table class="table font-bold text-center table-compact w-full border border-white">
                             <thead>
                                 <tr class="bg-[#1f2937] text-white border-b border-white">
@@ -190,122 +213,41 @@
                                     <th class="border-r border-white">Evapotranspiration (mm/h)</th>
                                     <th class="border-r border-white">CO<sub>2</sub> (ppm)</th>
                                     <th class="border-r border-white">Optical Particles (g/m)</th>
-                                    <th>Pollen</th>
+                                    <th class="border-r border-white">Pollen</th>
                                 </tr>
                             </thead>
+
                             <tbody id="weatherData">
-                                <tr class="border-b border-white">
-                                    <td class="border-r border-white whitespace-nowrap">03:15 AM</td>
-                                    <td class="border-r border-white">🌤</td>
-                                    <td class="border-r border-white text-black">14</td>
-                                    <td class="border-r border-white text-black">1012</td>
-                                    <td class="border-r border-white text-black">190</td>
-                                    <td class="border-r border-white text-black">West</td>
-                                    <td class="border-r border-white text-black">55</td>
-                                    <td class="border-r border-white text-black">5</td>
-                                    <td class="border-r border-white text-black">800</td>
-                                    <td class="border-r border-white text-black">30</td>
-                                    <td class="border-r border-white text-black">8</td>
-                                    <td class="border-r border-white text-black">3500</td>
-                                    <td class="border-r border-white text-black">40</td>
-                                    <td class="border-r border-white text-black">70</td>
-                                </tr>
-                                <tr class="border-b border-white">
-                                    <td class="border-r border-white">04:30 AM</td>
-                                    <td class="border-r border-white">☁️</td>
-                                    <td class="border-r border-white text-black">12</td>
-                                    <td class="border-r border-white text-black">1008</td>
-                                    <td class="border-r border-white text-black">220</td>
-                                    <td class="border-r border-white text-black">South</td>
-                                    <td class="border-r border-white text-black">65</td>
-                                    <td class="border-r border-white text-black">10</td>
-                                    <td class="border-r border-white text-black">700</td>
-                                    <td class="border-r border-white text-black">45</td>
-                                    <td class="border-r border-white text-black">10</td>
-                                    <td class="border-r border-white text-black">3300</td>
-                                    <td class="border-r border-white text-black">50</td>
-                                    <td class="border-r border-white text-black">60</td>
-                                </tr>
-                                <tr class="border-b border-white">
-                                    <td class="border-r border-white">05:45 AM</td>
-                                    <td class="border-r border-white">🌨</td>
-                                    <td class="border-r border-white text-black">11</td>
-                                    <td class="border-r border-white text-black">1000</td>
-                                    <td class="border-r border-white text-black">210</td>
-                                    <td class="border-r border-white text-black">East</td>
-                                    <td class="border-r border-white text-black">70</td>
-                                    <td class="border-r border-white text-black">15</td>
-                                    <td class="border-r border-white text-black">650</td>
-                                    <td class="border-r border-white text-black">50</td>
-                                    <td class="border-r border-white text-black">12</td>
-                                    <td class="border-r border-white text-black">3200</td>
-                                    <td class="border-r border-white text-black">60</td>
-                                    <td class="border-r border-white text-black">80</td>
-                                </tr>
-                                <tr class="border-b border-white">
-                                    <td class="border-r border-white">06:00 AM</td>
-                                    <td class="border-r border-white">🌫</td>
-                                    <td class="border-r border-white text-black">10</td>
-                                    <td class="border-r border-white text-black">995</td>
-                                    <td class="border-r border-white text-black">180</td>
-                                    <td class="border-r border-white text-black">North</td>
-                                    <td class="border-r border-white text-black">75</td>
-                                    <td class="border-r border-white text-black">8</td>
-                                    <td class="border-r border-white text-black">600</td>
-                                    <td class="border-r border-white text-black">55</td>
-                                    <td class="border-r border-white text-black">9</td>
-                                    <td class="border-r border-white text-black">3100</td>
-                                    <td class="border-r border-white text-black">70</td>
-                                    <td class="border-r border-white text-black">90</td>
-                                </tr>
-                                <tr class="border-b border-white">
-                                    <td class="border-r border-white">07:15 AM</td>
-                                    <td class="border-r border-white">🌦</td>
-                                    <td class="border-r border-white text-black">13</td>
-                                    <td class="border-r border-white text-black">990</td>
-                                    <td class="border-r border-white text-black">200</td>
-                                    <td class="border-r border-white text-black">NW</td>
-                                    <td class="border-r border-white text-black">60</td>
-                                    <td class="border-r border-white text-black">12</td>
-                                    <td class="border-r border-white text-black">750</td>
-                                    <td class="border-r border-white text-black">40</td>
-                                    <td class="border-r border-white text-black">11</td>
-                                    <td class="border-r border-white text-black">3300</td>
-                                    <td class="border-r border-white text-black">55</td>
-                                    <td class="border-r border-white text-black">100</td>
-                                </tr>
-                                <tr class="border-b border-white">
-                                    <td class="border-r border-white">08:30 AM</td>
-                                    <td class="border-r border-white">🌤</td>
-                                    <td class="border-r border-white text-black">15</td>
-                                    <td class="border-r border-white text-black">1015</td>
-                                    <td class="border-r border-white text-black">170</td>
-                                    <td class="border-r border-white text-black">SE</td>
-                                    <td class="border-r border-white text-black">50</td>
-                                    <td class="border-r border-white text-black">6</td>
-                                    <td class="border-r border-white text-black">800</td>
-                                    <td class="border-r border-white text-black">35</td>
-                                    <td class="border-r border-white text-black">8</td>
-                                    <td class="border-r border-white text-black">3000</td>
-                                    <td class="border-r border-white text-black">45</td>
-                                    <td class="border-r border-white text-black">85</td>
-                                </tr>
-                                <tr class="border-b border-white">
-                                    <td class="border-r border-white">09:45 AM</td>
-                                    <td class="border-r border-white">🌤</td>
-                                    <td class="border-r border-white text-black">16</td>
-                                    <td class="border-r border-white text-black">1020</td>
-                                    <td class="border-r border-white text-black">160</td>
-                                    <td class="border-r border-white text-black">SW</td>
-                                    <td class="border-r border-white text-black">45</td>
-                                    <td class="border-r border-white text-black">5</td>
-                                    <td class="border-r border-white text-black">850</td>
-                                    <td class="border-r border-white text-black">30</td>
-                                    <td class="border-r border-white text-black">7</td>
-                                    <td class="border-r border-white text-black">2900</td>
-                                    <td class="border-r border-white text-black">50</td>
-                                    <td class="border-r border-white text-black">75</td>
-                                </tr>
+                                {% for row in last_7_data_NUTECH %}
+                                    <tr class="border-b border-white">
+                                        <td class="border-r border-white whitespace-nowrap">{{ row.Time }}</td>
+                                        <td class="border-r border-white">
+                                            {% if row.Rain > 0 %}
+                                                🌧
+                                            {% elif row.Time|slice:":2" == "PM" %}
+                                                🌙 
+                                            {% elif row.Solar_Radiation > 200 %}
+                                                🌞 
+                                            {% elif row.Solar_Radiation > 100 %}
+                                                ☁ 
+                                            {% else %}
+                                                🌥 
+                                            {% endif %}
+                                        </td>
+                                        <td class="border-r border-white text-black">{{ row.Temperature }}</td>
+                                        <td class="border-r border-white text-black">{{ row.Pressure }}</td>
+                                        <td class="border-r border-white text-black">{{ row.Wind_Speed }}</td>
+                                        <td class="border-r border-white text-black">{{ row.Wind_Direction }}</td>
+                                        <td class="border-r border-white text-black">{{ row.Humidity }}</td>
+                                        <td class="border-r border-white text-black">{{ row.Rain }}</td>
+                                        <td class="border-r border-white text-black">{{ row.Solar_Radiation }}</td>
+                                        <td class="border-r border-white text-black">{{ row.Soil_Moisture }}</td>
+                                        <td class="border-r border-white text-black">{{ row.Evapotranspiration }}</td>
+                                        <td class="border-r border-white text-black">{{ row.CO2_level }}</td>
+                                        <td class="border-r border-white text-black">{{ row.Optical_Particles }}</td>
+                                        <td class="border-r border-white text-black">{{ row.Pollen_Count }}</td>
+                                    </tr>
+                                {% endfor %}
                             </tbody>
                         </table>
                     </div>
@@ -315,63 +257,116 @@
             <section class="w-full">
                 <h2 class="text-lg font-bold text-center mb-4 border-b-2 pt-6">Forecast</h2>
                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 gap-4"> 
-                    <!-- Adjusted grid columns and gap -->
-                    
-                    <!-- Card -->
                     <div class="card bg-gray-800 p-4 rounded-lg shadow-md">
-                        <h3 class="text-sm font-semibold text-center mb-2">Today</h3>
+                        <h3 class="text-sm font-semibold text-center mb-2">{{day_name_1}}</h3>
                         <div class="flex items-center justify-between mb-4">
                             <div class="flex flex-col items-center">
-                                <img src="static/assets/rain.png" alt="Weather Icon" class="w-20 h-20">
-                                <span class="text-sm text-gray-300 mt-2">Sunny</span>
+                                {% if predictions_day_1_NUTECH.Icon == "thunder-rain" %}
+                                    <img src="{% static 'assets/thunder-rain.png' %}" alt="Thunder Rain Icon" class="w-20 h-20">
+                                {% elif predictions_day_1_NUTECH.Icon == "thunder-showers-day" %}
+                                    <img src="{% static 'assets/thunder-rain.png' %}" alt="Thunder Showers Day Icon" class="w-20 h-20">
+                                {% elif predictions_day_1_NUTECH.Icon == "thunder-showers-night" %}
+                                    <img src="{% static 'assets/thunder-rain.png' %}" alt="Thunder Showers Night Icon" class="w-20 h-20">
+                                {% elif predictions_day_1_NUTECH.Icon == "rain" %}
+                                    <img src="{% static 'assets/rain.png' %}" alt="Rain Icon" class="w-20 h-20">
+                                {% elif predictions_day_1_NUTECH.Icon == "showers-day" %}
+                                    <img src="{% static 'assets/rain.png' %}" alt="Showers Day Icon" class="w-20 h-20">
+                                {% elif predictions_day_1_NUTECH.Icon == "showers-night" %}
+                                    <img src="{% static 'assets/rain.png' %}" alt="Showers Night Icon" class="w-20 h-20">
+                                {% elif predictions_day_1_NUTECH.Icon == "fog" %}
+                                    <img src="{% static 'assets/fog.png' %}" alt="Fog Icon" class="w-20 h-20">
+                                {% elif predictions_day_1_NUTECH.Icon == "wind" %}
+                                    <img src="{% static 'assets/wind.png' %}" alt="Wind Icon" class="w-20 h-20">
+                                {% elif predictions_day_1_NUTECH.Icon == "cloudy" %}
+                                    <img src="{% static 'assets/cloudy.png' %}" alt="Cloudy Icon" class="w-20 h-20">
+                                {% elif predictions_day_1_NUTECH.Icon == "partly-cloudy-day" %}
+                                    <img src="{% static 'assets/partly-cloudy-day.png' %}" alt="Partly Cloudy Day Icon" class="w-20 h-20">
+                                {% elif predictions_day_1_NUTECH.Icon == "partly-cloudy-night" %}
+                                    <img src="{% static 'assets/partly-cloudy-night.png' %}" alt="Partly Cloudy Night Icon" class="w-20 h-20">
+                                {% elif predictions_day_1_NUTECH.Icon == "clear-day" %}
+                                    <img src="{% static 'assets/clear-day.png' %}" alt="Clear Day Icon" class="w-20 h-20">
+                                {% elif predictions_day_1_NUTECH.Icon == "clear-night" %}
+                                    <img src="{% static 'assets/clear-night.png' %}" alt="Clear Night Icon" class="w-20 h-20">
+                                {% else %}
+                                    <img src="{% static 'assets/default.png' %}" alt="Default Weather Icon" class="w-20 h-20">
+                                {% endif %}
+                                <span class="text-sm text-gray-300 mt-2">{{ predictions_day_1_NUTECH.Heading }}</span>
                             </div>
-                            <div class="text-5xl font-bold">37°C</div>
+                            <div class="text-5xl font-bold">{{predictions_day_1_NUTECH.Temperature}}°C</div>
                         </div>
                         <div class="flex items-center justify-between mb-2">
                             <div class="flex items-center">
                                 <img src="static/assets/airpressure.png" alt="Pressure Icon" class="w-8 h-8">
                                 <span class="ml-2 text-sm font-semibold">Pressure</span>
                             </div>
-                            <span class="text-sm">1024 hPa</span>
+                            <span class="text-sm">{{predictions_day_1_NUTECH.Pressure}} hPa</span>
                         </div>
                         <div class="flex items-center justify-between mb-2">
                             <div class="flex items-center">
-                                <img src="static/assets/rain.png" alt="Rain Icon" class="w-8 h-8">
+                                <img src="static/assets/rainy.png" alt="Rain Icon" class="w-8 h-8">
                                 <span class="ml-2 text-sm font-semibold">Rain</span>
                             </div>
-                            <span class="text-sm">20%</span>
+                            <span class="text-sm">{{predictions_day_1_NUTECH.Rain}}%</span>
                         </div>
                         <div class="flex items-center justify-between mb-2">
                             <div class="flex items-center">
                                 <img src="static/assets/windspeed.png" alt="Wind Icon" class="w-8 h-8">
                                 <span class="ml-2 text-sm font-semibold">Wind</span>
                             </div>
-                            <span class="text-sm">5 km/h</span>
+                            <span class="text-sm">{{predictions_day_1_NUTECH.Wind_Speed}} km/h</span>
                         </div>
                         <div class="text-center text-sm mt-4">
-                            <span>28° / 40°</span>
+                            <span>{{predictions_day_1_NUTECH.Low_Temperature}}° / {{predictions_day_1_NUTECH.High_Temperature}}°</span>
                         </div>
                     </div>
                     <div class="card bg-gray-800 p-4 rounded-lg shadow-md">
-                        <h3 class="text-sm font-semibold text-center mb-2">Today</h3>
+                        <h3 class="text-sm font-semibold text-center mb-2">{{day_name_2}}</h3>
                         <div class="flex items-center justify-between mb-4">
                             <div class="flex flex-col items-center">
-                                <img src="static/assets/rain.png" alt="Weather Icon" class="w-20 h-20">
-                                <span class="text-sm text-gray-300 mt-2">Sunny</span>
+                                {% if predictions_day_2_NUTECH.Icon == "thunder-rain" %}
+                                    <img src="{% static 'assets/thunder-rain.png' %}" alt="Thunder Rain Icon" class="w-20 h-20">
+                                {% elif predictions_day_2_NUTECH.Icon == "thunder-showers-day" %}
+                                    <img src="{% static 'assets/thunder-rain.png' %}" alt="Thunder Showers Day Icon" class="w-20 h-20">
+                                {% elif predictions_day_2_NUTECH.Icon == "thunder-showers-night" %}
+                                    <img src="{% static 'assets/thunder-rain.png' %}" alt="Thunder Showers Night Icon" class="w-20 h-20">
+                                {% elif predictions_day_2_NUTECH.Icon == "rain" %}
+                                    <img src="{% static 'assets/rain.png' %}" alt="Rain Icon" class="w-20 h-20">
+                                {% elif predictions_day_2_NUTECH.Icon == "showers-day" %}
+                                    <img src="{% static 'assets/rain.png' %}" alt="Showers Day Icon" class="w-20 h-20">
+                                {% elif predictions_day_2_NUTECH.Icon == "showers-night" %}
+                                    <img src="{% static 'assets/rain.png' %}" alt="Showers Night Icon" class="w-20 h-20">
+                                {% elif predictions_day_2_NUTECH.Icon == "fog" %}
+                                    <img src="{% static 'assets/fog.png' %}" alt="Fog Icon" class="w-20 h-20">
+                                {% elif predictions_day_2_NUTECH.Icon == "wind" %}
+                                    <img src="{% static 'assets/wind.png' %}" alt="Wind Icon" class="w-20 h-20">
+                                {% elif predictions_day_2_NUTECH.Icon == "cloudy" %}
+                                    <img src="{% static 'assets/cloudy.png' %}" alt="Cloudy Icon" class="w-20 h-20">
+                                {% elif predictions_day_2_NUTECH.Icon == "partly-cloudy-day" %}
+                                    <img src="{% static 'assets/partly-cloudy-day.png' %}" alt="Partly Cloudy Day Icon" class="w-20 h-20">
+                                {% elif predictions_day_2_NUTECH.Icon == "partly-cloudy-night" %}
+                                    <img src="{% static 'assets/partly-cloudy-night.png' %}" alt="Partly Cloudy Night Icon" class="w-20 h-20">
+                                {% elif predictions_day_2_NUTECH.Icon == "clear-day" %}
+                                    <img src="{% static 'assets/clear-day.png' %}" alt="Clear Day Icon" class="w-20 h-20">
+                                {% elif predictions_day_2_NUTECH.Icon == "clear-night" %}
+                                    <img src="{% static 'assets/clear-night.png' %}" alt="Clear Night Icon" class="w-20 h-20">
+                                {% else %}
+                                    <img src="{% static 'assets/default.png' %}" alt="Default Weather Icon" class="w-20 h-20">
+                                {% endif %}
+                                <span class="text-sm text-gray-300 mt-2">{{ predictions_day_2_NUTECH.Heading }}</span>
                             </div>
-                            <div class="text-5xl font-bold">37°C</div>
+                            <div class="text-5xl font-bold">{{predictions_day_2_NUTECH.Temperature}}°C</div>
                         </div>
                         <div class="flex items-center justify-between mb-2">
                             <div class="flex items-center">
                                 <img src="static/assets/airpressure.png" alt="Pressure Icon" class="w-8 h-8">
                                 <span class="ml-2 text-sm font-semibold">Pressure</span>
                             </div>
-                            <span class="text-sm">1024 hPa</span>
+                            <span class="text-sm">{{predictions_day_2_NUTECH.Pressure}} hPa</span>
                         </div>
                         <div class="flex items-center justify-between mb-2">
                             <div class="flex items-center">
                                 <img src="static/assets/rain.png" alt="Rain Icon" class="w-8 h-8">
-                                <span class="ml-2 text-sm font-semibold">Rain</span>
+                                <span class="ml-2 text-sm font-semibold">{{predictions_day_2_NUTECH.Rain}}%</span>
                             </div>
                             <span class="text-sm">20%</span>
                         </div>
@@ -380,185 +375,325 @@
                                 <img src="static/assets/windspeed.png" alt="Wind Icon" class="w-8 h-8">
                                 <span class="ml-2 text-sm font-semibold">Wind</span>
                             </div>
-                            <span class="text-sm">5 km/h</span>
+                            <span class="text-sm">{{predictions_day_2_NUTECH.Wind_Speed}} km/h</span>
                         </div>
                         <div class="text-center text-sm mt-4">
-                            <span>28° / 40°</span>
+                            <span>{{predictions_day_2_NUTECH.Low_Temperature}}° / {{predictions_day_2_NUTECH.High_Temperature}}°</span>
                         </div>
                     </div>
                     <div class="card bg-gray-800 p-4 rounded-lg shadow-md">
-                        <h3 class="text-sm font-semibold text-center mb-2">Today</h3>
+                        <h3 class="text-sm font-semibold text-center mb-2">{{day_name_3}}</h3>
                         <div class="flex items-center justify-between mb-4">
                             <div class="flex flex-col items-center">
-                                <img src="static/assets/rain.png" alt="Weather Icon" class="w-20 h-20">
-                                <span class="text-sm text-gray-300 mt-2">Sunny</span>
+                                {% if predictions_day_3_NUTECH.Icon == "thunder-rain" %}
+                                    <img src="{% static 'assets/thunder-rain.png' %}" alt="Thunder Rain Icon" class="w-20 h-20">
+                                {% elif predictions_day_3_NUTECH.Icon == "thunder-showers-day" %}
+                                    <img src="{% static 'assets/thunder-rain.png' %}" alt="Thunder Showers Day Icon" class="w-20 h-20">
+                                {% elif predictions_day_3_NUTECH.Icon == "thunder-showers-night" %}
+                                    <img src="{% static 'assets/thunder-rain.png' %}" alt="Thunder Showers Night Icon" class="w-20 h-20">
+                                {% elif predictions_day_3_NUTECH.Icon == "rain" %}
+                                    <img src="{% static 'assets/rain.png' %}" alt="Rain Icon" class="w-20 h-20">
+                                {% elif predictions_day_3_NUTECH.Icon == "showers-day" %}
+                                    <img src="{% static 'assets/rain.png' %}" alt="Showers Day Icon" class="w-20 h-20">
+                                {% elif predictions_day_3_NUTECH.Icon == "showers-night" %}
+                                    <img src="{% static 'assets/rain.png' %}" alt="Showers Night Icon" class="w-20 h-20">
+                                {% elif predictions_day_3_NUTECH.Icon == "fog" %}
+                                    <img src="{% static 'assets/fog.png' %}" alt="Fog Icon" class="w-20 h-20">
+                                {% elif predictions_day_3_NUTECH.Icon == "wind" %}
+                                    <img src="{% static 'assets/wind.png' %}" alt="Wind Icon" class="w-20 h-20">
+                                {% elif predictions_day_3_NUTECH.Icon == "cloudy" %}
+                                    <img src="{% static 'assets/cloudy.png' %}" alt="Cloudy Icon" class="w-20 h-20">
+                                {% elif predictions_day_3_NUTECH.Icon == "partly-cloudy-day" %}
+                                    <img src="{% static 'assets/partly-cloudy-day.png' %}" alt="Partly Cloudy Day Icon" class="w-20 h-20">
+                                {% elif predictions_day_3_NUTECH.Icon == "partly-cloudy-night" %}
+                                    <img src="{% static 'assets/partly-cloudy-night.png' %}" alt="Partly Cloudy Night Icon" class="w-20 h-20">
+                                {% elif predictions_day_3_NUTECH.Icon == "clear-day" %}
+                                    <img src="{% static 'assets/clear-day.png' %}" alt="Clear Day Icon" class="w-20 h-20">
+                                {% elif predictions_day_3_NUTECH.Icon == "clear-night" %}
+                                    <img src="{% static 'assets/clear-night.png' %}" alt="Clear Night Icon" class="w-20 h-20">
+                                {% else %}
+                                    <img src="{% static 'assets/default.png' %}" alt="Default Weather Icon" class="w-20 h-20">
+                                {% endif %}
+                                <span class="text-sm text-gray-300 mt-2">{{ predictions_day_3_NUTECH.Heading }}</span>
                             </div>
-                            <div class="text-5xl font-bold">37°C</div>
+                            <div class="text-5xl font-bold">{{predictions_day_3_NUTECH.Temperature}}°C</div>
                         </div>
                         <div class="flex items-center justify-between mb-2">
                             <div class="flex items-center">
                                 <img src="static/assets/airpressure.png" alt="Pressure Icon" class="w-8 h-8">
                                 <span class="ml-2 text-sm font-semibold">Pressure</span>
                             </div>
-                            <span class="text-sm">1024 hPa</span>
+                            <span class="text-sm">{{predictions_day_3_NUTECH.Pressure}} hPa</span>
                         </div>
                         <div class="flex items-center justify-between mb-2">
                             <div class="flex items-center">
-                                <img src="static/assets/rain.png" alt="Rain Icon" class="w-8 h-8">
+                                <img src="static/assets/rainy.png" alt="Rain Icon" class="w-8 h-8">
                                 <span class="ml-2 text-sm font-semibold">Rain</span>
                             </div>
-                            <span class="text-sm">20%</span>
+                            <span class="text-sm">{{predictions_day_3_NUTECH.Rain}}%</span>
                         </div>
                         <div class="flex items-center justify-between mb-2">
                             <div class="flex items-center">
                                 <img src="static/assets/windspeed.png" alt="Wind Icon" class="w-8 h-8">
                                 <span class="ml-2 text-sm font-semibold">Wind</span>
                             </div>
-                            <span class="text-sm">5 km/h</span>
+                            <span class="text-sm">{{predictions_day_3_NUTECH.Wind_Speed}} km/h</span>
                         </div>
                         <div class="text-center text-sm mt-4">
-                            <span>28° / 40°</span>
+                            <span>{{predictions_day_3_NUTECH.Low_Temperature}}° / {{predictions_day_3_NUTECH.High_Temperature}}°</span>
                         </div>
                     </div>
                     <div class="card bg-gray-800 p-4 rounded-lg shadow-md">
-                        <h3 class="text-sm font-semibold text-center mb-2">Today</h3>
+                        <h3 class="text-sm font-semibold text-center mb-2">{{day_name_4}}</h3>
                         <div class="flex items-center justify-between mb-4">
                             <div class="flex flex-col items-center">
-                                <img src="static/assets/rain.png" alt="Weather Icon" class="w-20 h-20">
-                                <span class="text-sm text-gray-300 mt-2">Sunny</span>
+                                {% if predictions_day_4_NUTECH.Icon == "thunder-rain" %}
+                                    <img src="{% static 'assets/thunder-rain.png' %}" alt="Thunder Rain Icon" class="w-20 h-20">
+                                {% elif predictions_day_4_NUTECH.Icon == "thunder-showers-day" %}
+                                    <img src="{% static 'assets/thunder-rain.png' %}" alt="Thunder Showers Day Icon" class="w-20 h-20">
+                                {% elif predictions_day_4_NUTECH.Icon == "thunder-showers-night" %}
+                                    <img src="{% static 'assets/thunder-rain.png' %}" alt="Thunder Showers Night Icon" class="w-20 h-20">
+                                {% elif predictions_day_4_NUTECH.Icon == "rain" %}
+                                    <img src="{% static 'assets/rain.png' %}" alt="Rain Icon" class="w-20 h-20">
+                                {% elif predictions_day_4_NUTECH.Icon == "showers-day" %}
+                                    <img src="{% static 'assets/rain.png' %}" alt="Showers Day Icon" class="w-20 h-20">
+                                {% elif predictions_day_4_NUTECH.Icon == "showers-night" %}
+                                    <img src="{% static 'assets/rain.png' %}" alt="Showers Night Icon" class="w-20 h-20">
+                                {% elif predictions_day_4_NUTECH.Icon == "fog" %}
+                                    <img src="{% static 'assets/fog.png' %}" alt="Fog Icon" class="w-20 h-20">
+                                {% elif predictions_day_4_NUTECH.Icon == "wind" %}
+                                    <img src="{% static 'assets/wind.png' %}" alt="Wind Icon" class="w-20 h-20">
+                                {% elif predictions_day_4_NUTECH.Icon == "cloudy" %}
+                                    <img src="{% static 'assets/cloudy.png' %}" alt="Cloudy Icon" class="w-20 h-20">
+                                {% elif predictions_day_4_NUTECH.Icon == "partly-cloudy-day" %}
+                                    <img src="{% static 'assets/partly-cloudy-day.png' %}" alt="Partly Cloudy Day Icon" class="w-20 h-20">
+                                {% elif predictions_day_4_NUTECH.Icon == "partly-cloudy-night" %}
+                                    <img src="{% static 'assets/partly-cloudy-night.png' %}" alt="Partly Cloudy Night Icon" class="w-20 h-20">
+                                {% elif predictions_day_4_NUTECH.Icon == "clear-day" %}
+                                    <img src="{% static 'assets/clear-day.png' %}" alt="Clear Day Icon" class="w-20 h-20">
+                                {% elif predictions_day_4_NUTECH.Icon == "clear-night" %}
+                                    <img src="{% static 'assets/clear-night.png' %}" alt="Clear Night Icon" class="w-20 h-20">
+                                {% else %}
+                                    <img src="{% static 'assets/default.png' %}" alt="Default Weather Icon" class="w-20 h-20">
+                                {% endif %}
+                                <span class="text-sm text-gray-300 mt-2">{{ predictions_day_4_NUTECH.Heading }}</span>
                             </div>
-                            <div class="text-5xl font-bold">37°C</div>
+                            <div class="text-5xl font-bold">{{predictions_day_4_NUTECH.Temperature}}°C</div>
                         </div>
                         <div class="flex items-center justify-between mb-2">
                             <div class="flex items-center">
                                 <img src="static/assets/airpressure.png" alt="Pressure Icon" class="w-8 h-8">
                                 <span class="ml-2 text-sm font-semibold">Pressure</span>
                             </div>
-                            <span class="text-sm">1024 hPa</span>
+                            <span class="text-sm">{{predictions_day_4_NUTECH.Pressure}} hPa</span>
                         </div>
                         <div class="flex items-center justify-between mb-2">
                             <div class="flex items-center">
-                                <img src="static/assets/rain.png" alt="Rain Icon" class="w-8 h-8">
+                                <img src="static/assets/rainy.png" alt="Rain Icon" class="w-8 h-8">
                                 <span class="ml-2 text-sm font-semibold">Rain</span>
                             </div>
-                            <span class="text-sm">20%</span>
+                            <span class="text-sm">{{predictions_day_4_NUTECH.Rain}}%</span>
                         </div>
                         <div class="flex items-center justify-between mb-2">
                             <div class="flex items-center">
                                 <img src="static/assets/windspeed.png" alt="Wind Icon" class="w-8 h-8">
                                 <span class="ml-2 text-sm font-semibold">Wind</span>
                             </div>
-                            <span class="text-sm">5 km/h</span>
+                            <span class="text-sm">{{predictions_day_4_NUTECH.Wind_Speed}} km/h</span>
                         </div>
                         <div class="text-center text-sm mt-4">
-                            <span>28° / 40°</span>
+                            <span>{{predictions_day_4_NUTECH.Low_Temperature}}° / {{predictions_day_4_NUTECH.High_Temperature}}°</span>
                         </div>
                     </div>
                     <div class="card bg-gray-800 p-4 rounded-lg shadow-md">
-                        <h3 class="text-sm font-semibold text-center mb-2">Today</h3>
+                        <h3 class="text-sm font-semibold text-center mb-2">{{day_name_5}}</h3>
                         <div class="flex items-center justify-between mb-4">
                             <div class="flex flex-col items-center">
-                                <img src="static/assets/rain.png" alt="Weather Icon" class="w-20 h-20">
-                                <span class="text-sm text-gray-300 mt-2">Sunny</span>
+                                {% if predictions_day_5_NUTECH.Icon == "thunder-rain" %}
+                                    <img src="{% static 'assets/thunder-rain.png' %}" alt="Thunder Rain Icon" class="w-20 h-20">
+                                {% elif predictions_day_5_NUTECH.Icon == "thunder-showers-day" %}
+                                    <img src="{% static 'assets/thunder-rain.png' %}" alt="Thunder Showers Day Icon" class="w-20 h-20">
+                                {% elif predictions_day_5_NUTECH.Icon == "thunder-showers-night" %}
+                                    <img src="{% static 'assets/thunder-rain.png' %}" alt="Thunder Showers Night Icon" class="w-20 h-20">
+                                {% elif predictions_day_5_NUTECH.Icon == "rain" %}
+                                    <img src="{% static 'assets/rain.png' %}" alt="Rain Icon" class="w-20 h-20">
+                                {% elif predictions_day_5_NUTECH.Icon == "showers-day" %}
+                                    <img src="{% static 'assets/rain.png' %}" alt="Showers Day Icon" class="w-20 h-20">
+                                {% elif predictions_day_5_NUTECH.Icon == "showers-night" %}
+                                    <img src="{% static 'assets/rain.png' %}" alt="Showers Night Icon" class="w-20 h-20">
+                                {% elif predictions_day_5_NUTECH.Icon == "fog" %}
+                                    <img src="{% static 'assets/fog.png' %}" alt="Fog Icon" class="w-20 h-20">
+                                {% elif predictions_day_5_NUTECH.Icon == "wind" %}
+                                    <img src="{% static 'assets/wind.png' %}" alt="Wind Icon" class="w-20 h-20">
+                                {% elif predictions_day_5_NUTECH.Icon == "cloudy" %}
+                                    <img src="{% static 'assets/cloudy.png' %}" alt="Cloudy Icon" class="w-20 h-20">
+                                {% elif predictions_day_5_NUTECH.Icon == "partly-cloudy-day" %}
+                                    <img src="{% static 'assets/partly-cloudy-day.png' %}" alt="Partly Cloudy Day Icon" class="w-20 h-20">
+                                {% elif predictions_day_5_NUTECH.Icon == "partly-cloudy-night" %}
+                                    <img src="{% static 'assets/partly-cloudy-night.png' %}" alt="Partly Cloudy Night Icon" class="w-20 h-20">
+                                {% elif predictions_day_5_NUTECH.Icon == "clear-day" %}
+                                    <img src="{% static 'assets/clear-day.png' %}" alt="Clear Day Icon" class="w-20 h-20">
+                                {% elif predictions_day_5_NUTECH.Icon == "clear-night" %}
+                                    <img src="{% static 'assets/clear-night.png' %}" alt="Clear Night Icon" class="w-20 h-20">
+                                {% else %}
+                                    <img src="{% static 'assets/default.png' %}" alt="Default Weather Icon" class="w-20 h-20">
+                                {% endif %}
+                                <span class="text-sm text-gray-300 mt-2">{{ predictions_day_5_NUTECH.Heading }}</span>
                             </div>
-                            <div class="text-5xl font-bold">37°C</div>
+                            <div class="text-5xl font-bold">{{predictions_day_5_NUTECH.Temperature}}°C</div>
                         </div>
                         <div class="flex items-center justify-between mb-2">
                             <div class="flex items-center">
                                 <img src="static/assets/airpressure.png" alt="Pressure Icon" class="w-8 h-8">
                                 <span class="ml-2 text-sm font-semibold">Pressure</span>
                             </div>
-                            <span class="text-sm">1024 hPa</span>
+                            <span class="text-sm">{{predictions_day_5_NUTECH.Pressure}} hPa</span>
                         </div>
                         <div class="flex items-center justify-between mb-2">
                             <div class="flex items-center">
-                                <img src="static/assets/rain.png" alt="Rain Icon" class="w-8 h-8">
+                                <img src="static/assets/rainy.png" alt="Rain Icon" class="w-8 h-8">
                                 <span class="ml-2 text-sm font-semibold">Rain</span>
                             </div>
-                            <span class="text-sm">20%</span>
+                            <span class="text-sm">{{predictions_day_5_NUTECH.Rain}}%</span>
                         </div>
                         <div class="flex items-center justify-between mb-2">
                             <div class="flex items-center">
                                 <img src="static/assets/windspeed.png" alt="Wind Icon" class="w-8 h-8">
                                 <span class="ml-2 text-sm font-semibold">Wind</span>
                             </div>
-                            <span class="text-sm">5 km/h</span>
+                            <span class="text-sm">{{predictions_day_5_NUTECH.Wind_Speed}} km/h</span>
                         </div>
                         <div class="text-center text-sm mt-4">
-                            <span>28° / 40°</span>
+                            <span>{{predictions_day_5_NUTECH.Low_Temperature}}° / {{predictions_day_5_NUTECH.High_Temperature}}°</span>
                         </div>
                     </div>
                     <div class="card bg-gray-800 p-4 rounded-lg shadow-md">
-                        <h3 class="text-sm font-semibold text-center mb-2">Today</h3>
+                        <h3 class="text-sm font-semibold text-center mb-2">{{day_name_6}}</h3>
                         <div class="flex items-center justify-between mb-4">
                             <div class="flex flex-col items-center">
-                                <img src="static/assets/rain.png" alt="Weather Icon" class="w-20 h-20">
-                                <span class="text-sm text-gray-300 mt-2">Sunny</span>
+                                {% if predictions_day_6_NUTECH.Icon == "thunder-rain" %}
+                                    <img src="{% static 'assets/thunder-rain.png' %}" alt="Thunder Rain Icon" class="w-20 h-20">
+                                {% elif predictions_day_6_NUTECH.Icon == "thunder-showers-day" %}
+                                    <img src="{% static 'assets/thunder-rain.png' %}" alt="Thunder Showers Day Icon" class="w-20 h-20">
+                                {% elif predictions_day_6_NUTECH.Icon == "thunder-showers-night" %}
+                                    <img src="{% static 'assets/thunder-rain.png' %}" alt="Thunder Showers Night Icon" class="w-20 h-20">
+                                {% elif predictions_day_6_NUTECH.Icon == "rain" %}
+                                    <img src="{% static 'assets/rain.png' %}" alt="Rain Icon" class="w-20 h-20">
+                                {% elif predictions_day_6_NUTECH.Icon == "showers-day" %}
+                                    <img src="{% static 'assets/rain.png' %}" alt="Showers Day Icon" class="w-20 h-20">
+                                {% elif predictions_day_6_NUTECH.Icon == "showers-night" %}
+                                    <img src="{% static 'assets/rain.png' %}" alt="Showers Night Icon" class="w-20 h-20">
+                                {% elif predictions_day_6_NUTECH.Icon == "fog" %}
+                                    <img src="{% static 'assets/fog.png' %}" alt="Fog Icon" class="w-20 h-20">
+                                {% elif predictions_day_6_NUTECH.Icon == "wind" %}
+                                    <img src="{% static 'assets/wind.png' %}" alt="Wind Icon" class="w-20 h-20">
+                                {% elif predictions_day_6_NUTECH.Icon == "cloudy" %}
+                                    <img src="{% static 'assets/cloudy.png' %}" alt="Cloudy Icon" class="w-20 h-20">
+                                {% elif predictions_day_6_NUTECH.Icon == "partly-cloudy-day" %}
+                                    <img src="{% static 'assets/partly-cloudy-day.png' %}" alt="Partly Cloudy Day Icon" class="w-20 h-20">
+                                {% elif predictions_day_6_NUTECH.Icon == "partly-cloudy-night" %}
+                                    <img src="{% static 'assets/partly-cloudy-night.png' %}" alt="Partly Cloudy Night Icon" class="w-20 h-20">
+                                {% elif predictions_day_6_NUTECH.Icon == "clear-day" %}
+                                    <img src="{% static 'assets/clear-day.png' %}" alt="Clear Day Icon" class="w-20 h-20">
+                                {% elif predictions_day_6_NUTECH.Icon == "clear-night" %}
+                                    <img src="{% static 'assets/clear-night.png' %}" alt="Clear Night Icon" class="w-20 h-20">
+                                {% else %}
+                                    <img src="{% static 'assets/default.png' %}" alt="Default Weather Icon" class="w-20 h-20">
+                                {% endif %}
+                                <span class="text-sm text-gray-300 mt-2">{{ predictions_day_6_NUTECH.Heading }}</span>
                             </div>
-                            <div class="text-5xl font-bold">37°C</div>
+                            <div class="text-5xl font-bold">{{predictions_day_6_NUTECH.Temperature}}°C</div>
                         </div>
                         <div class="flex items-center justify-between mb-2">
                             <div class="flex items-center">
                                 <img src="static/assets/airpressure.png" alt="Pressure Icon" class="w-8 h-8">
                                 <span class="ml-2 text-sm font-semibold">Pressure</span>
                             </div>
-                            <span class="text-sm">1024 hPa</span>
+                            <span class="text-sm">{{predictions_day_6_NUTECH.Pressure}} hPa</span>
                         </div>
                         <div class="flex items-center justify-between mb-2">
                             <div class="flex items-center">
-                                <img src="static/assets/rain.png" alt="Rain Icon" class="w-8 h-8">
+                                <img src="static/assets/rainy.png" alt="Rain Icon" class="w-8 h-8">
                                 <span class="ml-2 text-sm font-semibold">Rain</span>
                             </div>
-                            <span class="text-sm">20%</span>
+                            <span class="text-sm">{{predictions_day_6_NUTECH.Rain}}%</span>
                         </div>
                         <div class="flex items-center justify-between mb-2">
                             <div class="flex items-center">
                                 <img src="static/assets/windspeed.png" alt="Wind Icon" class="w-8 h-8">
                                 <span class="ml-2 text-sm font-semibold">Wind</span>
                             </div>
-                            <span class="text-sm">5 km/h</span>
+                            <span class="text-sm">{{predictions_day_6_NUTECH.Wind_Speed}} km/h</span>
                         </div>
                         <div class="text-center text-sm mt-4">
-                            <span>28° / 40°</span>
+                            <span>{{predictions_day_6_NUTECH.Low_Temperature}}° / {{predictions_day_6_NUTECH.High_Temperature}}°</span>
                         </div>
                     </div>
                     <div class="card bg-gray-800 p-4 rounded-lg shadow-md">
-                        <h3 class="text-sm font-semibold text-center mb-2">Today</h3>
+                        <h3 class="text-sm font-semibold text-center mb-2">{{day_name_7}}</h3>
                         <div class="flex items-center justify-between mb-4">
                             <div class="flex flex-col items-center">
-                                <img src="static/assets/rain.png" alt="Weather Icon" class="w-20 h-20">
-                                <span class="text-sm text-gray-300 mt-2">Sunny</span>
+                                {% if predictions_day_7_NUTECH.Icon == "thunder-rain" %}
+                                    <img src="{% static 'assets/thunder-rain.png' %}" alt="Thunder Rain Icon" class="w-20 h-20">
+                                {% elif predictions_day_7_NUTECH.Icon == "thunder-showers-day" %}
+                                    <img src="{% static 'assets/thunder-rain.png' %}" alt="Thunder Showers Day Icon" class="w-20 h-20">
+                                {% elif predictions_day_7_NUTECH.Icon == "thunder-showers-night" %}
+                                    <img src="{% static 'assets/thunder-rain.png' %}" alt="Thunder Showers Night Icon" class="w-20 h-20">
+                                {% elif predictions_day_7_NUTECH.Icon == "rain" %}
+                                    <img src="{% static 'assets/rain.png' %}" alt="Rain Icon" class="w-20 h-20">
+                                {% elif predictions_day_7_NUTECH.Icon == "showers-day" %}
+                                    <img src="{% static 'assets/rain.png' %}" alt="Showers Day Icon" class="w-20 h-20">
+                                {% elif predictions_day_7_NUTECH.Icon == "showers-night" %}
+                                    <img src="{% static 'assets/rain.png' %}" alt="Showers Night Icon" class="w-20 h-20">
+                                {% elif predictions_day_7_NUTECH.Icon == "fog" %}
+                                    <img src="{% static 'assets/fog.png' %}" alt="Fog Icon" class="w-20 h-20">
+                                {% elif predictions_day_7_NUTECH.Icon == "wind" %}
+                                    <img src="{% static 'assets/wind.png' %}" alt="Wind Icon" class="w-20 h-20">
+                                {% elif predictions_day_7_NUTECH.Icon == "cloudy" %}
+                                    <img src="{% static 'assets/cloudy.png' %}" alt="Cloudy Icon" class="w-20 h-20">
+                                {% elif predictions_day_7_NUTECH.Icon == "partly-cloudy-day" %}
+                                    <img src="{% static 'assets/partly-cloudy-day.png' %}" alt="Partly Cloudy Day Icon" class="w-20 h-20">
+                                {% elif predictions_day_7_NUTECH.Icon == "partly-cloudy-night" %}
+                                    <img src="{% static 'assets/partly-cloudy-night.png' %}" alt="Partly Cloudy Night Icon" class="w-20 h-20">
+                                {% elif predictions_day_7_NUTECH.Icon == "clear-day" %}
+                                    <img src="{% static 'assets/clear-day.png' %}" alt="Clear Day Icon" class="w-20 h-20">
+                                {% elif predictions_day_7_NUTECH.Icon == "clear-night" %}
+                                    <img src="{% static 'assets/clear-night.png' %}" alt="Clear Night Icon" class="w-20 h-20">
+                                {% else %}
+                                    <img src="{% static 'assets/default.png' %}" alt="Default Weather Icon" class="w-20 h-20">
+                                {% endif %}
+                                <span class="text-sm text-gray-300 mt-2">{{ predictions_day_7_NUTECH.Heading }}</span>
                             </div>
-                            <div class="text-5xl font-bold">37°C</div>
+                            <div class="text-5xl font-bold">{{predictions_day_7_NUTECH.Temperature}}°C</div>
                         </div>
                         <div class="flex items-center justify-between mb-2">
                             <div class="flex items-center">
                                 <img src="static/assets/airpressure.png" alt="Pressure Icon" class="w-8 h-8">
                                 <span class="ml-2 text-sm font-semibold">Pressure</span>
                             </div>
-                            <span class="text-sm">1024 hPa</span>
+                            <span class="text-sm">{{predictions_day_7_NUTECH.Pressure}} hPa</span>
                         </div>
                         <div class="flex items-center justify-between mb-2">
                             <div class="flex items-center">
-                                <img src="static/assets/rain.png" alt="Rain Icon" class="w-8 h-8">
+                                <img src="static/assets/rainy.png" alt="Rain Icon" class="w-8 h-8">
                                 <span class="ml-2 text-sm font-semibold">Rain</span>
                             </div>
-                            <span class="text-sm">20%</span>
+                            <span class="text-sm">{{predictions_day_7_NUTECH.Rain}}%</span>
                         </div>
                         <div class="flex items-center justify-between mb-2">
                             <div class="flex items-center">
                                 <img src="static/assets/windspeed.png" alt="Wind Icon" class="w-8 h-8">
                                 <span class="ml-2 text-sm font-semibold">Wind</span>
                             </div>
-                            <span class="text-sm">5 km/h</span>
+                            <span class="text-sm">{{predictions_day_7_NUTECH.Wind_Speed}} km/h</span>
                         </div>
                         <div class="text-center text-sm mt-4">
-                            <span>28° / 40°</span>
+                            <span>{{predictions_day_7_NUTECH.Low_Temperature}}° / {{predictions_day_7_NUTECH.High_Temperature}}°</span>
                         </div>
                     </div>
                 </div>
             </section>
-            
+
             <section>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">                   
                     <div>
@@ -619,6 +754,26 @@
             </section>
         </div>
         <div id="Margalla_Tab" class="tab_content hidden_content">
+            <div id="Alert_Margalla" class="hidden p-4 space-y-4">
+                <div id="Temp_Alert_Margalla" class="alert alert-error shadow-lg flex items-center justify-between p-2 bg-red-500 text-white rounded-lg">
+                    <div class="flex items-center">
+                        <span class="text-2xl mr-3">🌡️</span>
+                        <span class="font-semibold">Warning: Temperature has exceeded the safe limit!</span>
+                    </div>
+                </div>
+                <div id="Wind_Alert_Margalla" class="alert alert-warning shadow-lg flex items-center justify-between p-2 bg-yellow-500 text-white rounded-lg">
+                    <div class="flex items-center">
+                        <span class="text-2xl mr-3">💨</span>
+                        <span class="font-semibold">Caution: Wind speed is too high!</span>
+                    </div>
+                </div>
+                <div id="Thunderstorm_Alert_Margalla" class="alert alert-error shadow-lg flex items-center justify-between p-2 bg-red-700 text-white rounded-lg">
+                    <div class="flex items-center">
+                        <span class="text-2xl mr-3">⚡</span>
+                        <span class="font-semibold">Danger: Thunderstorm detected!</span>
+                    </div>
+                </div>
+            </div>
             <section class="text-center mt-4">
                 <div class="grid grid-cols-1 lg:grid-cols-7 gap-4 mt-4">
                     <div class="text-white flex flex-col justify-between h-full lg:col-span-1 md:col-span-2 sm:col-span-2">
@@ -634,7 +789,7 @@
                         </div>
                     </div>
                     <div class="lg:col-span-6 md:col-span-5 sm:col-span-5 overflow-x-auto">
-                        <h3 class="text-lg font-bold text-left mb-2 border-b-[1px]">August 20th, 2024</h3>
+                        <h3 class="text-lg font-bold text-left mb-2 border-b-[1px]">{{formatted_date}}</h3>
                         <table class="table font-bold text-center table-compact w-full border border-white">
                             <thead>
                                 <tr class="bg-[#1f2937] text-white border-b border-white">
@@ -655,118 +810,36 @@
                                 </tr>
                             </thead>
                             <tbody id="weatherData">
-                                <tr class="border-b border-white">
-                                    <td class="border-r border-white whitespace-nowrap">03:45 PM</td>
-                                    <td class="border-r border-white">🌤</td>
-                                    <td class="border-r border-white text-black">22</td>
-                                    <td class="border-r border-white text-black">1012</td>
-                                    <td class="border-r border-white text-black">12</td>
-                                    <td class="border-r border-white text-black">West</td>
-                                    <td class="border-r border-white text-black">55</td>
-                                    <td class="border-r border-white text-black">0.2</td>
-                                    <td class="border-r border-white text-black">850</td>
-                                    <td class="border-r border-white text-black">35</td>
-                                    <td class="border-r border-white text-black">5</td>
-                                    <td class="border-r border-white text-black">4100</td>
-                                    <td class="border-r border-white text-black">30</td>
-                                    <td class="border-r border-white text-black">70</td>
-                                </tr>
-                                <tr class="border-b border-white">
-                                    <td class="border-r border-white">04:15 PM</td>
-                                    <td class="border-r border-white">🌧</td>
-                                    <td class="border-r border-white text-black">19</td>
-                                    <td class="border-r border-white text-black">1008</td>
-                                    <td class="border-r border-white text-black">15</td>
-                                    <td class="border-r border-white text-black">NW</td>
-                                    <td class="border-r border-white text-black">65</td>
-                                    <td class="border-r border-white text-black">3.0</td>
-                                    <td class="border-r border-white text-black">780</td>
-                                    <td class="border-r border-white text-black">45</td>
-                                    <td class="border-r border-white text-black">8</td>
-                                    <td class="border-r border-white text-black">3900</td>
-                                    <td class="border-r border-white text-black">40</td>
-                                    <td class="border-r border-white text-black">120</td>
-                                </tr>
-                                <tr class="border-b border-white">
-                                    <td class="border-r border-white">05:00 PM</td>
-                                    <td class="border-r border-white">🌩</td>
-                                    <td class="border-r border-white text-black">17</td>
-                                    <td class="border-r border-white text-black">1020</td>
-                                    <td class="border-r border-white text-black">20</td>
-                                    <td class="border-r border-white text-black">SE</td>
-                                    <td class="border-r border-white text-black">75</td>
-                                    <td class="border-r border-white text-black">4.5</td>
-                                    <td class="border-r border-white text-black">920</td>
-                                    <td class="border-r border-white text-black">50</td>
-                                    <td class="border-r border-white text-black">6</td>
-                                    <td class="border-r border-white text-black">4300</td>
-                                    <td class="border-r border-white text-black">25</td>
-                                    <td class="border-r border-white text-black">80</td>
-                                </tr>
-                                <tr class="border-b border-white">
-                                    <td class="border-r border-white">06:30 PM</td>
-                                    <td class="border-r border-white">🌫</td>
-                                    <td class="border-r border-white text-black">14</td>
-                                    <td class="border-r border-white text-black">1000</td>
-                                    <td class="border-r border-white text-black">8</td>
-                                    <td class="border-r border-white text-black">East</td>
-                                    <td class="border-r border-white text-black">80</td>
-                                    <td class="border-r border-white text-black">1.0</td>
-                                    <td class="border-r border-white text-black">700</td>
-                                    <td class="border-r border-white text-black">55</td>
-                                    <td class="border-r border-white text-black">7</td>
-                                    <td class="border-r border-white text-black">3500</td>
-                                    <td class="border-r border-white text-black">20</td>
-                                    <td class="border-r border-white text-black">60</td>
-                                </tr>
-                                <tr class="border-b border-white">
-                                    <td class="border-r border-white">07:15 PM</td>
-                                    <td class="border-r border-white">🌒</td>
-                                    <td class="border-r border-white text-black">12</td>
-                                    <td class="border-r border-white text-black">995</td>
-                                    <td class="border-r border-white text-black">10</td>
-                                    <td class="border-r border-white text-black">South</td>
-                                    <td class="border-r border-white text-black">85</td>
-                                    <td class="border-r border-white text-black">0.5</td>
-                                    <td class="border-r border-white text-black">650</td>
-                                    <td class="border-r border-white text-black">60</td>
-                                    <td class="border-r border-white text-black">4</td>
-                                    <td class="border-r border-white text-black">3000</td>
-                                    <td class="border-r border-white text-black">45</td>
-                                    <td class="border-r border-white text-black">90</td>
-                                </tr>
-                                <tr class="border-b border-white">
-                                    <td class="border-r border-white">08:00 PM</td>
-                                    <td class="border-r border-white">🌚</td>
-                                    <td class="border-r border-white text-black">10</td>
-                                    <td class="border-r border-white text-black">990</td>
-                                    <td class="border-r border-white text-black">5</td>
-                                    <td class="border-r border-white text-black">West</td>
-                                    <td class="border-r border-white text-black">90</td>
-                                    <td class="border-r border-white text-black">0.1</td>
-                                    <td class="border-r border-white text-black">600</td>
-                                    <td class="border-r border-white text-black">65</td>
-                                    <td class="border-r border-white text-black">3</td>
-                                    <td class="border-r border-white text-black">2900</td>
-                                    <td class="border-r border-white text-black">50</td>
-                                    <td class="border-r border-white text-black">110</td>
-                                </tr>
-                                <tr class="border-b border-white">
-                                    <td class="border-r border-white">09:30 PM</td>
-                                    <td class="border-r border-white">🌌</td>
-                                    <td class="border-r border-white text-black">8</td>
-                                    <td class="border-r border-white text-black">980</td>
-                                    <td class="border-r border-white text-black">7</td>
-                                    <td class="border-r border-white text-black">NE</td>
-                                    <td class="border-r border-white text-black">95</td>
-                                    <td class="border-r border-white text-black">0.0</td>
-                                    <td class="border-r border-white text-black">550</td>
-                                    <td class="border-r border-white text-black">70</td>
-                                    <td class="border-r border-white text-black">2</td>
-                                    <td class="border-r border-white text-black">2700</td>
-                                    <td class="border-r border-white text-black">55</td>
-                                    <td class="border-r border-white text-black">130</td>
-                                </tr>
+                                {% for row in last_7_data_Margalla %}
+                                    <tr class="border-b border-white">
+                                        <td class="border-r border-white whitespace-nowrap">{{ row.Time }}</td>
+                                        <td class="border-r border-white">
+                                            {% if row.Rain > 0 %}
+                                                🌧
+                                            {% elif row.Time|slice:":2" == "PM" %}
+                                                🌙 
+                                            {% elif row.Solar_Radiation > 200 %}
+                                                🌞 
+                                            {% elif row.Solar_Radiation > 100 %}
+                                                ☁ 
+                                            {% else %}
+                                                🌥 
+                                            {% endif %}
+                                        </td>
+                                        <td class="border-r border-white text-black">{{ row.Temperature }}</td>
+                                        <td class="border-r border-white text-black">{{ row.Pressure }}</td>
+                                        <td class="border-r border-white text-black">{{ row.Wind_Speed }}</td>
+                                        <td class="border-r border-white text-black">{{ row.Wind_Direction }}</td>
+                                        <td class="border-r border-white text-black">{{ row.Humidity }}</td>
+                                        <td class="border-r border-white text-black">{{ row.Rain }}</td>
+                                        <td class="border-r border-white text-black">{{ row.Solar_Radiation }}</td>
+                                        <td class="border-r border-white text-black">{{ row.Soil_Moisture }}</td>
+                                        <td class="border-r border-white text-black">{{ row.Evapotranspiration }}</td>
+                                        <td class="border-r border-white text-black">{{ row.CO2_level }}</td>
+                                        <td class="border-r border-white text-black">{{ row.Optical_Particles }}</td>
+                                        <td class="border-r border-white text-black">{{ row.Pollen_Count }}</td>
+                                    </tr>
+                                {% endfor %}
                             </tbody>
                         </table>
                     </div>
@@ -776,63 +849,116 @@
             <section class="w-full">
                 <h2 class="text-lg font-bold text-center mb-4 border-b-2 pt-6">Forecast</h2>
                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 gap-4"> 
-                    <!-- Adjusted grid columns and gap -->
-                    
-                    <!-- Card -->
                     <div class="card bg-gray-800 p-4 rounded-lg shadow-md">
-                        <h3 class="text-sm font-semibold text-center mb-2">Today</h3>
+                        <h3 class="text-sm font-semibold text-center mb-2">{{day_name_1}}</h3>
                         <div class="flex items-center justify-between mb-4">
                             <div class="flex flex-col items-center">
-                                <img src="static/assets/rain.png" alt="Weather Icon" class="w-20 h-20">
-                                <span class="text-sm text-gray-300 mt-2">Sunny</span>
+                                {% if predictions_day_1_Margalla.Icon == "thunder-rain" %}
+                                    <img src="{% static 'assets/thunder-rain.png' %}" alt="Thunder Rain Icon" class="w-20 h-20">
+                                {% elif predictions_day_1_Margalla.Icon == "thunder-showers-day" %}
+                                    <img src="{% static 'assets/thunder-rain.png' %}" alt="Thunder Showers Day Icon" class="w-20 h-20">
+                                {% elif predictions_day_1_Margalla.Icon == "thunder-showers-night" %}
+                                    <img src="{% static 'assets/thunder-rain.png' %}" alt="Thunder Showers Night Icon" class="w-20 h-20">
+                                {% elif predictions_day_1_Margalla.Icon == "rain" %}
+                                    <img src="{% static 'assets/rain.png' %}" alt="Rain Icon" class="w-20 h-20">
+                                {% elif predictions_day_1_Margalla.Icon == "showers-day" %}
+                                    <img src="{% static 'assets/rain.png' %}" alt="Showers Day Icon" class="w-20 h-20">
+                                {% elif predictions_day_1_Margalla.Icon == "showers-night" %}
+                                    <img src="{% static 'assets/rain.png' %}" alt="Showers Night Icon" class="w-20 h-20">
+                                {% elif predictions_day_1_Margalla.Icon == "fog" %}
+                                    <img src="{% static 'assets/fog.png' %}" alt="Fog Icon" class="w-20 h-20">
+                                {% elif predictions_day_1_Margalla.Icon == "wind" %}
+                                    <img src="{% static 'assets/wind.png' %}" alt="Wind Icon" class="w-20 h-20">
+                                {% elif predictions_day_1_Margalla.Icon == "cloudy" %}
+                                    <img src="{% static 'assets/cloudy.png' %}" alt="Cloudy Icon" class="w-20 h-20">
+                                {% elif predictions_day_1_Margalla.Icon == "partly-cloudy-day" %}
+                                    <img src="{% static 'assets/partly-cloudy-day.png' %}" alt="Partly Cloudy Day Icon" class="w-20 h-20">
+                                {% elif predictions_day_1_Margalla.Icon == "partly-cloudy-night" %}
+                                    <img src="{% static 'assets/partly-cloudy-night.png' %}" alt="Partly Cloudy Night Icon" class="w-20 h-20">
+                                {% elif predictions_day_1_Margalla.Icon == "clear-day" %}
+                                    <img src="{% static 'assets/clear-day.png' %}" alt="Clear Day Icon" class="w-20 h-20">
+                                {% elif predictions_day_1_Margalla.Icon == "clear-night" %}
+                                    <img src="{% static 'assets/clear-night.png' %}" alt="Clear Night Icon" class="w-20 h-20">
+                                {% else %}
+                                    <img src="{% static 'assets/default.png' %}" alt="Default Weather Icon" class="w-20 h-20">
+                                {% endif %}
+                                <span class="text-sm text-gray-300 mt-2">{{ predictions_day_1_Margalla.Heading }}</span>
                             </div>
-                            <div class="text-5xl font-bold">37°C</div>
+                            <div class="text-5xl font-bold">{{predictions_day_1_Margalla.Temperature}}°C</div>
                         </div>
                         <div class="flex items-center justify-between mb-2">
                             <div class="flex items-center">
                                 <img src="static/assets/airpressure.png" alt="Pressure Icon" class="w-8 h-8">
                                 <span class="ml-2 text-sm font-semibold">Pressure</span>
                             </div>
-                            <span class="text-sm">1024 hPa</span>
+                            <span class="text-sm">{{predictions_day_1_Margalla.Pressure}} hPa</span>
                         </div>
                         <div class="flex items-center justify-between mb-2">
                             <div class="flex items-center">
-                                <img src="static/assets/rain.png" alt="Rain Icon" class="w-8 h-8">
+                                <img src="static/assets/rainy.png" alt="Rain Icon" class="w-8 h-8">
                                 <span class="ml-2 text-sm font-semibold">Rain</span>
                             </div>
-                            <span class="text-sm">20%</span>
+                            <span class="text-sm">{{predictions_day_1_Margalla.Rain}}%</span>
                         </div>
                         <div class="flex items-center justify-between mb-2">
                             <div class="flex items-center">
                                 <img src="static/assets/windspeed.png" alt="Wind Icon" class="w-8 h-8">
                                 <span class="ml-2 text-sm font-semibold">Wind</span>
                             </div>
-                            <span class="text-sm">5 km/h</span>
+                            <span class="text-sm">{{predictions_day_1_Margalla.Wind_Speed}} km/h</span>
                         </div>
                         <div class="text-center text-sm mt-4">
-                            <span>28° / 40°</span>
+                            <span>{{predictions_day_1_Margalla.Low_Temperature}}° / {{predictions_day_1_Margalla.High_Temperature}}°</span>
                         </div>
                     </div>
                     <div class="card bg-gray-800 p-4 rounded-lg shadow-md">
-                        <h3 class="text-sm font-semibold text-center mb-2">Today</h3>
+                        <h3 class="text-sm font-semibold text-center mb-2">{{day_name_2}}</h3>
                         <div class="flex items-center justify-between mb-4">
                             <div class="flex flex-col items-center">
-                                <img src="static/assets/rain.png" alt="Weather Icon" class="w-20 h-20">
-                                <span class="text-sm text-gray-300 mt-2">Sunny</span>
+                                {% if predictions_day_2_Margalla.Icon == "thunder-rain" %}
+                                    <img src="{% static 'assets/thunder-rain.png' %}" alt="Thunder Rain Icon" class="w-20 h-20">
+                                {% elif predictions_day_2_Margalla.Icon == "thunder-showers-day" %}
+                                    <img src="{% static 'assets/thunder-rain.png' %}" alt="Thunder Showers Day Icon" class="w-20 h-20">
+                                {% elif predictions_day_2_Margalla.Icon == "thunder-showers-night" %}
+                                    <img src="{% static 'assets/thunder-rain.png' %}" alt="Thunder Showers Night Icon" class="w-20 h-20">
+                                {% elif predictions_day_2_Margalla.Icon == "rain" %}
+                                    <img src="{% static 'assets/rain.png' %}" alt="Rain Icon" class="w-20 h-20">
+                                {% elif predictions_day_2_Margalla.Icon == "showers-day" %}
+                                    <img src="{% static 'assets/rain.png' %}" alt="Showers Day Icon" class="w-20 h-20">
+                                {% elif predictions_day_2_Margalla.Icon == "showers-night" %}
+                                    <img src="{% static 'assets/rain.png' %}" alt="Showers Night Icon" class="w-20 h-20">
+                                {% elif predictions_day_2_Margalla.Icon == "fog" %}
+                                    <img src="{% static 'assets/fog.png' %}" alt="Fog Icon" class="w-20 h-20">
+                                {% elif predictions_day_2_Margalla.Icon == "wind" %}
+                                    <img src="{% static 'assets/wind.png' %}" alt="Wind Icon" class="w-20 h-20">
+                                {% elif predictions_day_2_Margalla.Icon == "cloudy" %}
+                                    <img src="{% static 'assets/cloudy.png' %}" alt="Cloudy Icon" class="w-20 h-20">
+                                {% elif predictions_day_2_Margalla.Icon == "partly-cloudy-day" %}
+                                    <img src="{% static 'assets/partly-cloudy-day.png' %}" alt="Partly Cloudy Day Icon" class="w-20 h-20">
+                                {% elif predictions_day_2_Margalla.Icon == "partly-cloudy-night" %}
+                                    <img src="{% static 'assets/partly-cloudy-night.png' %}" alt="Partly Cloudy Night Icon" class="w-20 h-20">
+                                {% elif predictions_day_2_Margalla.Icon == "clear-day" %}
+                                    <img src="{% static 'assets/clear-day.png' %}" alt="Clear Day Icon" class="w-20 h-20">
+                                {% elif predictions_day_2_Margalla.Icon == "clear-night" %}
+                                    <img src="{% static 'assets/clear-night.png' %}" alt="Clear Night Icon" class="w-20 h-20">
+                                {% else %}
+                                    <img src="{% static 'assets/default.png' %}" alt="Default Weather Icon" class="w-20 h-20">
+                                {% endif %}
+                                <span class="text-sm text-gray-300 mt-2">{{ predictions_day_2_Margalla.Heading }}</span>
                             </div>
-                            <div class="text-5xl font-bold">37°C</div>
+                            <div class="text-5xl font-bold">{{predictions_day_2_Margalla.Temperature}}°C</div>
                         </div>
                         <div class="flex items-center justify-between mb-2">
                             <div class="flex items-center">
                                 <img src="static/assets/airpressure.png" alt="Pressure Icon" class="w-8 h-8">
                                 <span class="ml-2 text-sm font-semibold">Pressure</span>
                             </div>
-                            <span class="text-sm">1024 hPa</span>
+                            <span class="text-sm">{{predictions_day_2_Margalla.Pressure}} hPa</span>
                         </div>
                         <div class="flex items-center justify-between mb-2">
                             <div class="flex items-center">
                                 <img src="static/assets/rain.png" alt="Rain Icon" class="w-8 h-8">
-                                <span class="ml-2 text-sm font-semibold">Rain</span>
+                                <span class="ml-2 text-sm font-semibold">{{predictions_day_2_Margalla.Rain}}%</span>
                             </div>
                             <span class="text-sm">20%</span>
                         </div>
@@ -841,185 +967,324 @@
                                 <img src="static/assets/windspeed.png" alt="Wind Icon" class="w-8 h-8">
                                 <span class="ml-2 text-sm font-semibold">Wind</span>
                             </div>
-                            <span class="text-sm">5 km/h</span>
+                            <span class="text-sm">{{predictions_day_2_Margalla.Wind_Speed}} km/h</span>
                         </div>
                         <div class="text-center text-sm mt-4">
-                            <span>28° / 40°</span>
+                            <span>{{predictions_day_2_Margalla.Low_Temperature}}° / {{predictions_day_2_Margalla.High_Temperature}}°</span>
                         </div>
                     </div>
                     <div class="card bg-gray-800 p-4 rounded-lg shadow-md">
-                        <h3 class="text-sm font-semibold text-center mb-2">Today</h3>
+                        <h3 class="text-sm font-semibold text-center mb-2">{{day_name_3}}</h3>
                         <div class="flex items-center justify-between mb-4">
                             <div class="flex flex-col items-center">
-                                <img src="static/assets/rain.png" alt="Weather Icon" class="w-20 h-20">
-                                <span class="text-sm text-gray-300 mt-2">Sunny</span>
+                                {% if predictions_day_3_Margalla.Icon == "thunder-rain" %}
+                                    <img src="{% static 'assets/thunder-rain.png' %}" alt="Thunder Rain Icon" class="w-20 h-20">
+                                {% elif predictions_day_3_Margalla.Icon == "thunder-showers-day" %}
+                                    <img src="{% static 'assets/thunder-rain.png' %}" alt="Thunder Showers Day Icon" class="w-20 h-20">
+                                {% elif predictions_day_3_Margalla.Icon == "thunder-showers-night" %}
+                                    <img src="{% static 'assets/thunder-rain.png' %}" alt="Thunder Showers Night Icon" class="w-20 h-20">
+                                {% elif predictions_day_3_Margalla.Icon == "rain" %}
+                                    <img src="{% static 'assets/rain.png' %}" alt="Rain Icon" class="w-20 h-20">
+                                {% elif predictions_day_3_Margalla.Icon == "showers-day" %}
+                                    <img src="{% static 'assets/rain.png' %}" alt="Showers Day Icon" class="w-20 h-20">
+                                {% elif predictions_day_3_Margalla.Icon == "showers-night" %}
+                                    <img src="{% static 'assets/rain.png' %}" alt="Showers Night Icon" class="w-20 h-20">
+                                {% elif predictions_day_3_Margalla.Icon == "fog" %}
+                                    <img src="{% static 'assets/fog.png' %}" alt="Fog Icon" class="w-20 h-20">
+                                {% elif predictions_day_3_Margalla.Icon == "wind" %}
+                                    <img src="{% static 'assets/wind.png' %}" alt="Wind Icon" class="w-20 h-20">
+                                {% elif predictions_day_3_Margalla.Icon == "cloudy" %}
+                                    <img src="{% static 'assets/cloudy.png' %}" alt="Cloudy Icon" class="w-20 h-20">
+                                {% elif predictions_day_3_Margalla.Icon == "partly-cloudy-day" %}
+                                    <img src="{% static 'assets/partly-cloudy-day.png' %}" alt="Partly Cloudy Day Icon" class="w-20 h-20">
+                                {% elif predictions_day_3_Margalla.Icon == "partly-cloudy-night" %}
+                                    <img src="{% static 'assets/partly-cloudy-night.png' %}" alt="Partly Cloudy Night Icon" class="w-20 h-20">
+                                {% elif predictions_day_3_Margalla.Icon == "clear-day" %}
+                                    <img src="{% static 'assets/clear-day.png' %}" alt="Clear Day Icon" class="w-20 h-20">
+                                {% elif predictions_day_3_Margalla.Icon == "clear-night" %}
+                                    <img src="{% static 'assets/clear-night.png' %}" alt="Clear Night Icon" class="w-20 h-20">
+                                {% else %}
+                                    <img src="{% static 'assets/default.png' %}" alt="Default Weather Icon" class="w-20 h-20">
+                                {% endif %}
+                                <span class="text-sm text-gray-300 mt-2">{{ predictions_day_3_Margalla.Heading }}</span>
                             </div>
-                            <div class="text-5xl font-bold">37°C</div>
+                            <div class="text-5xl font-bold">{{predictions_day_3_Margalla.Temperature}}°C</div>
                         </div>
                         <div class="flex items-center justify-between mb-2">
                             <div class="flex items-center">
                                 <img src="static/assets/airpressure.png" alt="Pressure Icon" class="w-8 h-8">
                                 <span class="ml-2 text-sm font-semibold">Pressure</span>
                             </div>
-                            <span class="text-sm">1024 hPa</span>
+                            <span class="text-sm">{{predictions_day_3_Margalla.Pressure}} hPa</span>
                         </div>
                         <div class="flex items-center justify-between mb-2">
                             <div class="flex items-center">
-                                <img src="static/assets/rain.png" alt="Rain Icon" class="w-8 h-8">
+                                <img src="static/assets/rainy.png" alt="Rain Icon" class="w-8 h-8">
                                 <span class="ml-2 text-sm font-semibold">Rain</span>
                             </div>
-                            <span class="text-sm">20%</span>
+                            <span class="text-sm">{{predictions_day_3_Margalla.Rain}}%</span>
                         </div>
                         <div class="flex items-center justify-between mb-2">
                             <div class="flex items-center">
                                 <img src="static/assets/windspeed.png" alt="Wind Icon" class="w-8 h-8">
                                 <span class="ml-2 text-sm font-semibold">Wind</span>
                             </div>
-                            <span class="text-sm">5 km/h</span>
+                            <span class="text-sm">{{predictions_day_3_Margalla.Wind_Speed}} km/h</span>
                         </div>
                         <div class="text-center text-sm mt-4">
-                            <span>28° / 40°</span>
+                            <span>{{predictions_day_3_Margalla.Low_Temperature}}° / {{predictions_day_3_Margalla.High_Temperature}}°</span>
                         </div>
                     </div>
                     <div class="card bg-gray-800 p-4 rounded-lg shadow-md">
-                        <h3 class="text-sm font-semibold text-center mb-2">Today</h3>
+                        <h3 class="text-sm font-semibold text-center mb-2">{{day_name_4}}</h3>
                         <div class="flex items-center justify-between mb-4">
                             <div class="flex flex-col items-center">
-                                <img src="static/assets/rain.png" alt="Weather Icon" class="w-20 h-20">
-                                <span class="text-sm text-gray-300 mt-2">Sunny</span>
+                                {% if predictions_day_4_Margalla.Icon == "thunder-rain" %}
+                                    <img src="{% static 'assets/thunder-rain.png' %}" alt="Thunder Rain Icon" class="w-20 h-20">
+                                {% elif predictions_day_4_Margalla.Icon == "thunder-showers-day" %}
+                                    <img src="{% static 'assets/thunder-rain.png' %}" alt="Thunder Showers Day Icon" class="w-20 h-20">
+                                {% elif predictions_day_4_Margalla.Icon == "thunder-showers-night" %}
+                                    <img src="{% static 'assets/thunder-rain.png' %}" alt="Thunder Showers Night Icon" class="w-20 h-20">
+                                {% elif predictions_day_4_Margalla.Icon == "rain" %}
+                                    <img src="{% static 'assets/rain.png' %}" alt="Rain Icon" class="w-20 h-20">
+                                {% elif predictions_day_4_Margalla.Icon == "showers-day" %}
+                                    <img src="{% static 'assets/rain.png' %}" alt="Showers Day Icon" class="w-20 h-20">
+                                {% elif predictions_day_4_Margalla.Icon == "showers-night" %}
+                                    <img src="{% static 'assets/rain.png' %}" alt="Showers Night Icon" class="w-20 h-20">
+                                {% elif predictions_day_4_Margalla.Icon == "fog" %}
+                                    <img src="{% static 'assets/fog.png' %}" alt="Fog Icon" class="w-20 h-20">
+                                {% elif predictions_day_4_Margalla.Icon == "wind" %}
+                                    <img src="{% static 'assets/wind.png' %}" alt="Wind Icon" class="w-20 h-20">
+                                {% elif predictions_day_4_Margalla.Icon == "cloudy" %}
+                                    <img src="{% static 'assets/cloudy.png' %}" alt="Cloudy Icon" class="w-20 h-20">
+                                {% elif predictions_day_4_Margalla.Icon == "partly-cloudy-day" %}
+                                    <img src="{% static 'assets/partly-cloudy-day.png' %}" alt="Partly Cloudy Day Icon" class="w-20 h-20">
+                                {% elif predictions_day_4_Margalla.Icon == "partly-cloudy-night" %}
+                                    <img src="{% static 'assets/partly-cloudy-night.png' %}" alt="Partly Cloudy Night Icon" class="w-20 h-20">
+                                {% elif predictions_day_4_Margalla.Icon == "clear-day" %}
+                                    <img src="{% static 'assets/clear-day.png' %}" alt="Clear Day Icon" class="w-20 h-20">
+                                {% elif predictions_day_4_Margalla.Icon == "clear-night" %}
+                                    <img src="{% static 'assets/clear-night.png' %}" alt="Clear Night Icon" class="w-20 h-20">
+                                {% else %}
+                                    <img src="{% static 'assets/default.png' %}" alt="Default Weather Icon" class="w-20 h-20">
+                                {% endif %}
+                                <span class="text-sm text-gray-300 mt-2">{{ predictions_day_4_Margalla.Heading }}</span>
                             </div>
-                            <div class="text-5xl font-bold">37°C</div>
+                            <div class="text-5xl font-bold">{{predictions_day_4_Margalla.Temperature}}°C</div>
                         </div>
                         <div class="flex items-center justify-between mb-2">
                             <div class="flex items-center">
                                 <img src="static/assets/airpressure.png" alt="Pressure Icon" class="w-8 h-8">
                                 <span class="ml-2 text-sm font-semibold">Pressure</span>
                             </div>
-                            <span class="text-sm">1024 hPa</span>
+                            <span class="text-sm">{{predictions_day_4_Margalla.Pressure}} hPa</span>
                         </div>
                         <div class="flex items-center justify-between mb-2">
                             <div class="flex items-center">
-                                <img src="static/assets/rain.png" alt="Rain Icon" class="w-8 h-8">
+                                <img src="static/assets/rainy.png" alt="Rain Icon" class="w-8 h-8">
                                 <span class="ml-2 text-sm font-semibold">Rain</span>
                             </div>
-                            <span class="text-sm">20%</span>
+                            <span class="text-sm">{{predictions_day_4_Margalla.Rain}}%</span>
                         </div>
                         <div class="flex items-center justify-between mb-2">
                             <div class="flex items-center">
                                 <img src="static/assets/windspeed.png" alt="Wind Icon" class="w-8 h-8">
                                 <span class="ml-2 text-sm font-semibold">Wind</span>
                             </div>
-                            <span class="text-sm">5 km/h</span>
+                            <span class="text-sm">{{predictions_day_4_Margalla.Wind_Speed}} km/h</span>
                         </div>
                         <div class="text-center text-sm mt-4">
-                            <span>28° / 40°</span>
+                            <span>{{predictions_day_4_Margalla.Low_Temperature}}° / {{predictions_day_4_Margalla.High_Temperature}}°</span>
                         </div>
                     </div>
                     <div class="card bg-gray-800 p-4 rounded-lg shadow-md">
-                        <h3 class="text-sm font-semibold text-center mb-2">Today</h3>
+                        <h3 class="text-sm font-semibold text-center mb-2">{{day_name_5}}</h3>
                         <div class="flex items-center justify-between mb-4">
                             <div class="flex flex-col items-center">
-                                <img src="static/assets/rain.png" alt="Weather Icon" class="w-20 h-20">
-                                <span class="text-sm text-gray-300 mt-2">Sunny</span>
+                                {% if predictions_day_5_Margalla.Icon == "thunder-rain" %}
+                                    <img src="{% static 'assets/thunder-rain.png' %}" alt="Thunder Rain Icon" class="w-20 h-20">
+                                {% elif predictions_day_5_Margalla.Icon == "thunder-showers-day" %}
+                                    <img src="{% static 'assets/thunder-rain.png' %}" alt="Thunder Showers Day Icon" class="w-20 h-20">
+                                {% elif predictions_day_5_Margalla.Icon == "thunder-showers-night" %}
+                                    <img src="{% static 'assets/thunder-rain.png' %}" alt="Thunder Showers Night Icon" class="w-20 h-20">
+                                {% elif predictions_day_5_Margalla.Icon == "rain" %}
+                                    <img src="{% static 'assets/rain.png' %}" alt="Rain Icon" class="w-20 h-20">
+                                {% elif predictions_day_5_Margalla.Icon == "showers-day" %}
+                                    <img src="{% static 'assets/rain.png' %}" alt="Showers Day Icon" class="w-20 h-20">
+                                {% elif predictions_day_5_Margalla.Icon == "showers-night" %}
+                                    <img src="{% static 'assets/rain.png' %}" alt="Showers Night Icon" class="w-20 h-20">
+                                {% elif predictions_day_5_Margalla.Icon == "fog" %}
+                                    <img src="{% static 'assets/fog.png' %}" alt="Fog Icon" class="w-20 h-20">
+                                {% elif predictions_day_5_Margalla.Icon == "wind" %}
+                                    <img src="{% static 'assets/wind.png' %}" alt="Wind Icon" class="w-20 h-20">
+                                {% elif predictions_day_5_Margalla.Icon == "cloudy" %}
+                                    <img src="{% static 'assets/cloudy.png' %}" alt="Cloudy Icon" class="w-20 h-20">
+                                {% elif predictions_day_5_Margalla.Icon == "partly-cloudy-day" %}
+                                    <img src="{% static 'assets/partly-cloudy-day.png' %}" alt="Partly Cloudy Day Icon" class="w-20 h-20">
+                                {% elif predictions_day_5_Margalla.Icon == "partly-cloudy-night" %}
+                                    <img src="{% static 'assets/partly-cloudy-night.png' %}" alt="Partly Cloudy Night Icon" class="w-20 h-20">
+                                {% elif predictions_day_5_Margalla.Icon == "clear-day" %}
+                                    <img src="{% static 'assets/clear-day.png' %}" alt="Clear Day Icon" class="w-20 h-20">
+                                {% elif predictions_day_5_Margalla.Icon == "clear-night" %}
+                                    <img src="{% static 'assets/clear-night.png' %}" alt="Clear Night Icon" class="w-20 h-20">
+                                {% else %}
+                                    <img src="{% static 'assets/default.png' %}" alt="Default Weather Icon" class="w-20 h-20">
+                                {% endif %}
+                                <span class="text-sm text-gray-300 mt-2">{{ predictions_day_5_Margalla.Heading }}</span>
                             </div>
-                            <div class="text-5xl font-bold">37°C</div>
+                            <div class="text-5xl font-bold">{{predictions_day_5_Margalla.Temperature}}°C</div>
                         </div>
                         <div class="flex items-center justify-between mb-2">
                             <div class="flex items-center">
                                 <img src="static/assets/airpressure.png" alt="Pressure Icon" class="w-8 h-8">
                                 <span class="ml-2 text-sm font-semibold">Pressure</span>
                             </div>
-                            <span class="text-sm">1024 hPa</span>
+                            <span class="text-sm">{{predictions_day_5_Margalla.Pressure}} hPa</span>
                         </div>
                         <div class="flex items-center justify-between mb-2">
                             <div class="flex items-center">
-                                <img src="static/assets/rain.png" alt="Rain Icon" class="w-8 h-8">
+                                <img src="static/assets/rainy.png" alt="Rain Icon" class="w-8 h-8">
                                 <span class="ml-2 text-sm font-semibold">Rain</span>
                             </div>
-                            <span class="text-sm">20%</span>
+                            <span class="text-sm">{{predictions_day_5_Margalla.Rain}}%</span>
                         </div>
                         <div class="flex items-center justify-between mb-2">
                             <div class="flex items-center">
                                 <img src="static/assets/windspeed.png" alt="Wind Icon" class="w-8 h-8">
                                 <span class="ml-2 text-sm font-semibold">Wind</span>
                             </div>
-                            <span class="text-sm">5 km/h</span>
+                            <span class="text-sm">{{predictions_day_5_Margalla.Wind_Speed}} km/h</span>
                         </div>
                         <div class="text-center text-sm mt-4">
-                            <span>28° / 40°</span>
+                            <span>{{predictions_day_5_Margalla.Low_Temperature}}° / {{predictions_day_5_Margalla.High_Temperature}}°</span>
                         </div>
                     </div>
                     <div class="card bg-gray-800 p-4 rounded-lg shadow-md">
-                        <h3 class="text-sm font-semibold text-center mb-2">Today</h3>
+                        <h3 class="text-sm font-semibold text-center mb-2">{{day_name_6}}</h3>
                         <div class="flex items-center justify-between mb-4">
                             <div class="flex flex-col items-center">
-                                <img src="static/assets/rain.png" alt="Weather Icon" class="w-20 h-20">
-                                <span class="text-sm text-gray-300 mt-2">Sunny</span>
+                                {% if predictions_day_6_Margalla.Icon == "thunder-rain" %}
+                                    <img src="{% static 'assets/thunder-rain.png' %}" alt="Thunder Rain Icon" class="w-20 h-20">
+                                {% elif predictions_day_6_Margalla.Icon == "thunder-showers-day" %}
+                                    <img src="{% static 'assets/thunder-rain.png' %}" alt="Thunder Showers Day Icon" class="w-20 h-20">
+                                {% elif predictions_day_6_Margalla.Icon == "thunder-showers-night" %}
+                                    <img src="{% static 'assets/thunder-rain.png' %}" alt="Thunder Showers Night Icon" class="w-20 h-20">
+                                {% elif predictions_day_6_Margalla.Icon == "rain" %}
+                                    <img src="{% static 'assets/rain.png' %}" alt="Rain Icon" class="w-20 h-20">
+                                {% elif predictions_day_6_Margalla.Icon == "showers-day" %}
+                                    <img src="{% static 'assets/rain.png' %}" alt="Showers Day Icon" class="w-20 h-20">
+                                {% elif predictions_day_6_Margalla.Icon == "showers-night" %}
+                                    <img src="{% static 'assets/rain.png' %}" alt="Showers Night Icon" class="w-20 h-20">
+                                {% elif predictions_day_6_Margalla.Icon == "fog" %}
+                                    <img src="{% static 'assets/fog.png' %}" alt="Fog Icon" class="w-20 h-20">
+                                {% elif predictions_day_6_Margalla.Icon == "wind" %}
+                                    <img src="{% static 'assets/wind.png' %}" alt="Wind Icon" class="w-20 h-20">
+                                {% elif predictions_day_6_Margalla.Icon == "cloudy" %}
+                                    <img src="{% static 'assets/cloudy.png' %}" alt="Cloudy Icon" class="w-20 h-20">
+                                {% elif predictions_day_6_Margalla.Icon == "partly-cloudy-day" %}
+                                    <img src="{% static 'assets/partly-cloudy-day.png' %}" alt="Partly Cloudy Day Icon" class="w-20 h-20">
+                                {% elif predictions_day_6_Margalla.Icon == "partly-cloudy-night" %}
+                                    <img src="{% static 'assets/partly-cloudy-night.png' %}" alt="Partly Cloudy Night Icon" class="w-20 h-20">
+                                {% elif predictions_day_6_Margalla.Icon == "clear-day" %}
+                                    <img src="{% static 'assets/clear-day.png' %}" alt="Clear Day Icon" class="w-20 h-20">
+                                {% elif predictions_day_6_Margalla.Icon == "clear-night" %}
+                                    <img src="{% static 'assets/clear-night.png' %}" alt="Clear Night Icon" class="w-20 h-20">
+                                {% else %}
+                                    <img src="{% static 'assets/default.png' %}" alt="Default Weather Icon" class="w-20 h-20">
+                                {% endif %}
+                                <span class="text-sm text-gray-300 mt-2">{{ predictions_day_6_Margalla.Heading }}</span>
                             </div>
-                            <div class="text-5xl font-bold">37°C</div>
+                            <div class="text-5xl font-bold">{{predictions_day_6_Margalla.Temperature}}°C</div>
                         </div>
                         <div class="flex items-center justify-between mb-2">
                             <div class="flex items-center">
                                 <img src="static/assets/airpressure.png" alt="Pressure Icon" class="w-8 h-8">
                                 <span class="ml-2 text-sm font-semibold">Pressure</span>
                             </div>
-                            <span class="text-sm">1024 hPa</span>
+                            <span class="text-sm">{{predictions_day_6_Margalla.Pressure}} hPa</span>
                         </div>
                         <div class="flex items-center justify-between mb-2">
                             <div class="flex items-center">
-                                <img src="static/assets/rain.png" alt="Rain Icon" class="w-8 h-8">
+                                <img src="static/assets/rainy.png" alt="Rain Icon" class="w-8 h-8">
                                 <span class="ml-2 text-sm font-semibold">Rain</span>
                             </div>
-                            <span class="text-sm">20%</span>
+                            <span class="text-sm">{{predictions_day_6_Margalla.Rain}}%</span>
                         </div>
                         <div class="flex items-center justify-between mb-2">
                             <div class="flex items-center">
                                 <img src="static/assets/windspeed.png" alt="Wind Icon" class="w-8 h-8">
                                 <span class="ml-2 text-sm font-semibold">Wind</span>
                             </div>
-                            <span class="text-sm">5 km/h</span>
+                            <span class="text-sm">{{predictions_day_6_Margalla.Wind_Speed}} km/h</span>
                         </div>
                         <div class="text-center text-sm mt-4">
-                            <span>28° / 40°</span>
+                            <span>{{predictions_day_6_Margalla.Low_Temperature}}° / {{predictions_day_6_Margalla.High_Temperature}}°</span>
                         </div>
                     </div>
                     <div class="card bg-gray-800 p-4 rounded-lg shadow-md">
-                        <h3 class="text-sm font-semibold text-center mb-2">Today</h3>
+                        <h3 class="text-sm font-semibold text-center mb-2">{{day_name_7}}</h3>
                         <div class="flex items-center justify-between mb-4">
                             <div class="flex flex-col items-center">
-                                <img src="static/assets/rain.png" alt="Weather Icon" class="w-20 h-20">
-                                <span class="text-sm text-gray-300 mt-2">Sunny</span>
+                                {% if predictions_day_7_Margalla.Icon == "thunder-rain" %}
+                                    <img src="{% static 'assets/thunder-rain.png' %}" alt="Thunder Rain Icon" class="w-20 h-20">
+                                {% elif predictions_day_7_Margalla.Icon == "thunder-showers-day" %}
+                                    <img src="{% static 'assets/thunder-rain.png' %}" alt="Thunder Showers Day Icon" class="w-20 h-20">
+                                {% elif predictions_day_7_Margalla.Icon == "thunder-showers-night" %}
+                                    <img src="{% static 'assets/thunder-rain.png' %}" alt="Thunder Showers Night Icon" class="w-20 h-20">
+                                {% elif predictions_day_7_Margalla.Icon == "rain" %}
+                                    <img src="{% static 'assets/rain.png' %}" alt="Rain Icon" class="w-20 h-20">
+                                {% elif predictions_day_7_Margalla.Icon == "showers-day" %}
+                                    <img src="{% static 'assets/rain.png' %}" alt="Showers Day Icon" class="w-20 h-20">
+                                {% elif predictions_day_7_Margalla.Icon == "showers-night" %}
+                                    <img src="{% static 'assets/rain.png' %}" alt="Showers Night Icon" class="w-20 h-20">
+                                {% elif predictions_day_7_Margalla.Icon == "fog" %}
+                                    <img src="{% static 'assets/fog.png' %}" alt="Fog Icon" class="w-20 h-20">
+                                {% elif predictions_day_7_Margalla.Icon == "wind" %}
+                                    <img src="{% static 'assets/wind.png' %}" alt="Wind Icon" class="w-20 h-20">
+                                {% elif predictions_day_7_Margalla.Icon == "cloudy" %}
+                                    <img src="{% static 'assets/cloudy.png' %}" alt="Cloudy Icon" class="w-20 h-20">
+                                {% elif predictions_day_7_Margalla.Icon == "partly-cloudy-day" %}
+                                    <img src="{% static 'assets/partly-cloudy-day.png' %}" alt="Partly Cloudy Day Icon" class="w-20 h-20">
+                                {% elif predictions_day_7_Margalla.Icon == "partly-cloudy-night" %}
+                                    <img src="{% static 'assets/partly-cloudy-night.png' %}" alt="Partly Cloudy Night Icon" class="w-20 h-20">
+                                {% elif predictions_day_7_Margalla.Icon == "clear-day" %}
+                                    <img src="{% static 'assets/clear-day.png' %}" alt="Clear Day Icon" class="w-20 h-20">
+                                {% elif predictions_day_7_Margalla.Icon == "clear-night" %}
+                                    <img src="{% static 'assets/clear-night.png' %}" alt="Clear Night Icon" class="w-20 h-20">
+                                {% else %}
+                                    <img src="{% static 'assets/default.png' %}" alt="Default Weather Icon" class="w-20 h-20">
+                                {% endif %}
+                                <span class="text-sm text-gray-300 mt-2">{{ predictions_day_7_Margalla.Heading }}</span>
                             </div>
-                            <div class="text-5xl font-bold">37°C</div>
+                            <div class="text-5xl font-bold">{{predictions_day_7_Margalla.Temperature}}°C</div>
                         </div>
                         <div class="flex items-center justify-between mb-2">
                             <div class="flex items-center">
                                 <img src="static/assets/airpressure.png" alt="Pressure Icon" class="w-8 h-8">
                                 <span class="ml-2 text-sm font-semibold">Pressure</span>
                             </div>
-                            <span class="text-sm">1024 hPa</span>
+                            <span class="text-sm">{{predictions_day_7_Margalla.Pressure}} hPa</span>
                         </div>
                         <div class="flex items-center justify-between mb-2">
                             <div class="flex items-center">
-                                <img src="static/assets/rain.png" alt="Rain Icon" class="w-8 h-8">
+                                <img src="static/assets/rainy.png" alt="Rain Icon" class="w-8 h-8">
                                 <span class="ml-2 text-sm font-semibold">Rain</span>
                             </div>
-                            <span class="text-sm">20%</span>
+                            <span class="text-sm">{{predictions_day_7_Margalla.Rain}}%</span>
                         </div>
                         <div class="flex items-center justify-between mb-2">
                             <div class="flex items-center">
                                 <img src="static/assets/windspeed.png" alt="Wind Icon" class="w-8 h-8">
                                 <span class="ml-2 text-sm font-semibold">Wind</span>
                             </div>
-                            <span class="text-sm">5 km/h</span>
+                            <span class="text-sm">{{predictions_day_7_Margalla.Wind_Speed}} km/h</span>
                         </div>
                         <div class="text-center text-sm mt-4">
-                            <span>28° / 40°</span>
+                            <span>{{predictions_day_7_Margalla.Low_Temperature}}° / {{predictions_day_7_Margalla.High_Temperature}}°</span>
                         </div>
                     </div>
                 </div>
             </section>
-            
             <section>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
                     <div>
