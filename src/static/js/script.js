@@ -530,13 +530,85 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
+function downloadCSV() {
+    var table = document.getElementById("weather-table");
+    var rows = table.querySelectorAll("tr");
+    var csv = [];
+    var headerRow = [];
+    var subheaderRow = [];
+
+    for (var i = 0; i < rows.length; i++) {
+        var row = rows[i];
+        var cols = row.querySelectorAll("td, th");
+
+        if (i === 0) {
+            for (var j = 0; j < cols.length; j++) {
+                var col = cols[j];
+                if (col.hasAttribute('rowspan')) {
+                    headerRow.push(col.innerText.trim());
+                } else if (col.hasAttribute('colspan')) {
+                    var colspan = parseInt(col.getAttribute('colspan'));
+                    for (var k = 0; k < colspan; k++) {
+                        headerRow.push(col.innerText.trim());
+                    }
+                } else {
+                    headerRow.push(col.innerText.trim());
+                }
+            }
+            continue;
+        }
+
+        if (i === 1) {
+            for (var j = 0; j < cols.length; j++) {
+                var col = cols[j];
+                var colspan = parseInt(col.getAttribute('colspan')) || 1;
+                for (var k = 0; k < colspan; k++) {
+                    subheaderRow.push(col.innerText.trim());
+                }
+            }
+            continue;
+        }
+
+        var dataRow = [];
+        for (var j = 0; j < cols.length; j++) {
+            dataRow.push(cols[j].innerText.trim());
+        }
+        csv.push(dataRow.join(","));
+    }
+
+    var finalHeaderRow = [];
+    for (var i = 0; i < headerRow.length; i++) {
+        if (i === 0) {
+            finalHeaderRow.push(headerRow[i]);  // Skip the first entry (Time)
+        } else if (i < subheaderRow.length) {
+            var suffix = (i % 2 === 1) ? ' N' : ' M'; // Alternate between 'N' and 'M'
+            finalHeaderRow.push(headerRow[i] + suffix);
+        } else {
+            finalHeaderRow.push(headerRow[i]);
+        }
+    }
+
+    csv.unshift(finalHeaderRow.join(","));
+    downloadCSVFile(csv.join("\n"), 'weather_data.csv');
+}
+
+function downloadCSVFile(csv, filename) {
+    var csvFile = new Blob([csv], { type: "text/csv" });
+    var downloadLink = document.createElement("a");
+    downloadLink.download = filename;
+    downloadLink.href = window.URL.createObjectURL(csvFile);
+    downloadLink.style.display = "none";
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+    document.body.removeChild(downloadLink); // Remove the link after clicking
+}
 
 function updateAlerts(data, temperatureAlertId, windAlertId, thunderstormAlertId, alertSectionId,) {
     const temperatureAlert = document.getElementById(temperatureAlertId);
     const windAlert = document.getElementById(windAlertId);
     const thunderstormAlert = document.getElementById(thunderstormAlertId);
     const alertSection = document.getElementById(alertSectionId);
-    if (data.Temperature > 28) {
+    if (data.Temperature > 35) {
         temperatureAlert.classList.remove('hidden');
     } else {
         temperatureAlert.classList.add('hidden');
@@ -546,7 +618,7 @@ function updateAlerts(data, temperatureAlertId, windAlertId, thunderstormAlertId
     } else {
         windAlert.classList.add('hidden');
     }
-    if (data.Rain > 3) {
+    if (data.Rain > 20) {
         thunderstormAlert.classList.remove('hidden');
     } else {
         thunderstormAlert.classList.add('hidden');

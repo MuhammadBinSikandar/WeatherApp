@@ -323,6 +323,64 @@ def predictions(database, api_url):
     predictions_collection.insert_many(weather_forecast)
 
 
+def fetch_sun_times(lat, lng):
+    url = "https://api.sunrisesunset.io/json"
+    params = {
+        "lat": lat,
+        "lng": lng
+    }
+    response = requests.get(url, params=params)
+    if response.status_code == 200:
+        data = response.json()
+        sunrise = data['results']['sunrise']
+        sunset = data['results']['sunset']
+        sunrise_time = datetime.strptime(sunrise, "%I:%M:%S %p").strftime("%I:%M %p").lstrip('0').replace(' 0', ' ')
+        sunset_time = datetime.strptime(sunset, "%I:%M:%S %p").strftime("%I:%M %p").lstrip('0').replace(' 0', ' ')
+        sun_times = {
+            'sunrise': sunrise_time,
+            'sunset': sunset_time
+        }
+
+        return sun_times
+    else:
+        print(f"Error: {response.status_code}")
+        return None
+    
+def moon_phase():
+    url = "https://www.moongiant.com/phase/today/"
+    response = requests.get(url)
+    if response.status_code == 200:
+        soup = BeautifulSoup(response.content, 'html.parser')
+        moon_details_div = soup.find('div', id='moonDetails')
+        if moon_details_div:
+            first_span = moon_details_div.find('span')
+            if first_span:
+                moon_phase = first_span.get_text(strip=True)
+                return moon_phase
+            else:
+                return "First span tag not found."
+        else:
+            return "Div with id 'moonDetails' not found."
+    else:
+        return f"Failed to retrieve page, status code: {response.status_code}"
+
+def fetch_visibility(api_url):
+    # URL of the API
+    
+    # Make the GET request to the API
+    response = requests.get(api_url)
+    
+    # Check if the request was successful
+    if response.status_code == 200:
+        data = response.json()
+        
+        # Extract visibility data from the response
+        visibility = data.get('days', [{}])[0].get('visibility', None)
+        
+        return visibility
+    else:
+        # Handle the case where the API call fails
+        return None
 
 
 pakistan_timezone = timezone(timedelta(hours=5))
@@ -368,7 +426,8 @@ global predictions_by_day_NUTECH, predictions_by_day_Margalla, mapped_weekly_dat
 global aggregated_weekly_data_NUTECH, aggregated_weekly_data_Margalla
 global aggregated_monthly_data_NUTECH, aggregated_monthly_data_Margalla
 global temperature_graph_html_day, humidity_graph_html_day, pressure_graph_html_day, temperature_graph_html_week, humidity_graph_html_week 
-global pressure_graph_html_week, temperature_graph_html_month, humidity_graph_html_month, pressure_graph_html_month 
+global pressure_graph_html_week, temperature_graph_html_month, humidity_graph_html_month, pressure_graph_html_month
+global sun_times_NUTECH, sun_times_MAARGALLA ,moon_Phase, visibility_Nutech, visibility_Margalla
 
 def get_data_from_db():
     global mapped_last_data_NUTECH, mapped_last_data_Margalla, combined_data, mapped_all_data_NUTECH, mapped_all_data_Margalla, last_7_data_NUTECH, last_7_data_Margalla
@@ -376,7 +435,9 @@ def get_data_from_db():
     global aggregated_weekly_data_NUTECH, aggregated_weekly_data_Margalla
     global aggregated_monthly_data_NUTECH, aggregated_monthly_data_Margalla
     global temperature_graph_html_day, humidity_graph_html_day, pressure_graph_html_day, temperature_graph_html_week, humidity_graph_html_week 
-    global pressure_graph_html_week, temperature_graph_html_month, humidity_graph_html_month, pressure_graph_html_month 
+    global pressure_graph_html_week, temperature_graph_html_month, humidity_graph_html_month, pressure_graph_html_month
+    global sun_times_NUTECH, sun_times_MAARGALLA,moon_Phase, visibility_Nutech, visibility_Margalla
+
     client = MongoClient("mongodb+srv://niclab747:Q2AIeeHH4As1aSFc@weatherapplication.dsm8c7f.mongodb.net/?retryWrites=true&w=majority&appName=WeatherApplication")
 
     Today_date = datetime.now()
@@ -550,6 +611,14 @@ def get_data_from_db():
             'Heading': heading
         }
 
+    sun_times_NUTECH = fetch_sun_times(33.625566, 73.011561)
+    sun_times_MAARGALLA = fetch_sun_times(33.761550, 73.079636)
+
+    moon_Phase = moon_phase()
+
+    visibility_Nutech = fetch_visibility("https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/Rawalpindi/today?unitGroup=us&elements=visibility&include=stats%2Cdays&key=FVZ4MF57QRM857ELFR4NCPDYW&contentType=json")
+    visibility_Margalla = fetch_visibility("https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/Islamabad/today?unitGroup=us&elements=visibility&include=stats%2Cdays&key=FVZ4MF57QRM857ELFR4NCPDYW&contentType=json")
+
     client.close()
     print("Data fetched successfully")
 
@@ -578,6 +647,7 @@ def index(request):
     global temperature_graph_html_day, humidity_graph_html_day, pressure_graph_html_day
     global temperature_graph_html_week, humidity_graph_html_week, pressure_graph_html_week
     global temperature_graph_html_month, humidity_graph_html_month, pressure_graph_html_month
+    global sun_times_NUTECH, sun_times_MAARGALLA,moon_Phase, visibility_Nutech, visibility_Margalla
 
     Today_date = datetime.now()
     formatted_date = Today_date.strftime("%B %d, %Y")
@@ -605,6 +675,11 @@ def index(request):
         'aggregated_monthly_data_Margalla': json.dumps(aggregated_monthly_data_Margalla),
         'last_7_data_NUTECH': last_7_data_NUTECH,
         'last_7_data_Margalla': last_7_data_Margalla,
+        'sun_times_NUTECH': sun_times_NUTECH,
+        'sun_times_MAARGALLA': sun_times_MAARGALLA,
+        'moon_Phase': moon_Phase,
+        'visibility_Nutech': visibility_Nutech,
+        'visibility_Margalla': visibility_Margalla,
         'predictions_day_1_NUTECH': predictions_by_day_NUTECH.get(1, {}),
         'predictions_day_2_NUTECH': predictions_by_day_NUTECH.get(2, {}),
         'predictions_day_3_NUTECH': predictions_by_day_NUTECH.get(3, {}),

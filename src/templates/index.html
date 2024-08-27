@@ -188,13 +188,13 @@
                     <div class="text-white flex flex-col justify-between h-full lg:col-span-1 md:col-span-2 sm:col-span-2">
                         <h3 class="text-lg font-bold text-left mb-2 border-b-[1px]">Location</h3>
                         <div class="bg-[#1f2937] h-full text-left p-4 shadow-lg rounded-lg lg:space-y-6 pt-6 md:p-4 sm:space-y-2 md:space-y-2 md:pl-2">
-                            <p class="mb-2 sm:mb-1 md:mb-2 lg:mb-2"><strong>Latitude:</strong> 33.6844° N</p>
-                            <p class="mb-2 sm:mb-1 md:mb-2 lg:mb-2"><strong>Longitude:</strong> 73.0479° E</p>
-                            <p class="mb-2 sm:mb-1 md:mb-2 lg:mb-2"><strong>Visibility:</strong> 10 km</p>
-                            <p class="mb-2 sm:mb-1 md:mb-2 lg:mb-2"><strong>Sunrise:</strong> 5:45 AM</p>
-                            <p class="mb-2 sm:mb-1 md:mb-2 lg:mb-2"><strong>Sunset:</strong> 6:30 PM</p>
-                            <p class="mb-2 sm:mb-1 md:mb-2 lg:mb-2"><strong>Moon Phase:</strong> Waxing Crescent</p>
-                            <p class="mb-2 sm:mb-1 md:mb-2 lg:mb-2"><strong>Elevation:</strong> 540m</p>
+                            <p class="mb-2 sm:mb-1 md:mb-2 lg:mb-2"><strong>Latitude:</strong> 33.6255° N</p>
+                            <p class="mb-2 sm:mb-1 md:mb-2 lg:mb-2"><strong>Longitude:</strong> 73.0115° E</p>
+                            <p class="mb-2 sm:mb-1 md:mb-2 lg:mb-2"><strong>Visibility:</strong> {{visibility_Nutech}} km</p>
+                            <p class="mb-2 sm:mb-1 md:mb-2 lg:mb-2"><strong>Sunrise:</strong> {{sun_times_NUTECH.sunrise}}</p>
+                            <p class="mb-2 sm:mb-1 md:mb-2 lg:mb-2"><strong>Sunset:</strong> {{sun_times_NUTECH.sunset}}</p>
+                            <p class="mb-2 sm:mb-1 md:mb-2 lg:mb-2"><strong>Moon Phase:</strong> {{moon_Phase}}</p>
+                            <p class="mb-2 sm:mb-1 md:mb-2 lg:mb-2"><strong>Elevation:</strong> 484m</p>
                         </div>
                     </div>
                     <div class="lg:col-span-6 md:col-span-5 sm:col-span-5 overflow-x-auto">
@@ -215,7 +215,7 @@
                                     <th class="border-r border-white">Evapotranspiration (mm/h)</th>
                                     <th class="border-r border-white">CO<sub>2</sub> (ppm)</th>
                                     <th class="border-r border-white">Optical Particles (g/m)</th>
-                                    <th class="border-r border-white">Pollen</th>
+                                    <th class="border-r border-white">Pollen (p/m<sup>3</sup>)</th>
                                 </tr>
                             </thead>
 
@@ -226,7 +226,7 @@
                                         <td class="border-r border-white">
                                             {% if row.Rain > 0 %}
                                                 🌧
-                                            {% elif row.Time|slice:":2" == "PM" %}
+                                            {% elif row.Time > sun_times_NUTECH.sunset and row.Time < sun_times_NUTECH.sunrise %}
                                                 🌙 
                                             {% elif row.Solar_Radiation > 200 %}
                                                 🌞 
@@ -782,13 +782,13 @@
                     <div class="text-white flex flex-col justify-between h-full lg:col-span-1 md:col-span-2 sm:col-span-2">
                         <h3 class="text-lg font-bold text-left mb-2 border-b-[1px]">Location</h3>
                         <div class="bg-[#1f2937] h-full text-left p-4 shadow-lg rounded-lg lg:space-y-6 pt-6 md:p-4 md:space-y-2 md:pl-2 ">
-                            <p class="mb-2"><strong>Latitude:</strong> 33.6844° N</p>
-                            <p class="mb-2"><strong>Longitude:</strong> 73.0479° E</p>
-                            <p class="mb-2"><strong>Visibility:</strong> 10 km</p>
-                            <p class="mb-2"><strong>Sunrise:</strong> 5:45 AM</p>
-                            <p class="mb-2"><strong>Sunset:</strong> 6:30 PM</p>
-                            <p class="mb-2"><strong>Moon Phase:</strong> Waxing Crescent</p>
-                            <p class="mb-2"><strong>Elevation:</strong> 540m</p>
+                            <p class="mb-2"><strong>Latitude:</strong> 33.7615° N</p>
+                            <p class="mb-2"><strong>Longitude:</strong> 73.0796° E</p>
+                            <p class="mb-2"><strong>Visibility:</strong> {{visibility_Margalla}} km</p>
+                            <p class="mb-2"><strong>Sunrise:</strong> {{sun_times_MAARGALLA.sunrise}} </p>
+                            <p class="mb-2"><strong>Sunset:</strong> {{sun_times_MAARGALLA.sunset}} </p>
+                            <p class="mb-2"><strong>Moon Phase:</strong> {{moon_Phase}}</p>
+                            <p class="mb-2"><strong>Elevation:</strong> 1604m</p>
                         </div>
                     </div>
                     <div class="lg:col-span-6 md:col-span-5 sm:col-span-5 overflow-x-auto">
@@ -809,7 +809,7 @@
                                     <th class="border-r border-white">Evapotranspiration (mm/h)</th>
                                     <th class="border-r border-white">CO<sub>2</sub> (ppm)</th>
                                     <th class="border-r border-white">Optical Particles (g/m)</th>
-                                    <th>Pollen</th>
+                                    <th>Pollen (p/m<sup>3</sup>)</th>
                                 </tr>
                             </thead>
                             <tbody id="weatherData">
@@ -819,7 +819,7 @@
                                         <td class="border-r border-white">
                                             {% if row.Rain > 0 %}
                                                 🌧
-                                            {% elif row.Time|slice:":2" == "PM" %}
+                                            {% elif row.Time > sun_times_MAARGALLA.sunset and row.Time < sun_times_MAARGALLA.sunrise %}
                                                 🌙 
                                             {% elif row.Solar_Radiation > 200 %}
                                                 🌞 
@@ -1535,7 +1535,13 @@
                 </section>
             </div>
         </div>
-        <div id="Data_Tab" class="tab_content hidden_content mt-8 overflow-x-auto">
+        <div id="Data_Tab" class="tab_content hidden_content mt-4 overflow-x-auto">
+            <nav class="flex justify-center pt-2 mb-4">
+                <button
+                    class="btn text-white border-white graph_button_active btn-outline btn-xs sm:btn-sm md:btn-md md:btn-wide lg:btn-wide"
+                    onclick="downloadCSV()">Download
+                </button>
+            </nav>            
             <table id="weather-table" class="min-w-full bg-gray-900 text-xs md:text-sm lg:text-base border border-gray-700">
                 <thead>
                     <tr class="bg-gray-700">
