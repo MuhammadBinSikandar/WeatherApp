@@ -136,12 +136,23 @@
 
 <body class="bg-[#0F0E10] text-white">
     <!-- Header -->
-    <header class="flex flex-col sm:flex-row justify-between items-center py-4 px-4 md:px-8 lg:px-18 bg-[#1f2937] space-y-4 sm:space-y-0 sm:space-x-4">
+    <header class="flex flex-col sm:flex-row justify-between items-center py-4 px-4 md:px-8 lg:px-18 space-y-4 sm:space-y-0 sm:space-x-4" style="background-color: #0042a0;">
         <img src="static/assets/Active.png" alt="Active Logo" class="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20">
-        <div class="flex flex-col sm:flex-row items-center sm:space-x-2 text-center sm:text-left">
+        <div class="flex flex-col sm:flex-row items-center sm:space-x-2 text-center ">
             <div class="mt-2 sm:mt-0">
-                <h1 class="text-sm sm:text-xs md:text-lg lg:text-3xl font-bold">ICT AppliCaTions for sustaInable enVironmental protEction (ACTIVE)</h1>
-                <p class="text-xs sm:text-sm md:text-lg lg:text-xl text-center">Grant agreement no. 101082866</p>
+                <h1 class="text-sm sm:text-xs md:text-lg lg:text-4xl font-bold">
+                    <span style="color: #ffffff;">ICT</span> 
+                    <span style="color: #fec217;">A</span><span style="color: #ffffff;">p</span><span style="color: #ffffff;">p</span><span style="color: #ffffff;">l</span><span style="color: #ffffff;">i</span><span style="color: #fec217;">C</span><span style="color: #ffffff;">a</span><span style="color: #fec217;">T</span><span style="color: #ffffff;">i</span><span style="color: #ffffff;">o</span><span style="color: #ffffff;">n</span><span style="color: #ffffff;">s</span> 
+                    <span style="color: #ffffff;">f</span><span style="color: #ffffff;">o</span><span style="color: #ffffff;">r</span> 
+                    <span style="color: #ffffff;">s</span><span style="color: #ffffff;">u</span><span style="color: #ffffff;">s</span><span style="color: #ffffff;">t</span><span style="color: #ffffff;">a</span><span style="color: #fec217;">I</span><span style="color: #ffffff;">n</span><span style="color: #ffffff;">a</span><span style="color: #ffffff;">b</span><span style="color: #ffffff;">l</span><span style="color: #ffffff;">e</span> 
+                    <span style="color: #ffffff;">e</span><span style="color: #ffffff;">n</span><span style="color: #fec217;">V</span><span style="color: #ffffff;">i</span><span style="color: #ffffff;">r</span><span style="color: #ffffff;">o</span><span style="color: #ffffff;">n</span><span style="color: #ffffff;">m</span><span style="color: #ffffff;">e</span><span style="color: #ffffff;">n</span><span style="color: #ffffff;">t</span><span style="color: #ffffff;">a</span><span style="color: #ffffff;">l</span> 
+                    <span style="color: #ffffff;">p</span><span style="color: #ffffff;">r</span><span style="color: #ffffff;">o</span><span style="color: #ffffff;">t</span><span style="color: #fec217;">E</span><span style="color: #ffffff;">c</span><span style="color: #ffffff;">t</span><span style="color: #ffffff;">i</span><span style="color: #ffffff;">o</span><span style="color: #ffffff;">n</span> 
+                    <span style="color: #ffffff;">(</span><span style="color: #fec217;">A</span><span style="color: #fec217;">C</span><span style="color: #fec217;">T</span><span style="color: #fec217;">I</span><span style="color: #fec217;">V</span><span style="color: #fec217;">E</span><span style="color: #ffffff;">)</span>
+                  </h1>
+                  <p class="text-xs sm:text-sm md:text-lg lg:text-xl text-center">
+                    <span style="color: #ffffff;">Grant agreement no.</span>
+                    <span class="font-bold" style="color: #fec217"> 101082866</span>
+                  </p>
             </div>
         </div>
         <div class="flex space-x-4">
@@ -185,20 +196,20 @@
             </div>
             <section class="text-center">
                 <div class="grid grid-cols-1 lg:grid-cols-7 gap-4 mt-4">
-                    <div class="text-white flex flex-col justify-between h-full lg:col-span-1 md:col-span-2 sm:col-span-2">
-                        <h3 class="text-lg font-bold text-left mb-2 border-b-[1px]">Location</h3>
-                        <div class="bg-[#1f2937] h-full text-left p-4 shadow-lg rounded-lg lg:space-y-6 pt-6 md:p-4 sm:space-y-2 md:space-y-2 md:pl-2">
-                            <p class="mb-2 sm:mb-1 md:mb-2 lg:mb-2"><strong>Latitude:</strong> 33.6255° N</p>
-                            <p class="mb-2 sm:mb-1 md:mb-2 lg:mb-2"><strong>Longitude:</strong> 73.0115° E</p>
-                            <p class="mb-2 sm:mb-1 md:mb-2 lg:mb-2"><strong>Visibility:</strong> {{visibility_Nutech}} km</p>
-                            <p class="mb-2 sm:mb-1 md:mb-2 lg:mb-2"><strong>Sunrise:</strong> {{sun_times_NUTECH.sunrise}}</p>
-                            <p class="mb-2 sm:mb-1 md:mb-2 lg:mb-2"><strong>Sunset:</strong> {{sun_times_NUTECH.sunset}}</p>
-                            <p class="mb-2 sm:mb-1 md:mb-2 lg:mb-2"><strong>Moon Phase:</strong> {{moon_Phase}}</p>
-                            <p class="mb-2 sm:mb-1 md:mb-2 lg:mb-2"><strong>Elevation:</strong> 484m</p>
+                    <div class="text-white flex flex-col justify-between h-full lg:col-span-1 md:col-span-2 sm:col-span-2" >
+                        <h3 class="text-lg font-bold text-left mb-2 border-b-[1px]" style="background-color: #0042a0; padding: 2px; padding-left: 8px; border-radius: 8px;">Location</h3>
+                        <div class="h-full text-left p-4 shadow-lg rounded-lg lg:space-y-6 pt-6 md:p-4 sm:space-y-2 md:space-y-2 md:pl-2" style="background-color:  #0042a0; border: 1px solid white;">
+                            <p class="mb-2 sm:mb-1 md:mb-2 lg:mb-2 font-bold" style="color: #fec217;"><strong style="color: #ffffff;">Latitude:</strong> <span class="whitespace-nowrap">33.6255° N</span></p>
+                            <p class="mb-2 sm:mb-1 md:mb-2 lg:mb-2 font-bold" style="color: #fec217;"><strong style="color: #ffffff;">Longitude:</strong> <span class="whitespace-nowrap">73.0115° E</span></p>
+                            <p class="mb-2 sm:mb-1 md:mb-2 lg:mb-2 font-bold" style="color: #fec217;"><strong style="color: #ffffff;">Visibility:</strong> <span class="whitespace-nowrap">{{visibility_Nutech}} km</span></p>
+                            <p class="mb-2 sm:mb-1 md:mb-2 lg:mb-2 font-bold" style="color: #fec217;"><strong style="color: #ffffff;">Sunrise:</strong> <span class="whitespace-nowrap">{{sun_times_NUTECH.sunrise}}</span></p>
+                            <p class="mb-2 sm:mb-1 md:mb-2 lg:mb-2 font-bold" style="color: #fec217;"><strong style="color: #ffffff;">Sunset:</strong> <span class="whitespace-nowrap">{{sun_times_NUTECH.sunset}}</span></p>
+                            <p class="mb-2 sm:mb-1 md:mb-2 lg:mb-2 font-bold" style="color: #fec217;"><strong style="color: #ffffff;">Moon Phase:</strong> <span class="whitespace-nowrap">{{moon_Phase}}</span></p>
+                            <p class="mb-2 sm:mb-1 md:mb-2 lg:mb-2 font-bold" style="color: #fec217;"><strong style="color: #ffffff;">Elevation:</strong> <span class="whitespace-nowrap">484m</span></p>
                         </div>
                     </div>
                     <div class="lg:col-span-6 md:col-span-5 sm:col-span-5 overflow-x-auto">
-                        <h3 class="text-lg font-bold text-left mb-2 border-b-[1px]">{{formatted_date}}</h3>
+                        <h3 class="text-lg font-bold text-left mb-2 border-b-[1px]" style="background-color: #0042a0; padding: 2px; padding-left: 8px; border-radius: 8px;"> {{formatted_date}}</h3>
                         <table class="table font-bold text-center table-compact w-full border border-white">
                             <thead>
                                 <tr class="bg-[#1f2937] text-white border-b border-white">
@@ -215,7 +226,7 @@
                                     <th class="border-r border-white">Evapotranspiration (mm/h)</th>
                                     <th class="border-r border-white">CO<sub>2</sub> (ppm)</th>
                                     <th class="border-r border-white">Optical Particles (g/m)</th>
-                                    <th class="border-r border-white">Pollen (p/m<sup>3</sup>)</th>
+                                    <th class="border-r border-white">Pollen (g/m<sup>3</sup>)</th>
                                 </tr>
                             </thead>
 
@@ -226,7 +237,7 @@
                                         <td class="border-r border-white">
                                             {% if row.Rain > 0 %}
                                                 🌧
-                                            {% elif row.Time > sun_times_NUTECH.sunset and row.Time < sun_times_NUTECH.sunrise %}
+                                            {% elif row.Time|slice:":2" == "PM" %}
                                                 🌙 
                                             {% elif row.Solar_Radiation > 200 %}
                                                 🌞 
@@ -256,11 +267,11 @@
                 </div>
             </section>
     
-            <section class="w-full">
-                <h2 class="text-lg font-bold text-center mb-4 border-b-2 pt-6">Forecast</h2>
+            <section class="w-full pt-4">
+                <h2 class="text-2xl font-bold text-center mb-4 border-b-2 pt-6" style="background-color: #0042a0; padding: 2px; border-radius: 8px;">Forecast</h2>
                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 gap-4"> 
-                    <div class="card bg-gray-800 p-4 rounded-lg shadow-md">
-                        <h3 class="text-sm font-semibold text-center mb-2">{{day_name_1}}</h3>
+                    <div class="card bg-gray-800 p-4 rounded-lg shadow-md" style="border: 1px solid white;">
+                        <h3 class="text-lg font-bold text-center mb-2 rounded-lg" style="background-color: #0042a0;  color: #fec217;">{{day_name_1}}</h3>
                         <div class="flex items-center justify-between mb-4">
                             <div class="flex flex-col items-center">
                                 {% if predictions_day_1_NUTECH.Icon == "thunder-rain" %}
@@ -292,7 +303,7 @@
                                 {% else %}
                                     <img src="{% static 'assets/default.png' %}" alt="Default Weather Icon" class="w-14 h-14 2xl:w-20 2xl:h-20">
                                 {% endif %}
-                                <span class="text-[10px] 2xl:text-sm text-gray-300 mt-2">{{ predictions_day_1_NUTECH.Heading }}</span>
+                                <span class="text-[10px] 2xl:text-sm text-gray-300 mt-2 font-bold">{{ predictions_day_1_NUTECH.Heading }}</span>
                             </div>
                             <div class="text-md sm:text-lg md:text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl  font-bold">{{predictions_day_1_NUTECH.Temperature}}°C</div>
                         </div>
@@ -301,28 +312,28 @@
                                 <img src="static/assets/airpressure.png" alt="Pressure Icon" class="w-6 h-6 2xl:w-8 2xl:h-8">
                                 <span class="ml-2 text-xs 2xl:text-sm font-semibold">Pressure</span>
                             </div>
-                            <span class="text-[10px] 2xl:text-sm">{{predictions_day_1_NUTECH.Pressure}} hPa</span>
+                            <span class="text-[10px] 2xl:text-sm font-bold">{{predictions_day_1_NUTECH.Pressure}} hPa</span>
                         </div>
                         <div class="flex items-center justify-between mb-2">
                             <div class="flex items-center">
                                 <img src="static/assets/rainy.png" alt="Rain Icon" class="w-6 h-6 2xl:w-8 2xl:h-8">
                                 <span class="ml-2 text-xs 2xl:text-sm font-semibold">Rain</span>
                             </div>
-                            <span class="text-[10px] 2xl:text-sm">{{predictions_day_1_NUTECH.Rain}} mm</span>
+                            <span class="text-[10px] 2xl:text-sm font-bold">{{predictions_day_1_NUTECH.Rain}} mm</span>
                         </div>
                         <div class="flex items-center justify-between mb-2">
                             <div class="flex items-center">
                                 <img src="static/assets/windspeed.png" alt="Wind Icon" class="w-6 h-6 2xl:w-8 2xl:h-8">
                                 <span class="ml-2 text-xs 2xl:text-sm font-semibold">Wind</span>
                             </div>
-                            <span class="text-[10px] 2xl:text-sm">{{predictions_day_1_NUTECH.Wind_Speed}} km/h</span>
+                            <span class="text-[10px] 2xl:text-sm font-bold">{{predictions_day_1_NUTECH.Wind_Speed}} km/h</span>
                         </div>
-                        <div class="text-center text-sm mt-4">
+                        <div class="text-center text-sm mt-4 font-bold 2xl:text-md">
                             <span>{{predictions_day_1_NUTECH.Low_Temperature}}° / {{predictions_day_1_NUTECH.High_Temperature}}°</span>
                         </div>
                     </div>
-                    <div class="card bg-gray-800 p-4 rounded-lg shadow-md">
-                        <h3 class="text-sm font-semibold text-center mb-2">{{day_name_2}}</h3>
+                    <div class="card bg-gray-800 p-4 rounded-lg shadow-md" style="border: 1px solid white;">
+                        <h3 class="text-lg font-bold text-center mb-2 rounded-lg" style="background-color: #0042a0;  color: #fec217;">{{day_name_2}}</h3>
                         <div class="flex items-center justify-between mb-4">
                             <div class="flex flex-col items-center">
                                 {% if predictions_day_2_NUTECH.Icon == "thunder-rain" %}
@@ -354,7 +365,7 @@
                                 {% else %}
                                     <img src="{% static 'assets/default.png' %}" alt="Default Weather Icon" class="w-14 h-14 2xl:w-20 2xl:h-20">
                                 {% endif %}
-                                <span class="text-[10px] 2xl:text-sm text-gray-300 mt-2">{{ predictions_day_2_NUTECH.Heading }}</span>
+                                <span class="text-[10px] 2xl:text-sm text-gray-300 mt-2 font-bold">{{ predictions_day_2_NUTECH.Heading }}</span>
                             </div>
                             <div class="text-md sm:text-lg md:text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl  font-bold">{{predictions_day_2_NUTECH.Temperature}}°C</div>
                         </div>
@@ -363,28 +374,28 @@
                                 <img src="static/assets/airpressure.png" alt="Pressure Icon" class="w-6 h-6 2xl:w-8 2xl:h-8">
                                 <span class="ml-2 text-xs 2xl:text-sm font-semibold">Pressure</span>
                             </div>
-                            <span class="text-[10px] 2xl:text-sm">{{predictions_day_2_NUTECH.Pressure}} hPa</span>
+                            <span class="text-[10px] 2xl:text-sm font-bold">{{predictions_day_2_NUTECH.Pressure}} hPa</span>
                         </div>
                         <div class="flex items-center justify-between mb-2">
                             <div class="flex items-center">
                                 <img src="static/assets/rain.png" alt="Rain Icon" class="w-6 h-6 2xl:w-8 2xl:h-8">
                                 <span class="ml-2 text-xs 2xl:text-sm font-semibold">Rain</span>
                             </div>
-                            <span class="text-[10px] 2xl:text-sm">{{predictions_day_2_NUTECH.Rain}} mm</span>
+                            <span class="text-[10px] 2xl:text-sm font-bold">{{predictions_day_2_NUTECH.Rain}} mm</span>
                         </div>
                         <div class="flex items-center justify-between mb-2">
                             <div class="flex items-center">
                                 <img src="static/assets/windspeed.png" alt="Wind Icon" class="w-6 h-6 2xl:w-8 2xl:h-8">
                                 <span class="ml-2 text-xs 2xl:text-sm font-semibold">Wind</span>
                             </div>
-                            <span class="text-[10px] 2xl:text-sm">{{predictions_day_2_NUTECH.Wind_Speed}} km/h</span>
+                            <span class="text-[10px] 2xl:text-sm font-bold">{{predictions_day_2_NUTECH.Wind_Speed}} km/h</span>
                         </div>
-                        <div class="text-center text-sm mt-4">
+                        <div class="text-center text-sm mt-4 font-bold 2xl:text-md">
                             <span>{{predictions_day_2_NUTECH.Low_Temperature}}° / {{predictions_day_2_NUTECH.High_Temperature}}°</span>
                         </div>
                     </div>
-                    <div class="card bg-gray-800 p-4 rounded-lg shadow-md">
-                        <h3 class="text-sm font-semibold text-center mb-2">{{day_name_3}}</h3>
+                    <div class="card bg-gray-800 p-4 rounded-lg shadow-md" style="border: 1px solid white;">
+                        <h3 class="text-lg font-bold text-center mb-2 rounded-lg" style="background-color: #0042a0;  color: #fec217;">{{day_name_3}}</h3>
                         <div class="flex items-center justify-between mb-4">
                             <div class="flex flex-col items-center">
                                 {% if predictions_day_3_NUTECH.Icon == "thunder-rain" %}
@@ -416,7 +427,7 @@
                                 {% else %}
                                     <img src="{% static 'assets/default.png' %}" alt="Default Weather Icon" class="w-14 h-14 2xl:w-20 2xl:h-20">
                                 {% endif %}
-                                <span class="text-[10px] 2xl:text-sm text-gray-300 mt-2">{{ predictions_day_3_NUTECH.Heading }}</span>
+                                <span class="text-[10px] 2xl:text-sm text-gray-300 mt-2 font-bold">{{ predictions_day_3_NUTECH.Heading }}</span>
                             </div>
                             <div class="text-md sm:text-lg md:text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl  font-bold">{{predictions_day_3_NUTECH.Temperature}}°C</div>
                         </div>
@@ -425,28 +436,28 @@
                                 <img src="static/assets/airpressure.png" alt="Pressure Icon" class="w-6 h-6 2xl:w-8 2xl:h-8">
                                 <span class="ml-2 text-xs 2xl:text-sm font-semibold">Pressure</span>
                             </div>
-                            <span class="text-[10px] 2xl:text-sm">{{predictions_day_3_NUTECH.Pressure}} hPa</span>
+                            <span class="text-[10px] 2xl:text-sm font-bold">{{predictions_day_3_NUTECH.Pressure}} hPa</span>
                         </div>
                         <div class="flex items-center justify-between mb-2">
                             <div class="flex items-center">
                                 <img src="static/assets/rainy.png" alt="Rain Icon" class="w-6 h-6 2xl:w-8 2xl:h-8">
                                 <span class="ml-2 text-xs 2xl:text-sm font-semibold">Rain</span>
                             </div>
-                            <span class="text-[10px] 2xl:text-sm">{{predictions_day_3_NUTECH.Rain}} mm</span>
+                            <span class="text-[10px] 2xl:text-sm font-bold">{{predictions_day_3_NUTECH.Rain}} mm</span>
                         </div>
                         <div class="flex items-center justify-between mb-2">
                             <div class="flex items-center">
                                 <img src="static/assets/windspeed.png" alt="Wind Icon" class="w-6 h-6 2xl:w-8 2xl:h-8">
                                 <span class="ml-2 text-xs 2xl:text-sm font-semibold">Wind</span>
                             </div>
-                            <span class="text-[10px] 2xl:text-sm">{{predictions_day_3_NUTECH.Wind_Speed}} km/h</span>
+                            <span class="text-[10px] 2xl:text-sm font-bold">{{predictions_day_3_NUTECH.Wind_Speed}} km/h</span>
                         </div>
-                        <div class="text-center text-sm mt-4">
+                        <div class="text-center text-sm mt-4 font-bold 2xl:text-md">
                             <span>{{predictions_day_3_NUTECH.Low_Temperature}}° / {{predictions_day_3_NUTECH.High_Temperature}}°</span>
                         </div>
                     </div>
-                    <div class="card bg-gray-800 p-4 rounded-lg shadow-md">
-                        <h3 class="text-sm font-semibold text-center mb-2">{{day_name_4}}</h3>
+                    <div class="card bg-gray-800 p-4 rounded-lg shadow-md" style="border: 1px solid white;">
+                        <h3 class="text-lg font-bold text-center mb-2 rounded-lg" style="background-color: #0042a0;  color: #fec217;">{{day_name_4}}</h3>
                         <div class="flex items-center justify-between mb-4">
                             <div class="flex flex-col items-center">
                                 {% if predictions_day_4_NUTECH.Icon == "thunder-rain" %}
@@ -478,7 +489,7 @@
                                 {% else %}
                                     <img src="{% static 'assets/default.png' %}" alt="Default Weather Icon" class="w-14 h-14 2xl:w-20 2xl:h-20">
                                 {% endif %}
-                                <span class="text-[10px] 2xl:text-sm text-gray-300 mt-2">{{ predictions_day_4_NUTECH.Heading }}</span>
+                                <span class="text-[10px] 2xl:text-sm text-gray-300 mt-2 font-bold">{{ predictions_day_4_NUTECH.Heading }}</span>
                             </div>
                             <div class="text-md sm:text-lg md:text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl  font-bold">{{predictions_day_4_NUTECH.Temperature}}°C</div>
                         </div>
@@ -487,28 +498,28 @@
                                 <img src="static/assets/airpressure.png" alt="Pressure Icon" class="w-6 h-6 2xl:w-8 2xl:h-8">
                                 <span class="ml-2 text-xs 2xl:text-sm font-semibold">Pressure</span>
                             </div>
-                            <span class="text-[10px] 2xl:text-sm">{{predictions_day_4_NUTECH.Pressure}} hPa</span>
+                            <span class="text-[10px] 2xl:text-sm font-bold">{{predictions_day_4_NUTECH.Pressure}} hPa</span>
                         </div>
                         <div class="flex items-center justify-between mb-2">
                             <div class="flex items-center">
                                 <img src="static/assets/rainy.png" alt="Rain Icon" class="w-6 h-6 2xl:w-8 2xl:h-8">
                                 <span class="ml-2 text-xs 2xl:text-sm font-semibold">Rain</span>
                             </div>
-                            <span class="text-[10px] 2xl:text-sm">{{predictions_day_4_NUTECH.Rain}} mm</span>
+                            <span class="text-[10px] 2xl:text-sm font-bold">{{predictions_day_4_NUTECH.Rain}} mm</span>
                         </div>
                         <div class="flex items-center justify-between mb-2">
                             <div class="flex items-center">
                                 <img src="static/assets/windspeed.png" alt="Wind Icon" class="w-6 h-6 2xl:w-8 2xl:h-8">
                                 <span class="ml-2 text-xs 2xl:text-sm font-semibold">Wind</span>
                             </div>
-                            <span class="text-[10px] 2xl:text-sm">{{predictions_day_4_NUTECH.Wind_Speed}} km/h</span>
+                            <span class="text-[10px] 2xl:text-sm font-bold">{{predictions_day_4_NUTECH.Wind_Speed}} km/h</span>
                         </div>
-                        <div class="text-center text-sm mt-4">
+                        <div class="text-center text-sm mt-4 font-bold 2xl:text-md">
                             <span>{{predictions_day_4_NUTECH.Low_Temperature}}° / {{predictions_day_4_NUTECH.High_Temperature}}°</span>
                         </div>
                     </div>
-                    <div class="card bg-gray-800 p-4 rounded-lg shadow-md">
-                        <h3 class="text-sm font-semibold text-center mb-2">{{day_name_5}}</h3>
+                    <div class="card bg-gray-800 p-4 rounded-lg shadow-md" style="border: 1px solid white;">
+                        <h3 class="text-lg font-bold text-center mb-2 rounded-lg" style="background-color: #0042a0;  color: #fec217;">{{day_name_5}}</h3>
                         <div class="flex items-center justify-between mb-4">
                             <div class="flex flex-col items-center">
                                 {% if predictions_day_5_NUTECH.Icon == "thunder-rain" %}
@@ -540,7 +551,7 @@
                                 {% else %}
                                     <img src="{% static 'assets/default.png' %}" alt="Default Weather Icon" class="w-14 h-14 2xl:w-20 2xl:h-20">
                                 {% endif %}
-                                <span class="text-[10px] 2xl:text-sm text-gray-300 mt-2">{{ predictions_day_5_NUTECH.Heading }}</span>
+                                <span class="text-[10px] 2xl:text-sm text-gray-300 mt-2 font-bold">{{ predictions_day_5_NUTECH.Heading }}</span>
                             </div>
                             <div class="text-md sm:text-lg md:text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl  font-bold">{{predictions_day_5_NUTECH.Temperature}}°C</div>
                         </div>
@@ -549,28 +560,28 @@
                                 <img src="static/assets/airpressure.png" alt="Pressure Icon" class="w-6 h-6 2xl:w-8 2xl:h-8">
                                 <span class="ml-2 text-xs 2xl:text-sm font-semibold">Pressure</span>
                             </div>
-                            <span class="text-[10px] 2xl:text-sm">{{predictions_day_5_NUTECH.Pressure}} hPa</span>
+                            <span class="text-[10px] 2xl:text-sm font-bold">{{predictions_day_5_NUTECH.Pressure}} hPa</span>
                         </div>
                         <div class="flex items-center justify-between mb-2">
                             <div class="flex items-center">
                                 <img src="static/assets/rainy.png" alt="Rain Icon" class="w-6 h-6 2xl:w-8 2xl:h-8">
                                 <span class="ml-2 text-xs 2xl:text-sm font-semibold">Rain</span>
                             </div>
-                            <span class="text-[10px] 2xl:text-sm">{{predictions_day_5_NUTECH.Rain}} mm</span>
+                            <span class="text-[10px] 2xl:text-sm font-bold">{{predictions_day_5_NUTECH.Rain}} mm</span>
                         </div>
                         <div class="flex items-center justify-between mb-2">
                             <div class="flex items-center">
                                 <img src="static/assets/windspeed.png" alt="Wind Icon" class="w-6 h-6 2xl:w-8 2xl:h-8">
                                 <span class="ml-2 text-xs 2xl:text-sm font-semibold">Wind</span>
                             </div>
-                            <span class="text-[10px] 2xl:text-sm">{{predictions_day_5_NUTECH.Wind_Speed}} km/h</span>
+                            <span class="text-[10px] 2xl:text-sm font-bold">{{predictions_day_5_NUTECH.Wind_Speed}} km/h</span>
                         </div>
-                        <div class="text-center text-sm mt-4">
+                        <div class="text-center text-sm mt-4 font-bold 2xl:text-md">
                             <span>{{predictions_day_5_NUTECH.Low_Temperature}}° / {{predictions_day_5_NUTECH.High_Temperature}}°</span>
                         </div>
                     </div>
-                    <div class="card bg-gray-800 p-4 rounded-lg shadow-md">
-                        <h3 class="text-sm font-semibold text-center mb-2">{{day_name_6}}</h3>
+                    <div class="card bg-gray-800 p-4 rounded-lg shadow-md" style="border: 1px solid white;">
+                        <h3 class="text-lg font-bold text-center mb-2 rounded-lg" style="background-color: #0042a0;  color: #fec217;">{{day_name_6}}</h3>
                         <div class="flex items-center justify-between mb-4">
                             <div class="flex flex-col items-center">
                                 {% if predictions_day_6_NUTECH.Icon == "thunder-rain" %}
@@ -602,7 +613,7 @@
                                 {% else %}
                                     <img src="{% static 'assets/default.png' %}" alt="Default Weather Icon" class="w-14 h-14 2xl:w-20 2xl:h-20">
                                 {% endif %}
-                                <span class="text-[10px] 2xl:text-sm text-gray-300 mt-2">{{ predictions_day_6_NUTECH.Heading }}</span>
+                                <span class="text-[10px] 2xl:text-sm text-gray-300 mt-2 font-bold">{{ predictions_day_6_NUTECH.Heading }}</span>
                             </div>
                             <div class="text-md sm:text-lg md:text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl  font-bold">{{predictions_day_6_NUTECH.Temperature}}°C</div>
                         </div>
@@ -611,28 +622,28 @@
                                 <img src="static/assets/airpressure.png" alt="Pressure Icon" class="w-6 h-6 2xl:w-8 2xl:h-8">
                                 <span class="ml-2 text-xs 2xl:text-sm font-semibold">Pressure</span>
                             </div>
-                            <span class="text-[10px] 2xl:text-sm">{{predictions_day_6_NUTECH.Pressure}} hPa</span>
+                            <span class="text-[10px] 2xl:text-sm font-bold">{{predictions_day_6_NUTECH.Pressure}} hPa</span>
                         </div>
                         <div class="flex items-center justify-between mb-2">
                             <div class="flex items-center">
                                 <img src="static/assets/rainy.png" alt="Rain Icon" class="w-6 h-6 2xl:w-8 2xl:h-8">
                                 <span class="ml-2 text-xs 2xl:text-sm font-semibold">Rain</span>
                             </div>
-                            <span class="text-[10px] 2xl:text-sm">{{predictions_day_6_NUTECH.Rain}} mm</span>
+                            <span class="text-[10px] 2xl:text-sm font-bold">{{predictions_day_6_NUTECH.Rain}} mm</span>
                         </div>
                         <div class="flex items-center justify-between mb-2">
                             <div class="flex items-center">
                                 <img src="static/assets/windspeed.png" alt="Wind Icon" class="w-6 h-6 2xl:w-8 2xl:h-8">
                                 <span class="ml-2 text-xs 2xl:text-sm font-semibold">Wind</span>
                             </div>
-                            <span class="text-[10px] 2xl:text-sm">{{predictions_day_6_NUTECH.Wind_Speed}} km/h</span>
+                            <span class="text-[10px] 2xl:text-sm font-bold">{{predictions_day_6_NUTECH.Wind_Speed}} km/h</span>
                         </div>
-                        <div class="text-center text-sm mt-4">
+                        <div class="text-center text-sm mt-4 font-bold 2xl:text-md">
                             <span>{{predictions_day_6_NUTECH.Low_Temperature}}° / {{predictions_day_6_NUTECH.High_Temperature}}°</span>
                         </div>
                     </div>
-                    <div class="card bg-gray-800 p-4 rounded-lg shadow-md">
-                        <h3 class="text-sm font-semibold text-center mb-2">{{day_name_7}}</h3>
+                    <div class="card bg-gray-800 p-4 rounded-lg shadow-md" style="border: 1px solid white;">
+                        <h3 class="text-lg font-bold text-center mb-2 rounded-lg" style="background-color: #0042a0;  color: #fec217;">{{day_name_7}}</h3>
                         <div class="flex items-center justify-between mb-4">
                             <div class="flex flex-col items-center">
                                 {% if predictions_day_7_NUTECH.Icon == "thunder-rain" %}
@@ -664,7 +675,7 @@
                                 {% else %}
                                     <img src="{% static 'assets/default.png' %}" alt="Default Weather Icon" class="w-14 h-14 2xl:w-20 2xl:h-20">
                                 {% endif %}
-                                <span class="text-[10px] 2xl:text-sm text-gray-300 mt-2">{{ predictions_day_7_NUTECH.Heading }}</span>
+                                <span class="text-[10px] 2xl:text-sm text-gray-300 mt-2 font-bold">{{ predictions_day_7_NUTECH.Heading }}</span>
                             </div>
                             <div class="text-md sm:text-lg md:text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl  font-bold">{{predictions_day_7_NUTECH.Temperature}}°C</div>
                         </div>
@@ -673,23 +684,23 @@
                                 <img src="static/assets/airpressure.png" alt="Pressure Icon" class="w-6 h-6 2xl:w-8 2xl:h-8">
                                 <span class="ml-2 text-xs 2xl:text-sm font-semibold">Pressure</span>
                             </div>
-                            <span class="text-[10px] 2xl:text-sm">{{predictions_day_7_NUTECH.Pressure}} hPa</span>
+                            <span class="text-[10px] 2xl:text-sm font-bold">{{predictions_day_7_NUTECH.Pressure}} hPa</span>
                         </div>
                         <div class="flex items-center justify-between mb-2">
                             <div class="flex items-center">
                                 <img src="static/assets/rainy.png" alt="Rain Icon" class="w-6 h-6 2xl:w-8 2xl:h-8">
                                 <span class="ml-2 text-xs 2xl:text-sm font-semibold">Rain</span>
                             </div>
-                            <span class="text-[10px] 2xl:text-sm">{{predictions_day_7_NUTECH.Rain}} mm</span>
+                            <span class="text-[10px] 2xl:text-sm font-bold">{{predictions_day_7_NUTECH.Rain}} mm</span>
                         </div>
                         <div class="flex items-center justify-between mb-2">
                             <div class="flex items-center">
                                 <img src="static/assets/windspeed.png" alt="Wind Icon" class="w-6 h-6 2xl:w-8 2xl:h-8">
                                 <span class="ml-2 text-xs 2xl:text-sm font-semibold">Wind</span>
                             </div>
-                            <span class="text-[10px] 2xl:text-sm">{{predictions_day_7_NUTECH.Wind_Speed}} km/h</span>
+                            <span class="text-[10px] 2xl:text-sm font-bold">{{predictions_day_7_NUTECH.Wind_Speed}} km/h</span>
                         </div>
-                        <div class="text-center text-sm mt-4">
+                        <div class="text-center text-sm mt-4 font-bold 2xl:text-md">
                             <span>{{predictions_day_7_NUTECH.Low_Temperature}}° / {{predictions_day_7_NUTECH.High_Temperature}}°</span>
                         </div>
                     </div>
@@ -699,55 +710,55 @@
             <section>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">                   
                     <div>
-                        <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]">Temperature (°C)</h3>
+                        <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]" style="background-color: #0042a0; padding: 2px; border-radius: 8px;">Temperature (°C)</h3>
                         <div class="bg-gray-800 p-2 rounded-lg h-[300px]"> 
                             <canvas id="temperatureGraphNutech" class="w-full h-full"></canvas>
                         </div>
                     </div>
                     <div>
-                        <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]">Pressure (hPa)</h3>
+                        <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]" style="background-color: #0042a0; padding: 2px; border-radius: 8px;">Pressure (hPa)</h3>
                         <div class="bg-gray-800 p-2 rounded-lg h-[300px]"> 
                             <canvas id="pressureGraphNutech" class="w-full h-full"></canvas>
                         </div>
                     </div>
                     <div>
-                        <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]">Wind Speed (km/h)</h3>
+                        <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]" style="background-color: #0042a0; padding: 2px; border-radius: 8px;">Wind Speed (km/h)</h3>
                         <div class="bg-gray-800 p-2 rounded-lg h-[300px]"> 
                             <canvas id="windSpeedGraphNutech" class="w-full h-full"></canvas>
                         </div>
                     </div>
                     <div>
-                        <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]">Humidity (%)</h3>
+                        <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]" style="background-color: #0042a0; padding: 2px; border-radius: 8px;">Humidity (%)</h3>
                         <div class="bg-gray-800 p-2 rounded-lg h-[300px]"> 
                             <canvas id="humidityGraphNutech" class="w-full h-full"></canvas>
                         </div>
                     </div>
                     <div>
-                        <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]">Rain (mm)</h3>
+                        <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]" style="background-color: #0042a0; padding: 2px; border-radius: 8px;">Rain (mm)</h3>
                         <div class="bg-gray-800 p-2 rounded-lg h-[300px]"> 
                             <canvas id="rainGraphNutech" class="w-full h-full"></canvas>
                         </div>
                     </div>
                     <div>
-                        <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]">Solar Radiation (w/m<sup>2</sup>)</h3>
+                        <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]" style="background-color: #0042a0; padding: 2px; border-radius: 8px;">Solar Radiation (w/m<sup>2</sup>)</h3> 
                         <div class="bg-gray-800 p-2 rounded-lg h-[300px]"> 
                             <canvas id="solarradiationGraphNutech" class="w-full h-full"></canvas>
                         </div>
                     </div>
                     <div>
-                        <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]">Soil Moisture (kPa)</h3>
+                        <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]" style="background-color: #0042a0; padding: 2px; border-radius: 8px;">Soil Moisture (kPa)</h3>
                         <div class="bg-gray-800 p-2 rounded-lg h-[300px]"> 
                             <canvas id="soilmoistureGraphNutech" class="w-full h-full"></canvas>
                         </div>
                     </div>
                     <div>
-                        <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]">Evapotranspiration (mm/h)</h3>
+                        <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]" style="background-color: #0042a0; padding: 2px; border-radius: 8px;">Evapotranspiration (mm/h)</h3>
                         <div class="bg-gray-800 p-2 rounded-lg h-[300px]"> 
                             <canvas id="evapotranspirationGraphNutech" class="w-full h-full"></canvas>
                         </div>
                     </div>
                     <div>
-                        <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]">CO<sub>2</sub> (ppm)</h3>
+                        <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]" style="background-color: #0042a0; padding: 2px; border-radius: 8px;">CO<sub>2</sub> (ppm)</h3>
                         <div class="bg-gray-800 p-2 rounded-lg h-[300px]"> 
                             <canvas id="co2GraphNutech" class="w-full h-full"></canvas>
                         </div>
@@ -780,19 +791,19 @@
             <section class="text-center">
                 <div class="grid grid-cols-1 lg:grid-cols-7 gap-4 mt-4">
                     <div class="text-white flex flex-col justify-between h-full lg:col-span-1 md:col-span-2 sm:col-span-2">
-                        <h3 class="text-lg font-bold text-left mb-2 border-b-[1px]">Location</h3>
-                        <div class="bg-[#1f2937] h-full text-left p-4 shadow-lg rounded-lg lg:space-y-6 pt-6 md:p-4 md:space-y-2 md:pl-2 ">
-                            <p class="mb-2"><strong>Latitude:</strong> 33.7615° N</p>
-                            <p class="mb-2"><strong>Longitude:</strong> 73.0796° E</p>
-                            <p class="mb-2"><strong>Visibility:</strong> {{visibility_Margalla}} km</p>
-                            <p class="mb-2"><strong>Sunrise:</strong> {{sun_times_MAARGALLA.sunrise}} </p>
-                            <p class="mb-2"><strong>Sunset:</strong> {{sun_times_MAARGALLA.sunset}} </p>
-                            <p class="mb-2"><strong>Moon Phase:</strong> {{moon_Phase}}</p>
-                            <p class="mb-2"><strong>Elevation:</strong> 1604m</p>
+                        <h3 class="text-lg font-bold text-left mb-2 border-b-[1px]" style="background-color: #0042a0; padding: 2px; padding-left: 8px; border-radius: 8px;">Location</h3>
+                        <div class="h-full text-left p-4 shadow-lg rounded-lg lg:space-y-6 pt-6 md:p-4 md:space-y-2 md:pl-2 " style="background-color: #0042a0; border: 1px solid white;">
+                            <p class="mb-2 sm:mb-1 md:mb-2 lg:mb-2 font-bold" style="color: #fec217;"><strong style="color: #ffffff;">Latitude:</strong> <span class="whitespace-nowrap">33.7615° N</span></p>
+                            <p class="mb-2 sm:mb-1 md:mb-2 lg:mb-2 font-bold" style="color: #fec217;"><strong style="color: #ffffff;">Longitude:</strong> <span class="whitespace-nowrap">73.0796° E</span></p>
+                            <p class="mb-2 sm:mb-1 md:mb-2 lg:mb-2 font-bold" style="color: #fec217;"><strong style="color: #ffffff;">Visibility:</strong> <span class="whitespace-nowrap">{{visibility_Margalla}} km</span></p>
+                            <p class="mb-2 sm:mb-1 md:mb-2 lg:mb-2 font-bold" style="color: #fec217;"><strong style="color: #ffffff;">Sunrise:</strong> <span class="whitespace-nowrap">{{sun_times_MAARGALLA.sunrise}}</span></p>
+                            <p class="mb-2 sm:mb-1 md:mb-2 lg:mb-2 font-bold" style="color: #fec217;"><strong style="color: #ffffff;">Sunset:</strong> <span class="whitespace-nowrap">{{sun_times_MAARGALLA.sunset}}</span></p>
+                            <p class="mb-2 sm:mb-1 md:mb-2 lg:mb-2 font-bold" style="color: #fec217;"><strong style="color: #ffffff;">Moon Phase:</strong> <span class="whitespace-nowrap">{{moon_Phase}}</span></p>
+                            <p class="mb-2 sm:mb-1 md:mb-2 lg:mb-2 font-bold" style="color: #fec217;"><strong style="color: #ffffff;">Elevation:</strong> <span class="whitespace-nowrap">1604 m</span></p>
                         </div>
                     </div>
                     <div class="lg:col-span-6 md:col-span-5 sm:col-span-5 overflow-x-auto">
-                        <h3 class="text-lg font-bold text-left mb-2 border-b-[1px]">{{formatted_date}}</h3>
+                        <h3 class="text-lg font-bold text-left mb-2 border-b-[1px]" style="background-color: #0042a0; padding: 2px; padding-left: 8px; border-radius: 8px;">{{formatted_date}}</h3>
                         <table class="table font-bold text-center table-compact w-full border border-white">
                             <thead>
                                 <tr class="bg-[#1f2937] text-white border-b border-white">
@@ -809,7 +820,7 @@
                                     <th class="border-r border-white">Evapotranspiration (mm/h)</th>
                                     <th class="border-r border-white">CO<sub>2</sub> (ppm)</th>
                                     <th class="border-r border-white">Optical Particles (g/m)</th>
-                                    <th>Pollen (p/m<sup>3</sup>)</th>
+                                    <th>Pollen (g/m<sup>3</sup>)</th>
                                 </tr>
                             </thead>
                             <tbody id="weatherData">
@@ -819,7 +830,7 @@
                                         <td class="border-r border-white">
                                             {% if row.Rain > 0 %}
                                                 🌧
-                                            {% elif row.Time > sun_times_MAARGALLA.sunset and row.Time < sun_times_MAARGALLA.sunrise %}
+                                            {% elif row.Time|slice:":2" == "PM" %}
                                                 🌙 
                                             {% elif row.Solar_Radiation > 200 %}
                                                 🌞 
@@ -849,11 +860,11 @@
                 </div>
             </section>
     
-            <section class="w-full">
-                <h2 class="text-lg font-bold text-center mb-4 border-b-2 pt-6">Forecast</h2>
+            <section class="w-full pt-4">
+                <h2 class="text-2xl font-bold text-center mb-4 border-b-2 pt-6" style="background-color: #0042a0; padding: 2px; border-radius: 8px;">Forecast</h2>
                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 gap-4"> 
-                    <div class="card bg-gray-800 p-4 rounded-lg shadow-md">
-                        <h3 class="text-sm font-semibold text-center mb-2">{{day_name_1}}</h3>
+                    <div class="card bg-gray-800 p-4 rounded-lg shadow-md" style="border: 1px solid white;">
+                        <h3 class="text-lg font-bold text-center mb-2 rounded-lg" style="background-color: #0042a0;  color: #fec217;">{{day_name_1}}</h3>
                         <div class="flex items-center justify-between mb-4">
                             <div class="flex flex-col items-center">
                                 {% if predictions_day_1_Margalla.Icon == "thunder-rain" %}
@@ -885,7 +896,7 @@
                                 {% else %}
                                     <img src="{% static 'assets/default.png' %}" alt="Default Weather Icon" class="w-14 h-14 2xl:w-20 2xl:h-20">
                                 {% endif %}
-                                <span class="text-[10px] 2xl:text-sm text-gray-300 mt-2">{{ predictions_day_1_Margalla.Heading }}</span>
+                                <span class="text-[10px] 2xl:text-sm text-gray-300 mt-2 font-bold">{{ predictions_day_1_Margalla.Heading }}</span>
                             </div>
                             <div class="text-md sm:text-lg md:text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl  font-bold">{{predictions_day_1_Margalla.Temperature}}°C</div>
                         </div>
@@ -894,28 +905,28 @@
                                 <img src="static/assets/airpressure.png" alt="Pressure Icon" class="w-6 h-6 2xl:w-8 2xl:h-8">
                                 <span class="ml-2 text-xs 2xl:text-sm font-semibold">Pressure</span>
                             </div>
-                            <span class="text-[10px] 2xl:text-sm">{{predictions_day_1_Margalla.Pressure}} hPa</span>
+                            <span class="text-[10px] 2xl:text-sm font-bold">{{predictions_day_1_Margalla.Pressure}} hPa</span>
                         </div>
                         <div class="flex items-center justify-between mb-2">
                             <div class="flex items-center">
                                 <img src="static/assets/rainy.png" alt="Rain Icon" class="w-6 h-6 2xl:w-8 2xl:h-8">
                                 <span class="ml-2 text-xs 2xl:text-sm font-semibold">Rain</span>
                             </div>
-                            <span class="text-[10px] 2xl:text-sm">{{predictions_day_1_Margalla.Rain}} mm</span>
+                            <span class="text-[10px] 2xl:text-sm font-bold">{{predictions_day_1_Margalla.Rain}} mm</span>
                         </div>
                         <div class="flex items-center justify-between mb-2">
                             <div class="flex items-center">
                                 <img src="static/assets/windspeed.png" alt="Wind Icon" class="w-6 h-6 2xl:w-8 2xl:h-8">
                                 <span class="ml-2 text-xs 2xl:text-sm font-semibold">Wind</span>
                             </div>
-                            <span class="text-[10px] 2xl:text-sm">{{predictions_day_1_Margalla.Wind_Speed}} km/h</span>
+                            <span class="text-[10px] 2xl:text-sm font-bold">{{predictions_day_1_Margalla.Wind_Speed}} km/h</span>
                         </div>
-                        <div class="text-center text-sm mt-4">
+                        <div class="text-center text-sm mt-4 font-bold 2xl:text-md">
                             <span>{{predictions_day_1_Margalla.Low_Temperature}}° / {{predictions_day_1_Margalla.High_Temperature}}°</span>
                         </div>
                     </div>
-                    <div class="card bg-gray-800 p-4 rounded-lg shadow-md">
-                        <h3 class="text-sm font-semibold text-center mb-2">{{day_name_2}}</h3>
+                    <div class="card bg-gray-800 p-4 rounded-lg shadow-md" style="border: 1px solid white;">
+                        <h3 class="text-lg font-bold text-center mb-2 rounded-lg" style="background-color: #0042a0;  color: #fec217;">{{day_name_2}}</h3>
                         <div class="flex items-center justify-between mb-4">
                             <div class="flex flex-col items-center">
                                 {% if predictions_day_2_Margalla.Icon == "thunder-rain" %}
@@ -947,7 +958,7 @@
                                 {% else %}
                                     <img src="{% static 'assets/default.png' %}" alt="Default Weather Icon" class="w-14 h-14 2xl:w-20 2xl:h-20">
                                 {% endif %}
-                                <span class="text-[10px] 2xl:text-sm text-gray-300 mt-2">{{ predictions_day_2_Margalla.Heading }}</span>
+                                <span class="text-[10px] 2xl:text-sm text-gray-300 mt-2 font-bold">{{ predictions_day_2_Margalla.Heading }}</span>
                             </div>
                             <div class="text-md sm:text-lg md:text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl  font-bold">{{predictions_day_2_Margalla.Temperature}}°C</div>
                         </div>
@@ -956,28 +967,28 @@
                                 <img src="static/assets/airpressure.png" alt="Pressure Icon" class="w-6 h-6 2xl:w-8 2xl:h-8">
                                 <span class="ml-2 text-xs 2xl:text-sm font-semibold">Pressure</span>
                             </div>
-                            <span class="text-[10px] 2xl:text-sm">{{predictions_day_2_Margalla.Pressure}} hPa</span>
+                            <span class="text-[10px] 2xl:text-sm font-bold">{{predictions_day_2_Margalla.Pressure}} hPa</span>
                         </div>
                         <div class="flex items-center justify-between mb-2">
                             <div class="flex items-center">
                                 <img src="static/assets/rain.png" alt="Rain Icon" class="w-6 h-6 2xl:w-8 2xl:h-8">
                                 <span class="ml-2 text-xs 2xl:text-sm font-semibold">Rain</span>
                             </div>
-                            <span class="text-[10px] 2xl:text-sm">{{predictions_day_2_Margalla.Rain}} mm</span>
+                            <span class="text-[10px] 2xl:text-sm font-bold">{{predictions_day_2_Margalla.Rain}} mm</span>
                         </div>
                         <div class="flex items-center justify-between mb-2">
                             <div class="flex items-center">
                                 <img src="static/assets/windspeed.png" alt="Wind Icon" class="w-6 h-6 2xl:w-8 2xl:h-8">
                                 <span class="ml-2 text-xs 2xl:text-sm font-semibold">Wind</span>
                             </div>
-                            <span class="text-[10px] 2xl:text-sm">{{predictions_day_2_Margalla.Wind_Speed}} km/h</span>
+                            <span class="text-[10px] 2xl:text-sm font-bold">{{predictions_day_2_Margalla.Wind_Speed}} km/h</span>
                         </div>
-                        <div class="text-center text-sm mt-4">
+                        <div class="text-center text-sm mt-4 font-bold 2xl:text-md">
                             <span>{{predictions_day_2_Margalla.Low_Temperature}}° / {{predictions_day_2_Margalla.High_Temperature}}°</span>
                         </div>
                     </div>
-                    <div class="card bg-gray-800 p-4 rounded-lg shadow-md">
-                        <h3 class="text-sm font-semibold text-center mb-2">{{day_name_3}}</h3>
+                    <div class="card bg-gray-800 p-4 rounded-lg shadow-md" style="border: 1px solid white;">
+                        <h3 class="text-lg font-bold text-center mb-2 rounded-lg" style="background-color: #0042a0;  color: #fec217;">{{day_name_3}}</h3>
                         <div class="flex items-center justify-between mb-4">
                             <div class="flex flex-col items-center">
                                 {% if predictions_day_3_Margalla.Icon == "thunder-rain" %}
@@ -1009,7 +1020,7 @@
                                 {% else %}
                                     <img src="{% static 'assets/default.png' %}" alt="Default Weather Icon" class="w-14 h-14 2xl:w-20 2xl:h-20">
                                 {% endif %}
-                                <span class="text-[10px] 2xl:text-sm text-gray-300 mt-2">{{ predictions_day_3_Margalla.Heading }}</span>
+                                <span class="text-[10px] 2xl:text-sm text-gray-300 mt-2 font-bold">{{ predictions_day_3_Margalla.Heading }}</span>
                             </div>
                             <div class="text-md sm:text-lg md:text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl  font-bold">{{predictions_day_3_Margalla.Temperature}}°C</div>
                         </div>
@@ -1018,28 +1029,28 @@
                                 <img src="static/assets/airpressure.png" alt="Pressure Icon" class="w-6 h-6 2xl:w-8 2xl:h-8">
                                 <span class="ml-2 text-xs 2xl:text-sm font-semibold">Pressure</span>
                             </div>
-                            <span class="text-[10px] 2xl:text-sm">{{predictions_day_3_Margalla.Pressure}} hPa</span>
+                            <span class="text-[10px] 2xl:text-sm font-bold">{{predictions_day_3_Margalla.Pressure}} hPa</span>
                         </div>
                         <div class="flex items-center justify-between mb-2">
                             <div class="flex items-center">
                                 <img src="static/assets/rainy.png" alt="Rain Icon" class="w-6 h-6 2xl:w-8 2xl:h-8">
                                 <span class="ml-2 text-xs 2xl:text-sm font-semibold">Rain</span>
                             </div>
-                            <span class="text-[10px] 2xl:text-sm">{{predictions_day_3_Margalla.Rain}} mm</span>
+                            <span class="text-[10px] 2xl:text-sm font-bold">{{predictions_day_3_Margalla.Rain}} mm</span>
                         </div>
                         <div class="flex items-center justify-between mb-2">
                             <div class="flex items-center">
                                 <img src="static/assets/windspeed.png" alt="Wind Icon" class="w-6 h-6 2xl:w-8 2xl:h-8">
                                 <span class="ml-2 text-xs 2xl:text-sm font-semibold">Wind</span>
                             </div>
-                            <span class="text-[10px] 2xl:text-sm">{{predictions_day_3_Margalla.Wind_Speed}} km/h</span>
+                            <span class="text-[10px] 2xl:text-sm font-bold">{{predictions_day_3_Margalla.Wind_Speed}} km/h</span>
                         </div>
-                        <div class="text-center text-sm mt-4">
+                        <div class="text-center text-sm mt-4 font-bold 2xl:text-md">
                             <span>{{predictions_day_3_Margalla.Low_Temperature}}° / {{predictions_day_3_Margalla.High_Temperature}}°</span>
                         </div>
                     </div>
-                    <div class="card bg-gray-800 p-4 rounded-lg shadow-md">
-                        <h3 class="text-sm font-semibold text-center mb-2">{{day_name_4}}</h3>
+                    <div class="card bg-gray-800 p-4 rounded-lg shadow-md" style="border: 1px solid white;">
+                        <h3 class="text-lg font-bold text-center mb-2 rounded-lg" style="background-color: #0042a0;  color: #fec217;">{{day_name_4}}</h3>
                         <div class="flex items-center justify-between mb-4">
                             <div class="flex flex-col items-center">
                                 {% if predictions_day_4_Margalla.Icon == "thunder-rain" %}
@@ -1071,7 +1082,7 @@
                                 {% else %}
                                     <img src="{% static 'assets/default.png' %}" alt="Default Weather Icon" class="w-14 h-14 2xl:w-20 2xl:h-20">
                                 {% endif %}
-                                <span class="text-[10px] 2xl:text-sm text-gray-300 mt-2">{{ predictions_day_4_Margalla.Heading }}</span>
+                                <span class="text-[10px] 2xl:text-sm text-gray-300 mt-2 font-bold">{{ predictions_day_4_Margalla.Heading }}</span>
                             </div>
                             <div class="text-md sm:text-lg md:text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl  font-bold">{{predictions_day_4_Margalla.Temperature}}°C</div>
                         </div>
@@ -1080,28 +1091,28 @@
                                 <img src="static/assets/airpressure.png" alt="Pressure Icon" class="w-6 h-6 2xl:w-8 2xl:h-8">
                                 <span class="ml-2 text-xs 2xl:text-sm font-semibold">Pressure</span>
                             </div>
-                            <span class="text-[10px] 2xl:text-sm">{{predictions_day_4_Margalla.Pressure}} hPa</span>
+                            <span class="text-[10px] 2xl:text-sm font-bold">{{predictions_day_4_Margalla.Pressure}} hPa</span>
                         </div>
                         <div class="flex items-center justify-between mb-2">
                             <div class="flex items-center">
                                 <img src="static/assets/rainy.png" alt="Rain Icon" class="w-6 h-6 2xl:w-8 2xl:h-8">
                                 <span class="ml-2 text-xs 2xl:text-sm font-semibold">Rain</span>
                             </div>
-                            <span class="text-[10px] 2xl:text-sm">{{predictions_day_4_Margalla.Rain}} mm</span>
+                            <span class="text-[10px] 2xl:text-sm font-bold">{{predictions_day_4_Margalla.Rain}} mm</span>
                         </div>
                         <div class="flex items-center justify-between mb-2">
                             <div class="flex items-center">
                                 <img src="static/assets/windspeed.png" alt="Wind Icon" class="w-6 h-6 2xl:w-8 2xl:h-8">
                                 <span class="ml-2 text-xs 2xl:text-sm font-semibold">Wind</span>
                             </div>
-                            <span class="text-[10px] 2xl:text-sm">{{predictions_day_4_Margalla.Wind_Speed}} km/h</span>
+                            <span class="text-[10px] 2xl:text-sm font-bold">{{predictions_day_4_Margalla.Wind_Speed}} km/h</span>
                         </div>
-                        <div class="text-center text-sm mt-4">
+                        <div class="text-center text-sm mt-4 font-bold 2xl:text-md">
                             <span>{{predictions_day_4_Margalla.Low_Temperature}}° / {{predictions_day_4_Margalla.High_Temperature}}°</span>
                         </div>
                     </div>
-                    <div class="card bg-gray-800 p-4 rounded-lg shadow-md">
-                        <h3 class="text-sm font-semibold text-center mb-2">{{day_name_5}}</h3>
+                    <div class="card bg-gray-800 p-4 rounded-lg shadow-md" style="border: 1px solid white;">
+                        <h3 class="text-lg font-bold text-center mb-2 rounded-lg" style="background-color: #0042a0;  color: #fec217;">{{day_name_5}}</h3>
                         <div class="flex items-center justify-between mb-4">
                             <div class="flex flex-col items-center">
                                 {% if predictions_day_5_Margalla.Icon == "thunder-rain" %}
@@ -1133,7 +1144,7 @@
                                 {% else %}
                                     <img src="{% static 'assets/default.png' %}" alt="Default Weather Icon" class="w-14 h-14 2xl:w-20 2xl:h-20">
                                 {% endif %}
-                                <span class="text-[10px] 2xl:text-sm text-gray-300 mt-2">{{ predictions_day_5_Margalla.Heading }}</span>
+                                <span class="text-[10px] 2xl:text-sm text-gray-300 mt-2 font-bold">{{ predictions_day_5_Margalla.Heading }}</span>
                             </div>
                             <div class="text-md sm:text-lg md:text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl  font-bold">{{predictions_day_5_Margalla.Temperature}}°C</div>
                         </div>
@@ -1142,28 +1153,28 @@
                                 <img src="static/assets/airpressure.png" alt="Pressure Icon" class="w-6 h-6 2xl:w-8 2xl:h-8">
                                 <span class="ml-2 text-xs 2xl:text-sm font-semibold">Pressure</span>
                             </div>
-                            <span class="text-[10px] 2xl:text-sm">{{predictions_day_5_Margalla.Pressure}} hPa</span>
+                            <span class="text-[10px] 2xl:text-sm font-bold">{{predictions_day_5_Margalla.Pressure}} hPa</span>
                         </div>
                         <div class="flex items-center justify-between mb-2">
                             <div class="flex items-center">
                                 <img src="static/assets/rainy.png" alt="Rain Icon" class="w-6 h-6 2xl:w-8 2xl:h-8">
                                 <span class="ml-2 text-xs 2xl:text-sm font-semibold">Rain</span>
                             </div>
-                            <span class="text-[10px] 2xl:text-sm">{{predictions_day_5_Margalla.Rain}} mm</span>
+                            <span class="text-[10px] 2xl:text-sm font-bold">{{predictions_day_5_Margalla.Rain}} mm</span>
                         </div>
                         <div class="flex items-center justify-between mb-2">
                             <div class="flex items-center">
                                 <img src="static/assets/windspeed.png" alt="Wind Icon" class="w-6 h-6 2xl:w-8 2xl:h-8">
                                 <span class="ml-2 text-xs 2xl:text-sm font-semibold">Wind</span>
                             </div>
-                            <span class="text-[10px] 2xl:text-sm">{{predictions_day_5_Margalla.Wind_Speed}} km/h</span>
+                            <span class="text-[10px] 2xl:text-sm font-bold">{{predictions_day_5_Margalla.Wind_Speed}} km/h</span>
                         </div>
-                        <div class="text-center text-sm mt-4">
+                        <div class="text-center text-sm mt-4 font-bold 2xl:text-md">
                             <span>{{predictions_day_5_Margalla.Low_Temperature}}° / {{predictions_day_5_Margalla.High_Temperature}}°</span>
                         </div>
                     </div>
-                    <div class="card bg-gray-800 p-4 rounded-lg shadow-md">
-                        <h3 class="text-sm font-semibold text-center mb-2">{{day_name_6}}</h3>
+                    <div class="card bg-gray-800 p-4 rounded-lg shadow-md" style="border: 1px solid white;">
+                        <h3 class="text-lg font-bold text-center mb-2 rounded-lg" style="background-color: #0042a0;  color: #fec217;">{{day_name_6}}</h3>
                         <div class="flex items-center justify-between mb-4">
                             <div class="flex flex-col items-center">
                                 {% if predictions_day_6_Margalla.Icon == "thunder-rain" %}
@@ -1195,7 +1206,7 @@
                                 {% else %}
                                     <img src="{% static 'assets/default.png' %}" alt="Default Weather Icon" class="w-14 h-14 2xl:w-20 2xl:h-20">
                                 {% endif %}
-                                <span class="text-[10px] 2xl:text-sm text-gray-300 mt-2">{{ predictions_day_6_Margalla.Heading }}</span>
+                                <span class="text-[10px] 2xl:text-sm text-gray-300 mt-2 font-bold">{{ predictions_day_6_Margalla.Heading }}</span>
                             </div>
                             <div class="text-md sm:text-lg md:text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl  font-bold">{{predictions_day_6_Margalla.Temperature}}°C</div>
                         </div>
@@ -1204,28 +1215,28 @@
                                 <img src="static/assets/airpressure.png" alt="Pressure Icon" class="w-6 h-6 2xl:w-8 2xl:h-8">
                                 <span class="ml-2 text-xs 2xl:text-sm font-semibold">Pressure</span>
                             </div>
-                            <span class="text-[10px] 2xl:text-sm">{{predictions_day_6_Margalla.Pressure}} hPa</span>
+                            <span class="text-[10px] 2xl:text-sm font-bold">{{predictions_day_6_Margalla.Pressure}} hPa</span>
                         </div>
                         <div class="flex items-center justify-between mb-2">
                             <div class="flex items-center">
                                 <img src="static/assets/rainy.png" alt="Rain Icon" class="w-6 h-6 2xl:w-8 2xl:h-8">
                                 <span class="ml-2 text-xs 2xl:text-sm font-semibold">Rain</span>
                             </div>
-                            <span class="text-[10px] 2xl:text-sm">{{predictions_day_6_Margalla.Rain}} mm</span>
+                            <span class="text-[10px] 2xl:text-sm font-bold">{{predictions_day_6_Margalla.Rain}} mm</span>
                         </div>
                         <div class="flex items-center justify-between mb-2">
                             <div class="flex items-center">
                                 <img src="static/assets/windspeed.png" alt="Wind Icon" class="w-6 h-6 2xl:w-8 2xl:h-8">
                                 <span class="ml-2 text-xs 2xl:text-sm font-semibold">Wind</span>
                             </div>
-                            <span class="text-[10px] 2xl:text-sm">{{predictions_day_6_Margalla.Wind_Speed}} km/h</span>
+                            <span class="text-[10px] 2xl:text-sm font-bold">{{predictions_day_6_Margalla.Wind_Speed}} km/h</span>
                         </div>
-                        <div class="text-center text-sm mt-4">
+                        <div class="text-center text-sm mt-4 font-bold 2xl:text-md">
                             <span>{{predictions_day_6_Margalla.Low_Temperature}}° / {{predictions_day_6_Margalla.High_Temperature}}°</span>
                         </div>
                     </div>
-                    <div class="card bg-gray-800 p-4 rounded-lg shadow-md">
-                        <h3 class="text-sm font-semibold text-center mb-2">{{day_name_7}}</h3>
+                    <div class="card bg-gray-800 p-4 rounded-lg shadow-md" style="border: 1px solid white;">
+                        <h3 class="text-lg font-bold text-center mb-2 rounded-lg" style="background-color: #0042a0;  color: #fec217;" >{{day_name_7}}</h3>
                         <div class="flex items-center justify-between mb-4">
                             <div class="flex flex-col items-center">
                                 {% if predictions_day_7_Margalla.Icon == "thunder-rain" %}
@@ -1257,7 +1268,7 @@
                                 {% else %}
                                     <img src="{% static 'assets/default.png' %}" alt="Default Weather Icon" class="w-14 h-14 2xl:w-20 2xl:h-20">
                                 {% endif %}
-                                <span class="text-[10px] 2xl:text-sm text-gray-300 mt-2">{{ predictions_day_7_Margalla.Heading }}</span>
+                                <span class="text-[10px] 2xl:text-sm text-gray-300 mt-2 font-bold">{{ predictions_day_7_Margalla.Heading }}</span>
                             </div>
                             <div class="text-md sm:text-lg md:text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl  font-bold">{{predictions_day_7_Margalla.Temperature}}°C</div>
                         </div>
@@ -1266,23 +1277,23 @@
                                 <img src="static/assets/airpressure.png" alt="Pressure Icon" class="w-6 h-6 2xl:w-8 2xl:h-8">
                                 <span class="ml-2 text-xs 2xl:text-sm font-semibold">Pressure</span>
                             </div>
-                            <span class="text-[10px] 2xl:text-sm">{{predictions_day_7_Margalla.Pressure}} hPa</span>
+                            <span class="text-[10px] 2xl:text-sm font-bold">{{predictions_day_7_Margalla.Pressure}} hPa</span>
                         </div>
                         <div class="flex items-center justify-between mb-2">
                             <div class="flex items-center">
                                 <img src="static/assets/rainy.png" alt="Rain Icon" class="w-6 h-6 2xl:w-8 2xl:h-8">
                                 <span class="ml-2 text-xs 2xl:text-sm font-semibold">Rain</span>
                             </div>
-                            <span class="text-[10px] 2xl:text-sm">{{predictions_day_7_Margalla.Rain}} mm</span>
+                            <span class="text-[10px] 2xl:text-sm font-bold">{{predictions_day_7_Margalla.Rain}} mm</span>
                         </div>
                         <div class="flex items-center justify-between mb-2">
                             <div class="flex items-center">
                                 <img src="static/assets/windspeed.png" alt="Wind Icon" class="w-6 h-6 2xl:w-8 2xl:h-8">
                                 <span class="ml-2 text-xs 2xl:text-sm font-semibold">Wind</span>
                             </div>
-                            <span class="text-[10px] 2xl:text-sm">{{predictions_day_7_Margalla.Wind_Speed}} km/h</span>
+                            <span class="text-[10px] 2xl:text-sm font-bold">{{predictions_day_7_Margalla.Wind_Speed}} km/h</span>
                         </div>
-                        <div class="text-center text-sm mt-4">
+                        <div class="text-center text-sm mt-4 font-bold 2xl:text-md">
                             <span>{{predictions_day_7_Margalla.Low_Temperature}}° / {{predictions_day_7_Margalla.High_Temperature}}°</span>
                         </div>
                     </div>
@@ -1291,55 +1302,55 @@
             <section>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
                     <div>
-                        <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]">Temperature (°C)</h3>
+                        <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]" style="background-color: #0042a0; padding: 2px; border-radius: 8px;">Temperature (°C)</h3>
                         <div class="bg-gray-800 p-2 rounded-lg h-[300px]"> 
                             <canvas id="temperatureGraphMargalla" class="w-full h-full"></canvas>
                         </div>
                     </div>
                     <div>
-                        <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]">Pressure (hPa)</h3>
+                        <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]" style="background-color: #0042a0; padding: 2px; border-radius: 8px;">Pressure (hPa)</h3>
                         <div class="bg-gray-800 p-2 rounded-lg h-[300px]"> 
                             <canvas id="pressureGraphMargalla" class="w-full h-full"></canvas>
                         </div>
                     </div>
                     <div>
-                        <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]">Wind Speed (km/h)</h3>
+                        <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]" style="background-color: #0042a0; padding: 2px; border-radius: 8px;">Wind Speed (km/h)</h3>
                         <div class="bg-gray-800 p-2 rounded-lg h-[300px]"> 
                             <canvas id="windSpeedGraphMargalla" class="w-full h-full"></canvas>
                         </div>
                     </div>
                     <div>
-                        <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]">Humidity (%)</h3>
+                        <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]" style="background-color: #0042a0; padding: 2px; border-radius: 8px;">Humidity (%)</h3>
                         <div class="bg-gray-800 p-2 rounded-lg h-[300px]"> 
                             <canvas id="humidityGraphMargalla" class="w-full h-full"></canvas>
                         </div>
                     </div>
                     <div>
-                        <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]">Rain (mm)</h3>
+                        <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]" style="background-color: #0042a0; padding: 2px; border-radius: 8px;">Rain (mm)</h3>
                         <div class="bg-gray-800 p-2 rounded-lg h-[300px]"> 
                             <canvas id="rainGraphMargalla" class="w-full h-full"></canvas>
                         </div>
                     </div>
                     <div>
-                        <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]">Solar Radiation (w/m<sup>2</sup>)</h3>
+                        <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]" style="background-color: #0042a0; padding: 2px; border-radius: 8px;">Solar Radiation (w/m<sup>2</sup>)</h3> 
                         <div class="bg-gray-800 p-2 rounded-lg h-[300px]"> 
                             <canvas id="solarradiationGraphMargalla" class="w-full h-full"></canvas>
                         </div>
                     </div>
                     <div>
-                        <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]">Soil Moisture (kPa)</h3>
+                        <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]" style="background-color: #0042a0; padding: 2px; border-radius: 8px;">Soil Moisture (kPa)</h3>
                         <div class="bg-gray-800 p-2 rounded-lg h-[300px]"> 
                             <canvas id="soilmoistureGraphMargalla" class="w-full h-full"></canvas>
                         </div>
                     </div>
                     <div>
-                        <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]">Evapotranspiration (mm/h)</h3>
+                        <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]" style="background-color: #0042a0; padding: 2px; border-radius: 8px;">Evapotranspiration (mm/h)</h3>
                         <div class="bg-gray-800 p-2 rounded-lg h-[300px]"> 
                             <canvas id="evapotranspirationGraphMargalla" class="w-full h-full"></canvas>
                         </div>
                     </div>
                     <div>
-                        <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]">CO<sub>2</sub> (ppm)</h3>
+                        <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]" style="background-color: #0042a0; padding: 2px; border-radius: 8px;">CO<sub>2</sub> (ppm)</h3>
                         <div class="bg-gray-800 p-2 rounded-lg h-[300px]"> 
                             <canvas id="co2GraphMargalla" class="w-full h-full"></canvas>
                         </div>
@@ -1358,55 +1369,55 @@
                 <section>
                     <div class="grid grid-cols-1 space-y-4 mt-4">
                         <div>
-                            <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]">Temperature (°C)</h3>
+                            <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]" style="background-color: #0042a0; padding: 2px; border-radius: 8px;">Temperature (°C)</h3>
                             <div class="bg-gray-800 p-2 rounded-lg h-[300px]"> 
                                 <canvas id="temperatureGraphDaily" class="w-full h-full"></canvas>
                             </div>
                         </div>
                         <div>
-                            <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]">Pressure (hPa)</h3>
+                            <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]" style="background-color: #0042a0; padding: 2px; border-radius: 8px;">Pressure (hPa)</h3>
                             <div class="bg-gray-800 p-2 rounded-lg h-[300px]"> 
                                 <canvas id="pressureGraphDaily" class="w-full h-full"></canvas>
                             </div>
                         </div>
                         <div>
-                            <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]">Wind Speed (km/h)</h3>
+                            <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]" style="background-color: #0042a0; padding: 2px; border-radius: 8px;">Wind Speed (km/h)</h3>
                             <div class="bg-gray-800 p-2 rounded-lg h-[300px]"> 
                                 <canvas id="windSpeedGraphDaily" class="w-full h-full"></canvas>
                             </div>
                         </div>
                         <div>
-                            <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]">Humidity (%)</h3>
+                            <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]" style="background-color: #0042a0; padding: 2px; border-radius: 8px;">Humidity (%)</h3>
                             <div class="bg-gray-800 p-2 rounded-lg h-[300px]"> 
                                 <canvas id="humidityGraphDaily" class="w-full h-full"></canvas>
                             </div>
                         </div>
                         <div>
-                            <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]">Rain (mm)</h3>
+                            <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]" style="background-color: #0042a0; padding: 2px; border-radius: 8px;">Rain (mm)</h3>
                             <div class="bg-gray-800 p-2 rounded-lg h-[300px]"> 
                                 <canvas id="rainGraphDaily" class="w-full h-full"></canvas>
                             </div>
                         </div>
                         <div>
-                            <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]">Solar Radiation (w/m<sup>2</sup>)</h3>
+                            <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]" style="background-color: #0042a0; padding: 2px; border-radius: 8px;">Solar Radiation (w/m<sup>2</sup>)</h3> 
                             <div class="bg-gray-800 p-2 rounded-lg h-[300px]"> 
                                 <canvas id="solarradiationGraphDaily" class="w-full h-full"></canvas>
                             </div>
                         </div>
                         <div>
-                            <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]">Soil Moisture (kPa)</h3>
+                            <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]" style="background-color: #0042a0; padding: 2px; border-radius: 8px;">Soil Moisture (kPa)</h3>
                             <div class="bg-gray-800 p-2 rounded-lg h-[300px]"> 
                                 <canvas id="soilmoistureGraphDaily" class="w-full h-full"></canvas>
                             </div>
                         </div>
                         <div>
-                            <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]">Evapotranspiration (mm/h)</h3>
+                            <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]" style="background-color: #0042a0; padding: 2px; border-radius: 8px;">Evapotranspiration (mm/h)</h3>
                             <div class="bg-gray-800 p-2 rounded-lg h-[300px]"> 
                                 <canvas id="evapotranspirationGraphDaily" class="w-full h-full"></canvas>
                             </div>
                         </div>
                         <div>
-                            <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]">CO<sub>2</sub> (ppm)</h3>
+                            <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]" style="background-color: #0042a0; padding: 2px; border-radius: 8px;">CO<sub>2</sub> (ppm)</h3>
                             <div class="bg-gray-800 p-2 rounded-lg h-[300px]"> 
                                 <canvas id="co2GraphDaily" class="w-full h-full"></canvas>
                             </div>
@@ -1418,55 +1429,55 @@
                 <section>
                     <div class="grid grid-cols-1 space-y-4 mt-4">
                         <div>
-                            <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]">Temperature (°C)</h3>
+                            <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]" style="background-color: #0042a0; padding: 2px; border-radius: 8px;">Temperature (°C)</h3>
                             <div class="bg-gray-800 p-2 rounded-lg h-[300px]"> 
                                 <canvas id="temperatureGraphWeekly" class="w-full h-full"></canvas>
                             </div>
                         </div>
                         <div>
-                            <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]">Pressure (hPa)</h3>
+                            <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]" style="background-color: #0042a0; padding: 2px; border-radius: 8px;">Pressure (hPa)</h3>
                             <div class="bg-gray-800 p-2 rounded-lg h-[300px]"> 
                                 <canvas id="pressureGraphWeekly" class="w-full h-full"></canvas>
                             </div>
                         </div>
                         <div>
-                            <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]">Wind Speed (km/h)</h3>
+                            <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]" style="background-color: #0042a0; padding: 2px; border-radius: 8px;">Wind Speed (km/h)</h3>
                             <div class="bg-gray-800 p-2 rounded-lg h-[300px]"> 
                                 <canvas id="windSpeedGraphWeekly" class="w-full h-full"></canvas>
                             </div>
                         </div>
                         <div>
-                            <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]">Humidity (%)</h3>
+                            <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]" style="background-color: #0042a0; padding: 2px; border-radius: 8px;">Humidity (%)</h3>
                             <div class="bg-gray-800 p-2 rounded-lg h-[300px]"> 
                                 <canvas id="humidityGraphWeekly" class="w-full h-full"></canvas>
                             </div>
                         </div>
                         <div>
-                            <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]">Rain (mm)</h3>
+                            <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]" style="background-color: #0042a0; padding: 2px; border-radius: 8px;">Rain (mm)</h3>
                             <div class="bg-gray-800 p-2 rounded-lg h-[300px]"> 
                                 <canvas id="rainGraphWeekly" class="w-full h-full"></canvas>
                             </div>
                         </div>
                         <div>
-                            <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]">Solar Radiation (w/m<sup>2</sup>)</h3>
+                            <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]" style="background-color: #0042a0; padding: 2px; border-radius: 8px;">Solar Radiation (w/m<sup>2</sup>)</h3> 
                             <div class="bg-gray-800 p-2 rounded-lg h-[300px]"> 
                                 <canvas id="solarradiationGraphWeekly" class="w-full h-full"></canvas>
                             </div>
                         </div>
                         <div>
-                            <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]">Soil Moisture (kPa)</h3>
+                            <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]" style="background-color: #0042a0; padding: 2px; border-radius: 8px;">Soil Moisture (kPa)</h3>
                             <div class="bg-gray-800 p-2 rounded-lg h-[300px]"> 
                                 <canvas id="soilmoistureGraphWeekly" class="w-full h-full"></canvas>
                             </div>
                         </div>
                         <div>
-                            <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]">Evapotranspiration (mm/h)</h3>
+                            <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]" style="background-color: #0042a0; padding: 2px; border-radius: 8px;">Evapotranspiration (mm/h)</h3>
                             <div class="bg-gray-800 p-2 rounded-lg h-[300px]"> 
                                 <canvas id="evapotranspirationGraphWeekly" class="w-full h-full"></canvas>
                             </div>
                         </div>
                         <div>
-                            <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]">CO<sub>2</sub> (ppm)</h3>
+                            <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]" style="background-color: #0042a0; padding: 2px; border-radius: 8px;">CO<sub>2</sub> (ppm)</h3>
                             <div class="bg-gray-800 p-2 rounded-lg h-[300px]"> 
                                 <canvas id="co2GraphWeekly" class="w-full h-full"></canvas>
                             </div>
@@ -1478,55 +1489,55 @@
                 <section>
                     <div class="grid grid-cols-1 space-y-4 mt-4">
                         <div>
-                            <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]">Temperature (°C)</h3>
+                            <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]" style="background-color: #0042a0; padding: 2px; border-radius: 8px;">Temperature (°C)</h3>
                             <div class="bg-gray-800 p-2 rounded-lg h-[300px]"> 
                                 <canvas id="temperatureGraphMonthly" class="w-full h-full"></canvas>
                             </div>
                         </div>
                         <div>
-                            <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]">Pressure (hPa)</h3>
+                            <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]" style="background-color: #0042a0; padding: 2px; border-radius: 8px;">Pressure (hPa)</h3>
                             <div class="bg-gray-800 p-2 rounded-lg h-[300px]"> 
                                 <canvas id="pressureGraphMonthly" class="w-full h-full"></canvas>
                             </div>
                         </div>
                         <div>
-                            <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]">Wind Speed (km/h)</h3>
+                            <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]" style="background-color: #0042a0; padding: 2px; border-radius: 8px;">Wind Speed (km/h)</h3>
                             <div class="bg-gray-800 p-2 rounded-lg h-[300px]"> 
                                 <canvas id="windSpeedGraphMonthly" class="w-full h-full"></canvas>
                             </div>
                         </div>
                         <div>
-                            <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]">Humidity (%)</h3>
+                            <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]" style="background-color: #0042a0; padding: 2px; border-radius: 8px;">Humidity (%)</h3>
                             <div class="bg-gray-800 p-2 rounded-lg h-[300px]"> 
                                 <canvas id="humidityGraphMonthly" class="w-full h-full"></canvas>
                             </div>
                         </div>
                         <div>
-                            <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]">Rain (mm)</h3>
+                            <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]" style="background-color: #0042a0; padding: 2px; border-radius: 8px;">Rain (mm)</h3>
                             <div class="bg-gray-800 p-2 rounded-lg h-[300px]"> 
                                 <canvas id="rainGraphMonthly" class="w-full h-full"></canvas>
                             </div>
                         </div>
                         <div>
-                            <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]">Solar Radiation (w/m<sup>2</sup>)</h3>
+                            <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]" style="background-color: #0042a0; padding: 2px; border-radius: 8px;">Solar Radiation (w/m<sup>2</sup>)</h3> 
                             <div class="bg-gray-800 p-2 rounded-lg h-[300px]"> 
                                 <canvas id="solarradiationGraphMonthly" class="w-full h-full"></canvas>
                             </div>
                         </div>
                         <div>
-                            <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]">Soil Moisture (kPa)</h3>
+                            <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]" style="background-color: #0042a0; padding: 2px; border-radius: 8px;">Soil Moisture (kPa)</h3>
                             <div class="bg-gray-800 p-2 rounded-lg h-[300px]"> 
                                 <canvas id="soilmoistureGraphMonthly" class="w-full h-full"></canvas>
                             </div>
                         </div>
                         <div>
-                            <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]">Evapotranspiration (mm/h)</h3>
+                            <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]" style="background-color: #0042a0; padding: 2px; border-radius: 8px;">Evapotranspiration (mm/h)</h3>
                             <div class="bg-gray-800 p-2 rounded-lg h-[300px]"> 
                                 <canvas id="evapotranspirationGraphMonthly" class="w-full h-full"></canvas>
                             </div>
                         </div>
                         <div>
-                            <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]">CO<sub>2</sub> (ppm)</h3>
+                            <h3 class="text-center text-lg font-semibold mb-2 border-b-[1px]" style="background-color: #0042a0; padding: 2px; border-radius: 8px;">CO<sub>2</sub> (ppm)</h3>
                             <div class="bg-gray-800 p-2 rounded-lg h-[300px]"> 
                                 <canvas id="co2GraphMonthly" class="w-full h-full"></canvas>
                             </div>
@@ -1536,89 +1547,156 @@
             </div>
         </div>
         <div id="Data_Tab" class="tab_content hidden_content mt-4 overflow-x-auto">
-            <nav class="flex justify-center pt-2 mb-4">
+            <nav class="flex justify-center space-x-4 pt-2">
                 <button
-                    class="btn text-white border-white bg-green-600 btn-outline btn-xs sm:btn-sm md:btn-md md:btn-wide lg:btn-wide"
-                    onclick="downloadCSV()">Download
+                class="btn text-white border-white  btn-outline btn-xs sm:btn-sm md:btn-md md:btn-wide lg:btn-wide"
+                onclick="downloadCSV()">Download
                 </button>
-            </nav>            
-            <table id="weather-table" class="min-w-full bg-gray-900 text-xs md:text-sm lg:text-base border border-gray-700">
+            </nav>
+            <table id="weather-table" class="min-w-full bg-gray-900 text-xs md:text-sm lg:text-base border border-gray-700 mt-4 pt-2">
                 <thead>
-                    <tr class="bg-gray-700">
-                        <th rowspan="2" class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">Time</th>
-                        <th colspan="2" class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">Temp (°C)</th>
-                        <th colspan="2" class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">Rain (mm)</th>
-                        <th colspan="2" class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">Humidity (%)</th>
-                        <th colspan="2" class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">Wind Speed (km/h)</th>
-                        <th colspan="2" class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">Wind Direction</th>
-                        <th colspan="2" class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">Pressure (hpa)</th>
-                        <th colspan="2" class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">Evapotranspiration (mm/h)</th>
-                        <th colspan="2" class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">CO2 (ppm)</th>
-                        <th colspan="2" class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">Optical Particles (µg/m³)</th>
-                        <th colspan="2" class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">Solar (w/m²)</th>
-                        <th colspan="2" class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">Soil Moisture (kPa)</th>
-                        <th colspan="2" class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">Pollen (g/m)</th>
+                    <tr style="background-color: #0042a0;">
+                        <th rowspan="2" class="border px-2 py-1 md:px-4 md:py-2">Time</th>
+                        <th colspan="2" class="border px-2 py-1 md:px-4 md:py-2">Temp (°C)</th>
+                        <th colspan="2" class="border px-2 py-1 md:px-4 md:py-2">Rain (mm)</th>
+                        <th colspan="2" class="border px-2 py-1 md:px-4 md:py-2">Humidity (%)</th>
+                        <th colspan="2" class="border px-2 py-1 md:px-4 md:py-2">Wind Speed (km/h)</th>
+                        <th colspan="2" class="border px-2 py-1 md:px-4 md:py-2">Wind Direction</th>
+                        <th colspan="2" class="border px-2 py-1 md:px-4 md:py-2">Pressure (hpa)</th>
+                        <th colspan="2" class="border px-2 py-1 md:px-4 md:py-2">Evapotranspiration (mm/h)</th>
+                        <th colspan="2" class="border px-2 py-1 md:px-4 md:py-2">CO2 (ppm)</th>
+                        <th colspan="2" class="border px-2 py-1 md:px-4 md:py-2">Optical Particles (µg/m³)</th>
+                        <th colspan="2" class="border px-2 py-1 md:px-4 md:py-2">Solar (w/m²)</th>
+                        <th colspan="2" class="border px-2 py-1 md:px-4 md:py-2">Soil Moisture (kPa)</th>
+                        <th colspan="2" class="border px-2 py-1 md:px-4 md:py-2">Pollen (g/m)</th>
                     </tr>
-                    <tr class="bg-gray-700">
-                        <th class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">N</th>
-                        <th class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">M</th>
-                        <th class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">N</th>
-                        <th class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">M</th>
-                        <th class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">N</th>
-                        <th class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">M</th>
-                        <th class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">N</th>
-                        <th class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">M</th>
-                        <th class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">N</th>
-                        <th class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">M</th>
-                        <th class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">N</th>
-                        <th class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">M</th>
-                        <th class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">N</th>
-                        <th class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">M</th>
-                        <th class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">N</th>
-                        <th class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">M</th>
-                        <th class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">N</th>
-                        <th class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">M</th>
-                        <th class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">N</th>
-                        <th class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">M</th>
-                        <th class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">N</th>
-                        <th class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">M</th>
-                        <th class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">N</th>
-                        <th class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">M</th>
+                    <tr style="background-color: #0042a0;">
+                        <th class="border px-2 py-1 md:px-4 md:py-2">N</th>
+                        <th class="border px-2 py-1 md:px-4 md:py-2">M</th>
+                        <th class="border px-2 py-1 md:px-4 md:py-2">N</th>
+                        <th class="border px-2 py-1 md:px-4 md:py-2">M</th>
+                        <th class="border px-2 py-1 md:px-4 md:py-2">N</th>
+                        <th class="border px-2 py-1 md:px-4 md:py-2">M</th>
+                        <th class="border px-2 py-1 md:px-4 md:py-2">N</th>
+                        <th class="border px-2 py-1 md:px-4 md:py-2">M</th>
+                        <th class="border px-2 py-1 md:px-4 md:py-2">N</th>
+                        <th class="border px-2 py-1 md:px-4 md:py-2">M</th>
+                        <th class="border px-2 py-1 md:px-4 md:py-2">N</th>
+                        <th class="border px-2 py-1 md:px-4 md:py-2">M</th>
+                        <th class="border px-2 py-1 md:px-4 md:py-2">N</th>
+                        <th class="border px-2 py-1 md:px-4 md:py-2">M</th>
+                        <th class="border px-2 py-1 md:px-4 md:py-2">N</th>
+                        <th class="border px-2 py-1 md:px-4 md:py-2">M</th>
+                        <th class="border px-2 py-1 md:px-4 md:py-2">N</th>
+                        <th class="border px-2 py-1 md:px-4 md:py-2">M</th>
+                        <th class="border px-2 py-1 md:px-4 md:py-2">N</th>
+                        <th class="border px-2 py-1 md:px-4 md:py-2">M</th>
+                        <th class="border px-2 py-1 md:px-4 md:py-2">N</th>
+                        <th class="border px-2 py-1 md:px-4 md:py-2">M</th>
+                        <th class="border px-2 py-1 md:px-4 md:py-2">N</th>
+                        <th class="border px-2 py-1 md:px-4 md:py-2">M</th>
                     </tr>
                 </thead>
                 <tbody class="text-center">
                     {% for nutech_row, margalla_row in combined_data %}
                     <tr>
-                        <td class="border border-gray-600 px-2 py-1 md:px-4 md:py-2 whitespace-nowrap">{{ nutech_row.Time }}</td>
-                        <td class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">{{ nutech_row.Temperature }}</td>
-                        <td class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">{{ margalla_row.Temperature }}</td>
-                        <td class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">{{ nutech_row.Rain }}</td>
-                        <td class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">{{ margalla_row.Rain }}</td>
-                        <td class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">{{ nutech_row.Humidity }}</td>
-                        <td class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">{{ margalla_row.Humidity }}</td>
-                        <td class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">{{ nutech_row.Wind_Speed }}</td>
-                        <td class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">{{ margalla_row.Wind_Speed }}</td>
-                        <td class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">{{ nutech_row.Wind_Direction }}</td>
-                        <td class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">{{ margalla_row.Wind_Direction }}</td>
-                        <td class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">{{ nutech_row.Pressure }}</td>
-                        <td class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">{{ margalla_row.Pressure }}</td>
-                        <td class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">{{ nutech_row.Evapotranspiration }}</td>
-                        <td class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">{{ margalla_row.Evapotranspiration }}</td>
-                        <td class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">{{ nutech_row.CO2_level }}</td>
-                        <td class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">{{ margalla_row.CO2_level }}</td>
-                        <td class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">{{ nutech_row.Optical_Particles }}</td>
-                        <td class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">{{ margalla_row.Optical_Particles }}</td>
-                        <td class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">{{ nutech_row.Solar_Radiation }}</td>
-                        <td class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">{{ margalla_row.Solar_Radiation }}</td>
-                        <td class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">{{ nutech_row.Soil_Moisture }}</td>
-                        <td class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">{{ margalla_row.Soil_Moisture }}</td>
-                        <td class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">{{ nutech_row.Pollen_Count }}</td>
-                        <td class="border border-gray-600 px-2 py-1 md:px-4 md:py-2">{{ margalla_row.Pollen_Count }}</td>
+                        <td class="border px-2 py-1 md:px-4 md:py-2 whitespace-nowrap">{{ nutech_row.Time }}</td>
+                        <td class="border px-2 py-1 md:px-4 md:py-2">{{ nutech_row.Temperature }}</td>
+                        <td class="border px-2 py-1 md:px-4 md:py-2">{{ margalla_row.Temperature }}</td>
+                        <td class="border px-2 py-1 md:px-4 md:py-2">{{ nutech_row.Rain }}</td>
+                        <td class="border px-2 py-1 md:px-4 md:py-2">{{ margalla_row.Rain }}</td>
+                        <td class="border px-2 py-1 md:px-4 md:py-2">{{ nutech_row.Humidity }}</td>
+                        <td class="border px-2 py-1 md:px-4 md:py-2">{{ margalla_row.Humidity }}</td>
+                        <td class="border px-2 py-1 md:px-4 md:py-2">{{ nutech_row.Wind_Speed }}</td>
+                        <td class="border px-2 py-1 md:px-4 md:py-2">{{ margalla_row.Wind_Speed }}</td>
+                        <td class="border px-2 py-1 md:px-4 md:py-2">{{ nutech_row.Wind_Direction }}</td>
+                        <td class="border px-2 py-1 md:px-4 md:py-2">{{ margalla_row.Wind_Direction }}</td>
+                        <td class="border px-2 py-1 md:px-4 md:py-2">{{ nutech_row.Pressure }}</td>
+                        <td class="border px-2 py-1 md:px-4 md:py-2">{{ margalla_row.Pressure }}</td>
+                        <td class="border px-2 py-1 md:px-4 md:py-2">{{ nutech_row.Evapotranspiration }}</td>
+                        <td class="border px-2 py-1 md:px-4 md:py-2">{{ margalla_row.Evapotranspiration }}</td>
+                        <td class="border px-2 py-1 md:px-4 md:py-2">{{ nutech_row.CO2_level }}</td>
+                        <td class="border px-2 py-1 md:px-4 md:py-2">{{ margalla_row.CO2_level }}</td>
+                        <td class="border px-2 py-1 md:px-4 md:py-2">{{ nutech_row.Optical_Particles }}</td>
+                        <td class="border px-2 py-1 md:px-4 md:py-2">{{ margalla_row.Optical_Particles }}</td>
+                        <td class="border px-2 py-1 md:px-4 md:py-2">{{ nutech_row.Solar_Radiation }}</td>
+                        <td class="border px-2 py-1 md:px-4 md:py-2">{{ margalla_row.Solar_Radiation }}</td>
+                        <td class="border px-2 py-1 md:px-4 md:py-2">{{ nutech_row.Soil_Moisture }}</td>
+                        <td class="border px-2 py-1 md:px-4 md:py-2">{{ margalla_row.Soil_Moisture }}</td>
+                        <td class="border px-2 py-1 md:px-4 md:py-2">{{ nutech_row.Pollen_Count }}</td>
+                        <td class="border px-2 py-1 md:px-4 md:py-2">{{ margalla_row.Pollen_Count }}</td>
                     </tr>
                     {% endfor %}
                 </tbody>
             </table>
         </div>
+        <script>
+            function downloadCSV() {
+                var table = document.getElementById("weather-table");
+                var rows = table.querySelectorAll("tr");
+                var csv = [];
+                var headerRow = [];
+                var subheaderRow = [];
+                var isSubheader = false;
+                for (var i = 0; i < rows.length; i++) {
+                    var row = rows[i];
+                    var cols = row.querySelectorAll("td, th");
+                    if (i === 0) { 
+                        for (var j = 0; j < cols.length; j++) {
+                            var col = cols[j];
+                            if (col.hasAttribute('rowspan')) {
+                                headerRow.push(col.innerText.trim());
+                            } else if (col.hasAttribute('colspan')) {
+                                var colspan = parseInt(col.getAttribute('colspan'));
+                                for (var k = 0; k < colspan; k++) {
+                                    headerRow.push(col.innerText.trim());
+                                }
+                            } else {
+                                headerRow.push(col.innerText.trim());
+                            }
+                        }
+                        continue;
+                    }
+                    if (i === 1) { 
+                        for (var j = 0; j < cols.length; j++) {
+                            var col = cols[j];
+                            var colspan = parseInt(col.getAttribute('colspan')) || 1;
+                            for (var k = 0; k < colspan; k++) {
+                                subheaderRow.push(col.innerText.trim());
+                            }
+                        }
+                        isSubheader = true;
+                        continue;
+                    }
+                    var dataRow = [];
+                    for (var j = 0; j < cols.length; j++) {
+                        dataRow.push(cols[j].innerText.trim());
+                    }
+                    csv.push(dataRow.join(","));
+                }
+                var finalHeaderRow = [];
+                for (var i = 0; i < headerRow.length; i++) {
+                    if (i < subheaderRow.length) {
+                        finalHeaderRow.push(headerRow[i] + ' ' + subheaderRow[i]);
+                    } else {
+                        finalHeaderRow.push(headerRow[i]);
+                    }
+                }
+                csv.unshift(finalHeaderRow.join(","));
+                downloadCSVFile(csv.join("\n"), 'weather_data.csv');
+            }
+            function downloadCSVFile(csv, filename) {
+                var csvFile;
+                var downloadLink;
+                csvFile = new Blob([csv], {type: "text/csv"});
+                downloadLink = document.createElement("a");
+                downloadLink.download = filename;
+                downloadLink.href = window.URL.createObjectURL(csvFile);
+                downloadLink.style.display = "none";
+                document.body.appendChild(downloadLink);
+                downloadLink.click();
+            }
+          </script>
     </main>
 
     <!-- Footer -->
