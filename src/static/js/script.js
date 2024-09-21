@@ -1,3 +1,4 @@
+
 document.addEventListener('DOMContentLoaded', function() {
     const tabs = ['Nutech_Tab', 'Margalla_Tab', 'Graphs_Tab', 'Data_Tab'];
     const buttons = ['Nutech_Button', 'Margalla_Button', 'Graphs_Button', 'Data_Button'];
@@ -257,24 +258,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
         if (humidity >= 100) {
-        humidityCell.style.backgroundColor = '#47126b'; // Blue - High humidity
-        } else if (humidity >= 90) {
-        humidityCell.style.backgroundColor = '#571089'; // Interpolate between high and moderate
-        } else if (humidity >= 80) {
-        humidityCell.style.backgroundColor = '#6411ad'; // Interpolate between high and moderate
-        } else if (humidity >= 70) {
-        humidityCell.style.backgroundColor = '#6d23b6'; // Interpolate between high and moderate
-        } else if (humidity >= 60) {
-        humidityCell.style.backgroundColor = '#822faf'; // Interpolate between high and moderate
-        } else if (humidity >= 50) {
         humidityCell.style.backgroundColor = '#973aa8'; // Light green - Moderate humidity
-        } else if (humidity >= 40) {
+        } else if (humidity >= 80) {
         humidityCell.style.backgroundColor = '#ac46a1'; // Interpolate between moderate and low
-        } else if (humidity >= 30) {
+        } else if (humidity >= 60) {
         humidityCell.style.backgroundColor = '#c05299'; // Interpolate between moderate and low
-        } else if (humidity >= 20) {
+        } else if (humidity >= 40) {
         humidityCell.style.backgroundColor = '#d55d92'; // Interpolate between moderate and low
-        } else if (humidity >= 10) {
+        } else if (humidity >= 20) {
         humidityCell.style.backgroundColor = '#ea698b'; // Interpolate between moderate and low
         } else {
         humidityCell.style.backgroundColor = '#ff7aa2'; // Pink - Low humidity
@@ -1796,4 +1787,3 @@ const co2ChartMonthly = new Chart(document.getElementById('co2GraphMonthly').get
     ...dualLineConfigTemplate,
     data: co2DataMonthly
 });
-
