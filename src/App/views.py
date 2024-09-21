@@ -147,9 +147,9 @@ def dataScrapping(database = "NUTECH",
         total_pollen = digits[0]
     total_pollen = int(total_pollen)
     if database == "NUTECH":
-        total_pollen = total_pollen - random.randint(50, 60)
+        total_pollen = total_pollen - random.randint(50, 55)
     else:
-        total_pollen = total_pollen + random.randint(50, 60)
+        total_pollen = total_pollen + random.randint(50, 55)
 
     optical_particle_response.raise_for_status()
     optical_particle_soup = BeautifulSoup(optical_particle_response.content, 'html.parser')
@@ -562,7 +562,9 @@ def get_data_from_db():
     
     predictions_by_day_NUTECH = {}
     for data in prediction_data_NUTECH:
-        day_number = data['Day_Number']
+        if data['Day_Number'] == 0:
+            continue
+        day_number = int(data['Day_Number'])-1
         temperature = data['Temperature']  
         high_temperature = data['High_Temperature']
         low_temperature = data['Low_Temperature']
@@ -587,7 +589,9 @@ def get_data_from_db():
 
     predictions_by_day_Margalla = {}
     for data in prediction_data_Margalla:
-        day_number = data['Day_Number']
+        if data['Day_Number'] == 0:
+            continue
+        day_number = int(data['Day_Number'])-1
         temperature = data['Temperature'] 
         high_temperature = data['High_Temperature']
         low_temperature = data['Low_Temperature']
@@ -632,7 +636,7 @@ def periodic_fetch():
 scheduler_thread = threading.Thread(target=start_schedule, daemon=True)
 scheduler_thread.start()
 
-time.sleep(120)
+# time.sleep(120)
 
 # Start the thread
 thread1 = threading.Thread(target=periodic_fetch, daemon=True)
