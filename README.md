@@ -1,5 +1,3 @@
-Here's a sample README for your weather dashboard project. You can customize it as needed:
-
 ---
 
 # Weather Dashboard Application
