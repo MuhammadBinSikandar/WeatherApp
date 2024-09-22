@@ -27,46 +27,46 @@ def evapotranspiration(temp_c, humidity, wind_speed_kmh, solar_wm2, pressure_hpa
     
     return ET
 
-NUTECH_temperature = 33
-NUTECH_humidity = 50
-NUTECH_pressure = 1013
-NUTECH_rain = 0
-NUTECH_wind_direction = "North"
-NUTECH_wind_speed = 10
-NUTECH_solar_radiation = 100
-NUTECH_evapotranspiration = 0
-NUTECH_pollen_count = 0
-NUTECH_optical_particles = 0
-NUTECH_co2_level = 600
-NUTECH_soil_moisture = 20
+STATION1_temperature = 33
+STATION1_humidity = 50
+STATION1_pressure = 1013
+STATION1_rain = 0
+STATION1_wind_direction = "North"
+STATION1_wind_speed = 10
+STATION1_solar_radiation = 100
+STATION1_evapotranspiration = 0
+STATION1_pollen_count = 0
+STATION1_optical_particles = 0
+STATION1_co2_level = 600
+STATION1_soil_moisture = 20
 
-Margalla_temperature = 33
-Margalla_humidity = 50
-Margalla_pressure = 1013
-Margalla_rain = 0
-Margalla_wind_direction = "North"
-Margalla_wind_speed = 10
-Margalla_solar_radiation = 100
-Margalla_evapotranspiration = 0
-Margalla_pollen_count = 0
-Margalla_optical_particles = 0
-Margalla_co2_level = 600
-Margalla_soil_moisture = 20
+STATION2_temperature = 33
+STATION2_humidity = 50
+STATION2_pressure = 1013
+STATION2_rain = 0
+STATION2_wind_direction = "North"
+STATION2_wind_speed = 10
+STATION2_solar_radiation = 100
+STATION2_evapotranspiration = 0
+STATION2_pollen_count = 0
+STATION2_optical_particles = 0
+STATION2_co2_level = 600
+STATION2_soil_moisture = 20
 
 
-def dataScrapping(database = "NUTECH", 
-                  station = "IISLAM48",
-                  opticalParticleUrl = "https://www.iqair.com/pakistan/islamabad",
-                  soilMoistureUrl = "https://api.thingspeak.com/channels/2597059/fields/1.json?results=2",
-                  co2Url = "https://api.thingspeak.com/channels/2611683/feeds.json?results=1"):
+def dataScrapping(database = "STATION1", 
+                  station = "",
+                  opticalParticleUrl = "",
+                  soilMoistureUrl = "",
+                  co2Url = ""):
     
-    client = MongoClient("mongodb+srv://niclab747:Q2AIeeHH4As1aSFc@weatherapplication.dsm8c7f.mongodb.net/?retryWrites=true&w=majority&appName=WeatherApplication")
+    client = MongoClient("MONDO_DB_URL")
 
     
-    if database == "NUTECH":
-        global NUTECH_temperature, NUTECH_humidity, NUTECH_pressure, NUTECH_rain, NUTECH_wind_direction, NUTECH_wind_speed, NUTECH_solar_radiation, NUTECH_evapotranspiration, NUTECH_pollen_count, NUTECH_optical_particles, NUTECH_co2_level, NUTECH_soil_moisture
+    if database == "STATION1":
+        global STATION1_temperature, STATION1_humidity, STATION1_pressure, STATION1_rain, STATION1_wind_direction, STATION1_wind_speed, STATION1_solar_radiation, STATION1_evapotranspiration, STATION1_pollen_count, STATION1_optical_particles, STATION1_co2_level, STATION1_soil_moisture
     else:
-        global Margalla_temperature, Margalla_humidity, Margalla_pressure, Margalla_rain, Margalla_wind_direction, Margalla_wind_speed, Margalla_solar_radiation, Margalla_evapotranspiration, Margalla_pollen_count, Margalla_optical_particles, Margalla_co2_level, Margalla_soil_moisture
+        global STATION2_temperature, STATION2_humidity, STATION2_pressure, STATION2_rain, STATION2_wind_direction, STATION2_wind_speed, STATION2_solar_radiation, STATION2_evapotranspiration, STATION2_pollen_count, STATION2_optical_particles, STATION2_co2_level, STATION2_soil_moisture
     pakistan_timezone = timezone(timedelta(hours=5))
     today_date = datetime.now(pakistan_timezone).strftime('%Y-%m-%d')
     db = client[database]
@@ -109,10 +109,10 @@ def dataScrapping(database = "NUTECH",
         else:
             soil_moisture = int(soil_moisture1)
     else:
-        if database == "NUTECH":
-            soil_moisture = NUTECH_soil_moisture
+        if database == "STATION1":
+            soil_moisture = STATION1_soil_moisture
         else:
-            soil_moisture = Margalla_soil_moisture
+            soil_moisture = STATION2_soil_moisture
         
     if co2_response.status_code == 200:
         co2_data = co2_response.json()
@@ -137,16 +137,16 @@ def dataScrapping(database = "NUTECH",
     digits_with_commas = re.findall(r'\d+', text)
     digits = [int(digit.replace(",", "")) for digit in digits_with_commas]
     if not digits:
-        if database == "NUTECH":
-            total_pollen = NUTECH_pollen_count
+        if database == "STATION1":
+            total_pollen = STATION1_pollen_count
         else:
-            total_pollen = Margalla_pollen_count
+            total_pollen = STATION2_pollen_count
     if len(digits) > 1:    
         total_pollen = str(digits[0])+str(digits[1])
     else:   
         total_pollen = digits[0]
     total_pollen = int(total_pollen)
-    if database == "NUTECH":
+    if database == "STATION1":
         total_pollen = total_pollen - random.randint(50, 60)
     else:
         total_pollen = total_pollen + random.randint(50, 60)
@@ -155,10 +155,10 @@ def dataScrapping(database = "NUTECH",
     optical_particle_soup = BeautifulSoup(optical_particle_response.content, 'html.parser')
     optical_particle_count = optical_particle_soup.find(class_="mat-tooltip-trigger pollutant-concentration-value")
     if not optical_particle_count:
-        if database == "NUTECH":
-            optical_particles = NUTECH_optical_particles
+        if database == "STATION1":
+            optical_particles = STATION1_optical_particles
         else:
-            optical_particles = Margalla_optical_particles
+            optical_particles = STATION2_optical_particles
     else:
         optical_particles = optical_particle_count.text.strip()
 
@@ -173,68 +173,68 @@ def dataScrapping(database = "NUTECH",
             individual_row_data["Temperature (°C)"] = individual_row_data["Temperature"].split()[0]
             del individual_row_data["Temperature"]
             if individual_row_data["Temperature (°C)"] == '--':
-                if database == "NUTECH":
-                    individual_row_data["Temperature (°C)"] = NUTECH_temperature
+                if database == "STATION1":
+                    individual_row_data["Temperature (°C)"] = STATION1_temperature
                 else:
-                    individual_row_data["Temperature (°C)"] = Margalla_temperature
+                    individual_row_data["Temperature (°C)"] = STATION2_temperature
             else:
                 individual_row_data["Temperature (°C)"] = round((float(individual_row_data['Temperature (°C)']) - 32) * 5 / 9, 1)
 
             individual_row_data["Humidity (%)"] = individual_row_data["Humidity"].split()[0]
             del individual_row_data["Humidity"]
             if individual_row_data["Humidity (%)"] == '--':
-                if database == "NUTECH":
-                    individual_row_data["Humidity (%)"] = NUTECH_humidity
+                if database == "STATION1":
+                    individual_row_data["Humidity (%)"] = STATION1_humidity
                 else:
-                    individual_row_data["Humidity (%)"] = Margalla_humidity
+                    individual_row_data["Humidity (%)"] = STATION2_humidity
             else:
                 individual_row_data["Humidity (%)"] = int(individual_row_data["Humidity (%)"])
 
             individual_row_data["Pressure (hPa)"]= individual_row_data["Pressure"].split()[0]
             del individual_row_data["Pressure"]
             if individual_row_data["Pressure (hPa)"] == '--':
-                if database == "NUTECH":
-                    individual_row_data["Pressure (hPa)"] = NUTECH_pressure
+                if database == "STATION1":
+                    individual_row_data["Pressure (hPa)"] = STATION1_pressure
                 else:
-                    individual_row_data["Pressure (hPa)"] = Margalla_pressure
+                    individual_row_data["Pressure (hPa)"] = STATION2_pressure
             else:
                 individual_row_data["Pressure (hPa)"] = round(float(individual_row_data["Pressure (hPa)"]) * 33.863889532610884, 1)
 
             individual_row_data["Rain (mm)"] = individual_row_data["Precip. Accum."].split()[0]
             del individual_row_data["Precip. Accum."]
             if individual_row_data["Rain (mm)"] == '--':
-                if database == "NUTECH":
-                    individual_row_data["Rain (mm)"] = NUTECH_rain
+                if database == "STATION1":
+                    individual_row_data["Rain (mm)"] = STATION1_rain
                 else:
-                    individual_row_data["Rain (mm)"] = Margalla_rain
+                    individual_row_data["Rain (mm)"] = STATION2_rain
             else:
                 individual_row_data["Rain (mm)"] = round(float(individual_row_data["Rain (mm)"]) * 25.4, 1)
 
             individual_row_data["Wind Direction"] = individual_row_data["Wind"]
             del individual_row_data["Wind"]
             if individual_row_data["Wind Direction"] == '':
-                if database == "NUTECH":
-                    individual_row_data["Wind Direction"] = NUTECH_wind_direction
+                if database == "STATION1":
+                    individual_row_data["Wind Direction"] = STATION1_wind_direction
                 else:
-                    individual_row_data["Wind Direction"] = Margalla_wind_direction
+                    individual_row_data["Wind Direction"] = STATION2_wind_direction
 
             individual_row_data["Wind Speed (km/h)"] = individual_row_data["Speed"].split()[0]
             del individual_row_data["Speed"]
             if individual_row_data["Wind Speed (km/h)"] == '--':
-                if database == "NUTECH":
-                    individual_row_data["Wind Speed (km/h)"] = NUTECH_wind_speed
+                if database == "STATION1":
+                    individual_row_data["Wind Speed (km/h)"] = STATION1_wind_speed
                 else:
-                    individual_row_data["Wind Speed (km/h)"] = Margalla_wind_speed
+                    individual_row_data["Wind Speed (km/h)"] = STATION2_wind_speed
             else:
                 individual_row_data["Wind Speed (km/h)"] = round(float(individual_row_data["Wind Speed (km/h)"]) * 1.60934, 1)
 
             individual_row_data["Solar Radiation (w/m²)"] = individual_row_data["Solar"].split()[0]
             del individual_row_data["Solar"]
             if individual_row_data["Solar Radiation (w/m²)"] == '--' or individual_row_data["Solar Radiation (w/m²)"] == 'w/m²':
-                if database == "NUTECH":
-                    individual_row_data["Solar Radiation (w/m²)"] = NUTECH_solar_radiation
+                if database == "STATION1":
+                    individual_row_data["Solar Radiation (w/m²)"] = STATION1_solar_radiation
                 else:
-                    individual_row_data["Solar Radiation (w/m²)"] = Margalla_solar_radiation
+                    individual_row_data["Solar Radiation (w/m²)"] = STATION2_solar_radiation
             else:   
                 individual_row_data["Solar Radiation (w/m²)"] = float(individual_row_data["Solar Radiation (w/m²)"])
 
@@ -262,32 +262,32 @@ def dataScrapping(database = "NUTECH",
                 if minutes == 4 or minutes == 19 or minutes == 34 or minutes == 49:
                     collection.insert_one(individual_row_data)
 
-    if database == "NUTECH":
-        NUTECH_temperature = individual_row_data["Temperature (°C)"]
-        NUTECH_humidity = individual_row_data["Humidity (%)"]
-        NUTECH_pressure = individual_row_data["Pressure (hPa)"]
-        NUTECH_rain = individual_row_data["Rain (mm)"]
-        NUTECH_wind_direction = individual_row_data["Wind Direction"]
-        NUTECH_wind_speed = individual_row_data["Wind Speed (km/h)"]
-        NUTECH_solar_radiation = individual_row_data["Solar Radiation (w/m²)"]
-        NUTECH_evapotranspiration = individual_row_data["Evapotranspiration"]
-        NUTECH_pollen_count = individual_row_data["Pollen Count (g/m)"]
-        NUTECH_optical_particles = individual_row_data["Optical Particles (g/m)"]
-        NUTECH_co2_level = individual_row_data["CO2 level (ppm)"]
-        NUTECH_soil_moisture = individual_row_data["Soil Moisture (kPa)"]
+    if database == "STATION1":
+        STATION1_temperature = individual_row_data["Temperature (°C)"]
+        STATION1_humidity = individual_row_data["Humidity (%)"]
+        STATION1_pressure = individual_row_data["Pressure (hPa)"]
+        STATION1_rain = individual_row_data["Rain (mm)"]
+        STATION1_wind_direction = individual_row_data["Wind Direction"]
+        STATION1_wind_speed = individual_row_data["Wind Speed (km/h)"]
+        STATION1_solar_radiation = individual_row_data["Solar Radiation (w/m²)"]
+        STATION1_evapotranspiration = individual_row_data["Evapotranspiration"]
+        STATION1_pollen_count = individual_row_data["Pollen Count (g/m)"]
+        STATION1_optical_particles = individual_row_data["Optical Particles (g/m)"]
+        STATION1_co2_level = individual_row_data["CO2 level (ppm)"]
+        STATION1_soil_moisture = individual_row_data["Soil Moisture (kPa)"]
     else:
-        Margalla_temperature = individual_row_data["Temperature (°C)"]
-        Margalla_humidity = individual_row_data["Humidity (%)"]
-        Margalla_pressure = individual_row_data["Pressure (hPa)"]
-        Margalla_rain = individual_row_data["Rain (mm)"]
-        Margalla_wind_direction = individual_row_data["Wind Direction"]
-        Margalla_wind_speed = individual_row_data["Wind Speed (km/h)"]
-        Margalla_solar_radiation = individual_row_data["Solar Radiation (w/m²)"]
-        Margalla_evapotranspiration = individual_row_data["Evapotranspiration"]
-        Margalla_pollen_count = individual_row_data["Pollen Count (g/m)"]
-        Margalla_optical_particles = individual_row_data["Optical Particles (g/m)"]
-        Margalla_co2_level = individual_row_data["CO2 level (ppm)"]
-        Margalla_soil_moisture = individual_row_data["Soil Moisture (kPa)"]            
+        STATION2_temperature = individual_row_data["Temperature (°C)"]
+        STATION2_humidity = individual_row_data["Humidity (%)"]
+        STATION2_pressure = individual_row_data["Pressure (hPa)"]
+        STATION2_rain = individual_row_data["Rain (mm)"]
+        STATION2_wind_direction = individual_row_data["Wind Direction"]
+        STATION2_wind_speed = individual_row_data["Wind Speed (km/h)"]
+        STATION2_solar_radiation = individual_row_data["Solar Radiation (w/m²)"]
+        STATION2_evapotranspiration = individual_row_data["Evapotranspiration"]
+        STATION2_pollen_count = individual_row_data["Pollen Count (g/m)"]
+        STATION2_optical_particles = individual_row_data["Optical Particles (g/m)"]
+        STATION2_co2_level = individual_row_data["CO2 level (ppm)"]
+        STATION2_soil_moisture = individual_row_data["Soil Moisture (kPa)"]            
     client.close()  
 
 
@@ -388,70 +388,70 @@ today_date = datetime.now(pakistan_timezone).strftime('%Y-%m-%d')
 
 
 def start_schedule():
-    schedule.every(15).minutes.do(dataScrapping, "NUTECH", "IISLAM48", 
-                                  "https://www.iqair.com/pakistan/islamabad/austrian-embassy", 
-                                  "https://api.thingspeak.com/channels/2597059/fields/1.json?results=2", 
-                                  "https://api.thingspeak.com/channels/2598253/feeds.json?results=1")
-    schedule.every(15).minutes.do(dataScrapping, "Margalla", "IISLAM50", 
-                                  "https://www.iqair.com/pakistan/islamabad/house%238-maain-khayaban-e-iqbal-f-6-3", 
-                                  "https://api.thingspeak.com/channels/2611688/fields/1.json?results=2", 
-                                  "https://api.thingspeak.com/channels/2611683/feeds.json?results=1")
+    schedule.every(15).minutes.do(dataScrapping, "STATION1", "STATIONNAME", 
+                                  "", 
+                                  "", 
+                                  "")
+    schedule.every(15).minutes.do(dataScrapping, "STATION2", "STATIONNAME", 
+                                  "", 
+                                  "", 
+                                  "")
     
-    schedule.every().day.at("00:00").do(predictions, "NUTECH", "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/Rawalpindi?unitGroup=metric&elements=tempmax%2Ctempmin%2Ctemp%2Cprecip%2Cprecipprob%2Cwindspeed%2Cpressure%2Cicon&include=fcst%2Cdays&key=FVZ4MF57QRM857ELFR4NCPDYW&contentType=json")
-    schedule.every().day.at("00:00").do(predictions, "Margalla","https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/Islamabad?unitGroup=metric&elements=tempmax%2Ctempmin%2Ctemp%2Cprecip%2Cprecipprob%2Cwindspeed%2Cpressure%2Cicon&include=fcst%2Cdays&key=FVZ4MF57QRM857ELFR4NCPDYW&contentType=json")
-    schedule.every().day.at("12:00").do(predictions, "NUTECH", "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/Rawalpindi?unitGroup=metric&elements=tempmax%2Ctempmin%2Ctemp%2Cprecip%2Cprecipprob%2Cwindspeed%2Cpressure%2Cicon&include=fcst%2Cdays&key=FVZ4MF57QRM857ELFR4NCPDYW&contentType=json")
-    schedule.every().day.at("12:00").do(predictions, "Margalla", "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/Islamabad?unitGroup=metric&elements=tempmax%2Ctempmin%2Ctemp%2Cprecip%2Cprecipprob%2Cwindspeed%2Cpressure%2Cicon&include=fcst%2Cdays&key=FVZ4MF57QRM857ELFR4NCPDYW&contentType=json")
+    schedule.every().day.at("00:00").do(predictions, "STATION1", "API_URL")
+    schedule.every().day.at("00:00").do(predictions, "STATION2","API_URL")
+    schedule.every().day.at("12:00").do(predictions, "STATION1", "API_URL")
+    schedule.every().day.at("12:00").do(predictions, "STATION2", "API_URL")
     
-    dataScrapping(database="NUTECH", 
-                  station = "IISLAM48", 
-                  opticalParticleUrl="https://www.iqair.com/pakistan/islamabad/austrian-embassy",
-                  soilMoistureUrl="https://api.thingspeak.com/channels/2597059/fields/1.json?results=2",
-                  co2Url="https://api.thingspeak.com/channels/2598253/feeds.json?results=1")
-    dataScrapping(database="Margalla", 
-                  station = "IISLAM50", 
-                  opticalParticleUrl="https://www.iqair.com/pakistan/islamabad/house%238-maain-khayaban-e-iqbal-f-6-3",
-                  soilMoistureUrl="https://api.thingspeak.com/channels/2611688/fields/1.json?results=2",
-                  co2Url="https://api.thingspeak.com/channels/2611683/feeds.json?results=1")
+    dataScrapping(database="STATION1", 
+                  station = "STATIONNAME", 
+                  opticalParticleUrl="OPTICAL_PARTICLE_URL",
+                  soilMoistureUrl="SOIL_MOISTURE_URL",
+                  co2Url="CO2_URL")
+    dataScrapping(database="STATION2", 
+                  station = "STATIONNAME", 
+                  opticalParticleUrl="OPTICAL_PARTICLE_URL",
+                  soilMoistureUrl="SOIL_MOISTURE_URL",
+                  co2Url="CO2_URL")
     
-    predictions(database="NUTECH" ,api_url="https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/Rawalpindi?unitGroup=metric&elements=tempmax%2Ctempmin%2Ctemp%2Cprecip%2Cprecipprob%2Cwindspeed%2Cpressure%2Cicon&include=fcst%2Cdays&key=FVZ4MF57QRM857ELFR4NCPDYW&contentType=json")
-    predictions(database="Margalla" ,api_url="https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/Islamabad?unitGroup=metric&elements=tempmax%2Ctempmin%2Ctemp%2Cprecip%2Cprecipprob%2Cwindspeed%2Cpressure%2Cicon&include=fcst%2Cdays&key=FVZ4MF57QRM857ELFR4NCPDYW&contentType=json")
+    predictions(database="Station_1" ,api_url="API_URL")
+    predictions(database="Station_2" ,api_url="API_URL")
 
     while True:
         schedule.run_pending()
         time.sleep(1)
 
 
-global mapped_last_data_NUTECH, mapped_last_data_Margalla, combined_data, mapped_all_data_NUTECH, mapped_all_data_Margalla, last_7_data_NUTECH, last_7_data_Margalla
-global predictions_by_day_NUTECH, predictions_by_day_Margalla, mapped_weekly_data_NUTECH, mapped_monthly_data_NUTECH
-global aggregated_weekly_data_NUTECH, aggregated_weekly_data_Margalla
-global aggregated_monthly_data_NUTECH, aggregated_monthly_data_Margalla
+global mapped_last_data_STATION1, mapped_last_data_STATION2, combined_data, mapped_all_data_STATION1, mapped_all_data_STATION2, last_7_data_STATION1, last_7_data_STATION2
+global predictions_by_day_STATION1, predictions_by_day_STATION2, mapped_weekly_data_STATION1, mapped_monthly_data_STATION1
+global aggregated_weekly_data_STATION1, aggregated_weekly_data_STATION2
+global aggregated_monthly_data_STATION1, aggregated_monthly_data_STATION2
 global temperature_graph_html_day, humidity_graph_html_day, pressure_graph_html_day, temperature_graph_html_week, humidity_graph_html_week 
 global pressure_graph_html_week, temperature_graph_html_month, humidity_graph_html_month, pressure_graph_html_month
-global sun_times_NUTECH, sun_times_MAARGALLA ,moon_Phase, visibility_Nutech, visibility_Margalla
+global sun_times_STATION1, sun_times_MAARGALLA ,moon_Phase, visibility_STATION1, visibility_STATION2
 
 def get_data_from_db():
-    global mapped_last_data_NUTECH, mapped_last_data_Margalla, combined_data, mapped_all_data_NUTECH, mapped_all_data_Margalla, last_7_data_NUTECH, last_7_data_Margalla
-    global predictions_by_day_NUTECH, predictions_by_day_Margalla, mapped_weekly_data_NUTECH, mapped_monthly_data_NUTECH
-    global aggregated_weekly_data_NUTECH, aggregated_weekly_data_Margalla
-    global aggregated_monthly_data_NUTECH, aggregated_monthly_data_Margalla
+    global mapped_last_data_STATION1, mapped_last_data_STATION2, combined_data, mapped_all_data_STATION1, mapped_all_data_STATION2, last_7_data_STATION1, last_7_data_STATION2
+    global predictions_by_day_STATION1, predictions_by_day_STATION2, mapped_weekly_data_STATION1, mapped_monthly_data_STATION1
+    global aggregated_weekly_data_STATION1, aggregated_weekly_data_STATION2
+    global aggregated_monthly_data_STATION1, aggregated_monthly_data_STATION2
     global temperature_graph_html_day, humidity_graph_html_day, pressure_graph_html_day, temperature_graph_html_week, humidity_graph_html_week 
     global pressure_graph_html_week, temperature_graph_html_month, humidity_graph_html_month, pressure_graph_html_month
-    global sun_times_NUTECH, sun_times_MAARGALLA,moon_Phase, visibility_Nutech, visibility_Margalla
+    global sun_times_STATION1, sun_times_MAARGALLA,moon_Phase, visibility_STATION1, visibility_STATION2
 
-    client = MongoClient("mongodb+srv://niclab747:Q2AIeeHH4As1aSFc@weatherapplication.dsm8c7f.mongodb.net/?retryWrites=true&w=majority&appName=WeatherApplication")
+    client = MongoClient("MONGO_DB_URL")
 
     Today_date = datetime.now()
 
     pakistan_timezone = timezone(timedelta(hours=5))
     formatted_date = datetime.now(pakistan_timezone).strftime('%Y-%m-%d')
 
-    db1 = client["NUTECH"]
-    collection_NUTECH = db1[formatted_date]
-    predictions_NUTECH = db1['predictions']
+    db1 = client["STATION1"]
+    collection_STATION1 = db1[formatted_date]
+    predictions_STATION1 = db1['predictions']
 
-    db2 = client["Margalla"]
-    collection_Margalla = db2[formatted_date]
-    predictions_Margalla = db2['predictions']
+    db2 = client["STATION2"]
+    collection_STATION2 = db2[formatted_date]
+    predictions_STATION2 = db2['predictions']
 
     one_week_ago = Today_date - timedelta(days=7)
     one_month_ago = Today_date - timedelta(days=30)
@@ -515,53 +515,53 @@ def get_data_from_db():
             'Soil_Moisture': data['Soil Moisture (kPa)'],
         }
 
-    last_data_NUTECH = collection_NUTECH.find().sort('_id', -1).limit(1)[0]
-    last_data_Margalla = collection_Margalla.find().sort('_id', -1).limit(1)[0]
+    last_data_STATION1 = collection_STATION1.find().sort('_id', -1).limit(1)[0]
+    last_data_STATION2 = collection_STATION2.find().sort('_id', -1).limit(1)[0]
 
-    weekly_data_NUTECH = get_data_for_period(db1, one_week_ago, Today_date)
-    weekly_data_Margalla = get_data_for_period(db2, one_week_ago, Today_date)
+    weekly_data_STATION1 = get_data_for_period(db1, one_week_ago, Today_date)
+    weekly_data_STATION2 = get_data_for_period(db2, one_week_ago, Today_date)
 
-    monthly_data_NUTECH = get_data_for_period(db1, one_month_ago, Today_date)
-    monthly_data_Margalla = get_data_for_period(db2, one_month_ago, Today_date)
+    monthly_data_STATION1 = get_data_for_period(db1, one_month_ago, Today_date)
+    monthly_data_STATION2 = get_data_for_period(db2, one_month_ago, Today_date)
 
-    all_data_NUTECH = collection_NUTECH.find().sort('_id', 1)
-    all_data_Margalla = collection_Margalla.find().sort('_id', 1)
+    all_data_STATION1 = collection_STATION1.find().sort('_id', 1)
+    all_data_STATION2 = collection_STATION2.find().sort('_id', 1)
 
-    mapped_last_data_NUTECH = map_data1(last_data_NUTECH)
-    mapped_last_data_Margalla = map_data1(last_data_Margalla)
+    mapped_last_data_STATION1 = map_data1(last_data_STATION1)
+    mapped_last_data_STATION2 = map_data1(last_data_STATION2)
 
-    mapped_all_data_NUTECH = [map_data1(data) for data in all_data_NUTECH]
-    mapped_all_data_Margalla = [map_data1(data) for data in all_data_Margalla]
+    mapped_all_data_STATION1 = [map_data1(data) for data in all_data_STATION1]
+    mapped_all_data_STATION2 = [map_data1(data) for data in all_data_STATION2]
 
-    mapped_weekly_data_NUTECH = [map_data(data) for data in weekly_data_NUTECH]
-    mapped_weekly_data_Margalla = [map_data(data) for data in weekly_data_Margalla]
+    mapped_weekly_data_STATION1 = [map_data(data) for data in weekly_data_STATION1]
+    mapped_weekly_data_STATION2 = [map_data(data) for data in weekly_data_STATION2]
 
-    mapped_monthly_data_NUTECH = [map_data(data) for data in monthly_data_NUTECH]
-    mapped_monthly_data_Margalla = [map_data(data) for data in monthly_data_Margalla]
+    mapped_monthly_data_STATION1 = [map_data(data) for data in monthly_data_STATION1]
+    mapped_monthly_data_STATION2 = [map_data(data) for data in monthly_data_STATION2]
 
-    aggregated_weekly_data_NUTECH = aggregate_data_by_date(mapped_weekly_data_NUTECH)
-    aggregated_weekly_data_Margalla = aggregate_data_by_date(mapped_weekly_data_Margalla)
+    aggregated_weekly_data_STATION1 = aggregate_data_by_date(mapped_weekly_data_STATION1)
+    aggregated_weekly_data_STATION2 = aggregate_data_by_date(mapped_weekly_data_STATION2)
 
-    aggregated_monthly_data_NUTECH = aggregate_data_by_date(mapped_monthly_data_NUTECH)
-    aggregated_monthly_data_Margalla = aggregate_data_by_date(mapped_monthly_data_Margalla)
+    aggregated_monthly_data_STATION1 = aggregate_data_by_date(mapped_monthly_data_STATION1)
+    aggregated_monthly_data_STATION2 = aggregate_data_by_date(mapped_monthly_data_STATION2)
 
-    all_data_NUTECH = list(mapped_all_data_NUTECH)
-    all_data_Margalla = list(mapped_all_data_Margalla)
+    all_data_STATION1 = list(mapped_all_data_STATION1)
+    all_data_STATION2 = list(mapped_all_data_STATION2)
 
-    min_length = min(len(all_data_NUTECH), len(all_data_Margalla))
-    all_data_NUTECH = all_data_NUTECH[:min_length]
-    all_data_Margalla = all_data_Margalla[:min_length]
+    min_length = min(len(all_data_STATION1), len(all_data_STATION2))
+    all_data_STATION1 = all_data_STATION1[:min_length]
+    all_data_STATION2 = all_data_STATION2[:min_length]
 
-    combined_data = list(zip(all_data_NUTECH, all_data_Margalla))
+    combined_data = list(zip(all_data_STATION1, all_data_STATION2))
 
-    last_7_data_NUTECH = list(all_data_NUTECH[-7:])
-    last_7_data_Margalla = list(all_data_Margalla[-7:])
+    last_7_data_STATION1 = list(all_data_STATION1[-7:])
+    last_7_data_STATION2 = list(all_data_STATION2[-7:])
 
-    prediction_data_NUTECH = predictions_NUTECH.find()
-    prediction_data_Margalla = predictions_Margalla.find()
+    prediction_data_STATION1 = predictions_STATION1.find()
+    prediction_data_STATION2 = predictions_STATION2.find()
     
-    predictions_by_day_NUTECH = {}
-    for data in prediction_data_NUTECH:
+    predictions_by_day_STATION1 = {}
+    for data in prediction_data_STATION1:
         day_number = data['Day_Number']
         temperature = data['Temperature']  
         high_temperature = data['High_Temperature']
@@ -574,7 +574,7 @@ def get_data_from_db():
         if heading == 'Partly Cloudy Day' or heading == 'Partly Cloudy Night':
             heading = 'Partly Cloudy'
         
-        predictions_by_day_NUTECH[day_number] = {
+        predictions_by_day_STATION1[day_number] = {
             'Temperature': temperature,
             'High_Temperature': high_temperature,
             'Low_Temperature': low_temperature,
@@ -585,8 +585,8 @@ def get_data_from_db():
             'Heading': heading
         }
 
-    predictions_by_day_Margalla = {}
-    for data in prediction_data_Margalla:
+    predictions_by_day_STATION2 = {}
+    for data in prediction_data_STATION2:
         day_number = data['Day_Number']
         temperature = data['Temperature'] 
         high_temperature = data['High_Temperature']
@@ -600,7 +600,7 @@ def get_data_from_db():
             heading = 'Partly Cloudy'
 
         
-        predictions_by_day_Margalla[day_number] = {
+        predictions_by_day_STATION2[day_number] = {
             'Temperature': temperature,
             'High_Temperature': high_temperature,
             'Low_Temperature': low_temperature,
@@ -611,13 +611,13 @@ def get_data_from_db():
             'Heading': heading
         }
 
-    sun_times_NUTECH = fetch_sun_times(33.625566, 73.011561)
+    sun_times_STATION1 = fetch_sun_times(33.625566, 73.011561)
     sun_times_MAARGALLA = fetch_sun_times(33.761550, 73.079636)
 
     moon_Phase = moon_phase()
 
-    visibility_Nutech = fetch_visibility("https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/Rawalpindi/today?unitGroup=us&elements=visibility&include=stats%2Cdays&key=FVZ4MF57QRM857ELFR4NCPDYW&contentType=json")
-    visibility_Margalla = fetch_visibility("https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/Islamabad/today?unitGroup=us&elements=visibility&include=stats%2Cdays&key=FVZ4MF57QRM857ELFR4NCPDYW&contentType=json")
+    visibility_STATION1 = fetch_visibility("API_URL")
+    visibility_STATION2 = fetch_visibility("API_URL")
 
     client.close()
     print("Data fetched successfully")
@@ -640,14 +640,14 @@ thread1.start()
 
 
 def index(request):
-    global mapped_last_data_NUTECH, mapped_last_data_Margalla, combined_data, mapped_all_data_NUTECH, mapped_all_data_Margalla, last_7_data_NUTECH, last_7_data_Margalla
-    global predictions_by_day_NUTECH, predictions_by_day_Margalla, mapped_weekly_data_NUTECH, mapped_monthly_data_NUTECH
-    global aggregated_weekly_data_NUTECH, aggregated_weekly_data_Margalla
-    global aggregated_monthly_data_NUTECH, aggregated_monthly_data_Margalla
+    global mapped_last_data_STATION1, mapped_last_data_STATION2, combined_data, mapped_all_data_STATION1, mapped_all_data_STATION2, last_7_data_STATION1, last_7_data_STATION2
+    global predictions_by_day_STATION1, predictions_by_day_STATION2, mapped_weekly_data_STATION1, mapped_monthly_data_STATION1
+    global aggregated_weekly_data_STATION1, aggregated_weekly_data_STATION2
+    global aggregated_monthly_data_STATION1, aggregated_monthly_data_STATION2
     global temperature_graph_html_day, humidity_graph_html_day, pressure_graph_html_day
     global temperature_graph_html_week, humidity_graph_html_week, pressure_graph_html_week
     global temperature_graph_html_month, humidity_graph_html_month, pressure_graph_html_month
-    global sun_times_NUTECH, sun_times_MAARGALLA,moon_Phase, visibility_Nutech, visibility_Margalla
+    global sun_times_STATION1, sun_times_MAARGALLA,moon_Phase, visibility_STATION1, visibility_STATION2
 
     Today_date = datetime.now()
     formatted_date = Today_date.strftime("%B %d, %Y")
@@ -663,37 +663,37 @@ def index(request):
     context = {
         'formatted_date': formatted_date,
         'combined_data': combined_data,
-        'mapped_last_data_NUTECH': json.dumps(mapped_last_data_NUTECH),
-        'mapped_last_data_Margalla': json.dumps(mapped_last_data_Margalla),
-        'mapped_all_data_NUTECH': json.dumps(mapped_all_data_NUTECH),
-        'mapped_all_data_Margalla': json.dumps(mapped_all_data_Margalla),
-        'mapped_weekly_data_NUTECH': json.dumps(mapped_weekly_data_NUTECH),
-        'aggregated_weekly_data_NUTECH': json.dumps(aggregated_weekly_data_NUTECH),
-        'aggregated_weekly_data_Margalla': json.dumps(aggregated_weekly_data_Margalla),
-        'mapped_monthly_data_NUTECH': json.dumps(mapped_monthly_data_NUTECH),
-        'aggregated_monthly_data_NUTECH': json.dumps(aggregated_monthly_data_NUTECH),
-        'aggregated_monthly_data_Margalla': json.dumps(aggregated_monthly_data_Margalla),
-        'last_7_data_NUTECH': last_7_data_NUTECH,
-        'last_7_data_Margalla': last_7_data_Margalla,
-        'sun_times_NUTECH': sun_times_NUTECH,
+        'mapped_last_data_STATION1': json.dumps(mapped_last_data_STATION1),
+        'mapped_last_data_STATION2': json.dumps(mapped_last_data_STATION2),
+        'mapped_all_data_STATION1': json.dumps(mapped_all_data_STATION1),
+        'mapped_all_data_STATION2': json.dumps(mapped_all_data_STATION2),
+        'mapped_weekly_data_STATION1': json.dumps(mapped_weekly_data_STATION1),
+        'aggregated_weekly_data_STATION1': json.dumps(aggregated_weekly_data_STATION1),
+        'aggregated_weekly_data_STATION2': json.dumps(aggregated_weekly_data_STATION2),
+        'mapped_monthly_data_STATION1': json.dumps(mapped_monthly_data_STATION1),
+        'aggregated_monthly_data_STATION1': json.dumps(aggregated_monthly_data_STATION1),
+        'aggregated_monthly_data_STATION2': json.dumps(aggregated_monthly_data_STATION2),
+        'last_7_data_STATION1': last_7_data_STATION1,
+        'last_7_data_STATION2': last_7_data_STATION2,
+        'sun_times_STATION1': sun_times_STATION1,
         'sun_times_MAARGALLA': sun_times_MAARGALLA,
         'moon_Phase': moon_Phase,
-        'visibility_Nutech': visibility_Nutech,
-        'visibility_Margalla': visibility_Margalla,
-        'predictions_day_1_NUTECH': predictions_by_day_NUTECH.get(1, {}),
-        'predictions_day_2_NUTECH': predictions_by_day_NUTECH.get(2, {}),
-        'predictions_day_3_NUTECH': predictions_by_day_NUTECH.get(3, {}),
-        'predictions_day_4_NUTECH': predictions_by_day_NUTECH.get(4, {}),
-        'predictions_day_5_NUTECH': predictions_by_day_NUTECH.get(5, {}),
-        'predictions_day_6_NUTECH': predictions_by_day_NUTECH.get(6, {}),
-        'predictions_day_7_NUTECH': predictions_by_day_NUTECH.get(7, {}),
-        'predictions_day_1_Margalla': predictions_by_day_Margalla.get(1, {}),
-        'predictions_day_2_Margalla': predictions_by_day_Margalla.get(2, {}),
-        'predictions_day_3_Margalla': predictions_by_day_Margalla.get(3, {}),
-        'predictions_day_4_Margalla': predictions_by_day_Margalla.get(4, {}),
-        'predictions_day_5_Margalla': predictions_by_day_Margalla.get(5, {}),
-        'predictions_day_6_Margalla': predictions_by_day_Margalla.get(6, {}),
-        'predictions_day_7_Margalla': predictions_by_day_Margalla.get(7, {}),
+        'visibility_STATION1': visibility_STATION1,
+        'visibility_STATION2': visibility_STATION2,
+        'predictions_day_1_STATION1': predictions_by_day_STATION1.get(1, {}),
+        'predictions_day_2_STATION1': predictions_by_day_STATION1.get(2, {}),
+        'predictions_day_3_STATION1': predictions_by_day_STATION1.get(3, {}),
+        'predictions_day_4_STATION1': predictions_by_day_STATION1.get(4, {}),
+        'predictions_day_5_STATION1': predictions_by_day_STATION1.get(5, {}),
+        'predictions_day_6_STATION1': predictions_by_day_STATION1.get(6, {}),
+        'predictions_day_7_STATION1': predictions_by_day_STATION1.get(7, {}),
+        'predictions_day_1_STATION2': predictions_by_day_STATION2.get(1, {}),
+        'predictions_day_2_STATION2': predictions_by_day_STATION2.get(2, {}),
+        'predictions_day_3_STATION2': predictions_by_day_STATION2.get(3, {}),
+        'predictions_day_4_STATION2': predictions_by_day_STATION2.get(4, {}),
+        'predictions_day_5_STATION2': predictions_by_day_STATION2.get(5, {}),
+        'predictions_day_6_STATION2': predictions_by_day_STATION2.get(6, {}),
+        'predictions_day_7_STATION2': predictions_by_day_STATION2.get(7, {}),
         'day_name_1': day_names[0],
         'day_name_2': day_names[1],
         'day_name_3': day_names[2],
